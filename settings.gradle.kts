@@ -1,1 +1,2 @@
-rootProject.name = "rev-backend-starter"
+rootProject.name = "rev-multimodule"
+include(":server-backend", ":android-app")

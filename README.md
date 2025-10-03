@@ -1,27 +1,17 @@
-# RE:V (리브) 백엔드 스타터 — Kotlin/Spring Boot + Supabase
+# RE:V — Multi-Module Workspace
 
-1차 범위: 로그인 / 겐바 목록 / 아티스트 목록
+- `:server-backend` — Spring Boot 3 + Kotlin + JPA (jakarta.persistence.*)
+- `:android-app` — Android App + Room (androidx.room.*)
 
-## 빠른 시작
-- Java 21, Gradle 8.x
-- PostgreSQL (Supabase 권장)
+> 두 환경에서 ORM이 다릅니다. **백엔드에는 Room import가 없어야** 하고, **안드로이드에는 JPA import가 없어야** 합니다.
 
+## 빌드/실행
+### 서버 백엔드
 ```bash
-# 환경 변수 또는 application.yml 수정
+cd server-backend
 ./gradlew bootRun
 ```
+Swagger UI: http://localhost:8080/swagger-ui/index.html
 
-## 엔드포인트
-- POST /auth/signup
-- POST /auth/login
-- POST /auth/refresh
-- POST /auth/logout
-- GET  /artists
-- GET  /artists/{id}
-- GET  /genbas
-- GET  /genbas/{id}
-```
-
-## 주의
-- application.yml의 DB/JWT 시크릿을 실제 값으로 변경하세요.
-- Flyway가 `rev` 스키마를 자동 생성합니다.
+### 안드로이드
+Android Studio로 `:android-app` 모듈을 열고 빌드/실행하세요.
