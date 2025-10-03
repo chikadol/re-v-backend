@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jihamdol
+    username: YOUR_POSTGRESQL_USERNAME
+    password: YOUR_POSTGRESQL_PASSWORD
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+payment:
+  toss:
+    secret-key: test_sk_xxxxxxxxxxxxxxxxxxxxxx
+    base-url: https://api.tosspayments.com
+
+jwt:
+  secret: a29tLmppaGFtZG9sLmp5YW1kb2wtYXBpLWp3dC1zZWNyZXQtZm9yLXByb2plY3Q=
+  expiration-in-ms: 86400000
