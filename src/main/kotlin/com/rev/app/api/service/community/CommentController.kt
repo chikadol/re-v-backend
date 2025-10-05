@@ -1,11 +1,11 @@
-package com.rev.app.api.community
+package com.rev.app.api.service.community
 
 import com.rev.app.api.PageCursorResp
-import com.rev.app.api.community.dto.*
+import com.rev.app.api.service.community.dto.*
 import com.rev.app.domain.community.ReactionKind
-import com.rev.app.service.community.CommentReactionReq
-import com.rev.app.service.community.CommentService
-import com.rev.app.service.community.CreateCommentReq
+import com.rev.app.api.service.CommentReactionReq
+import com.rev.app.api.service.CommentService
+import com.rev.app.api.service.CreateCommentReq
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*

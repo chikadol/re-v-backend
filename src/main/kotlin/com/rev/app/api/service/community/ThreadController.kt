@@ -1,10 +1,10 @@
-package com.rev.app.api.community
+package com.rev.app.api.service.community
 
-import com.rev.app.api.community.dto.*
+import com.rev.app.api.service.community.dto.*
 import com.rev.app.domain.community.ReactionKind
-import com.rev.app.service.community.CreateThreadReq
-import com.rev.app.service.community.ReactionReq
-import com.rev.app.service.community.ThreadService
+import com.rev.app.api.service.community.CreateThreadReq
+import com.rev.app.api.service.community.ReactionReq
+import com.rev.app.api.service.community.ThreadService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*

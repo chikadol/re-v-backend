@@ -1,8 +1,7 @@
-package com.rev.app.api.community
+package com.rev.app.api.service.community
 
 import com.rev.app.api.PageCursorResp
-import com.rev.app.api.community.dto.*
-import com.rev.app.service.community.BoardService
+import com.rev.app.api.service.community.dto.*
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*

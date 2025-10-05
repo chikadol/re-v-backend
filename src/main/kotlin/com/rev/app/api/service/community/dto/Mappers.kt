@@ -1,4 +1,4 @@
-package com.rev.app.api.community.dto
+package com.rev.app.api.service.community.dto
 
 import com.rev.app.domain.community.*
 
