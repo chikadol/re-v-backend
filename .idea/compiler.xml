@@ -2,9 +2,6 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="re-v-backend" target="21" />
-      <module name="re-v-backend.main" target="21" />
-      <module name="re-v-backend.test" target="21" />
       <module name="rev-server-only" target="21" />
       <module name="rev-server-only.main" target="21" />
       <module name="rev-server-only.test" target="21" />
