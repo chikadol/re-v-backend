@@ -1,20 +1,8 @@
-# RE:V — Server Only (Swagger + Flyway + Env DB)
+# re-v-backend (Windows-ready)
 
-## 사용법
-1) DB 실행
-```bash
-docker compose up -d
-```
-2) 환경변수 설정 (선택)
-```bash
-export DB_URL=jdbc:postgresql://localhost:5432/rev
-export DB_USERNAME=rev
-export DB_PASSWORD=rev
-```
-3) 서버 실행
-```bash
-./gradlew bootRun
-```
-
+## 실행 순서 (PowerShell)
+1) JDK 21 설치 및 JAVA_HOME 설정 (README 상단 가이드 참고)
+2) DB 실행: `docker compose up -d`
+3) 프로젝트 루트에서: `.\gradlew.bat bootRun`
 - Swagger UI: http://localhost:8080/swagger-ui/index.html
 - Health:     http://localhost:8080/health

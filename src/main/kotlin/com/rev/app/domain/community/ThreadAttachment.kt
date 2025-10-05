@@ -7,16 +7,12 @@ import jakarta.persistence.*
 class ThreadAttachment(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    @Column(nullable = false)
-    var threadId: Long,
-    @Column(nullable = false)
-    var type: String,
-    @Column(nullable = false)
-    var path: String,
+    @Column(nullable = false) var threadId: Long,
+    @Column(nullable = false) var type: String,
+    @Column(nullable = false) var path: String,
     var width: Int? = null,
     var height: Int? = null,
     var duration: Int? = null,
     var orderNo: Int = 0,
-    @Column(columnDefinition = "jsonb")
-    var metadata: String? = "{}"
+    @Column(columnDefinition = "jsonb") var metadata: String? = "{}"
 )

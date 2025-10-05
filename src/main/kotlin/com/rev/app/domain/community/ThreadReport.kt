@@ -8,15 +8,11 @@ import java.time.Instant
 class ThreadReport(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    @Column(nullable = false)
-    var threadId: Long,
-    @Column(nullable = false)
-    var reporterId: Long,
-    @Enumerated(EnumType.STRING)
-    var status: ReportStatus = ReportStatus.OPEN,
+    @Column(nullable = false) var threadId: Long,
+    @Column(nullable = false) var reporterId: Long,
+    @Enumerated(EnumType.STRING) var status: ReportStatus = ReportStatus.OPEN,
     var reason: String? = null,
-    @Column(columnDefinition = "text")
-    var detail: String? = null,
+    @Column(columnDefinition = "text") var detail: String? = null,
     var createdAt: Instant = Instant.now(),
     var resolvedBy: Long? = null,
     var resolvedAt: Instant? = null

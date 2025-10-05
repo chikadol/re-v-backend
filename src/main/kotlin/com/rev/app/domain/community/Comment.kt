@@ -8,13 +8,10 @@ import java.time.Instant
 class Comment(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-    @Column(nullable = false)
-    var threadId: Long,
+    @Column(nullable = false) var threadId: Long,
     var parentId: Long? = null,
-    @Column(nullable = false)
-    var authorId: Long,
-    @Column(columnDefinition = "text", nullable = false)
-    var content: String,
+    @Column(nullable = false) var authorId: Long,
+    @Column(columnDefinition = "text", nullable = false) var content: String,
     var isAnonymous: Boolean = false,
     var likeCount: Int = 0,
     var deletedAt: Instant? = null,

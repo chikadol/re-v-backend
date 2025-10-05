@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/rev}
+    username: ${DB_USERNAME:rev}
+    password: ${DB_PASSWORD:rev}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_schema: rev
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    schemas: rev
+    locations: classpath:db/migration
+
+server:
+  port: ${PORT:8080}

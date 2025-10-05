@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/threads")
 class ThreadController(private val svc: ThreadService) {
 
-    // 지금은 인증 없이 authorId를 param으로 받는 임시 버전 (차후 JWT로 교체)
-    @Operation(summary = "스레드 생성")
+    @Operation(summary = "스레드 생성 (임시: authorId 파라미터 사용)")
     @PostMapping
     fun create(@RequestParam authorId: Long, @RequestBody req: ThreadCreateReq): ThreadDetailDto =
         threadDetailDto(svc.createThread(authorId, CreateThreadReq(req.boardSlug, req.title, req.content, req.isAnonymous)))

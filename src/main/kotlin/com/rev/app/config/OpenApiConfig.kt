@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration
 class OpenApiConfig {
     @Bean
     fun api(): OpenAPI = OpenAPI().info(
-        Info().title("RE:V Server API").version("v1").description("RE:V backend (server only)")
+        Info().title("RE:V Server API").version("v1").description("RE:V backend")
     )
 }

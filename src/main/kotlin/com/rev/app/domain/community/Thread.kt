@@ -8,24 +8,12 @@ import java.time.Instant
 class Thread(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
-
-    @Column(nullable = false)
-    var boardId: Long,
-
-    @Column(nullable = false)
-    var authorId: Long,
-
-    @Column(nullable = false)
-    var title: String,
-
-    @Column(columnDefinition = "text")
-    var content: String? = null,
-
+    @Column(nullable = false) var boardId: Long,
+    @Column(nullable = false) var authorId: Long,
+    @Column(nullable = false) var title: String,
+    @Column(columnDefinition = "text") var content: String? = null,
     var isAnonymous: Boolean = false,
-
-    @Column(nullable = false)
-    var displayNo: Long,
-
+    @Column(nullable = false) var displayNo: Long,
     var viewCount: Long = 0,
     var likeCount: Int = 0,
     var dislikeCount: Int = 0,
