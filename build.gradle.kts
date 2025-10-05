@@ -31,7 +31,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.flywaydb:flyway-core")
+
+    // Flyway는 core + database-postgresql 를 같은 버전으로 맞춰서 추가
+    val flywayVersion = "10.17.0" // (둘 다 동일버전, 더 최신 써도 OK)
+    implementation("org.flywaydb:flyway-core:$flywayVersion")
+    implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
+
     implementation("org.postgresql:postgresql:42.7.4")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
