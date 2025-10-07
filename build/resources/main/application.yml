@@ -1,21 +1,16 @@
 spring:
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/rev}
-    username: ${DB_USERNAME:rev}
-    password: ${DB_PASSWORD:rev}
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/krchikadol_db_user
+    username: krchikadol_db_user
+    password: chikadol123!
   jpa:
     hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        default_schema: rev
-        format_sql: true
-    open-in-view: false
+      ddl-auto: validate
   flyway:
     enabled: true
-    schemas: rev
-    locations: classpath:db/migration
+  sql:
+    init:
+      mode: never
 
 server:
   port: ${PORT:8080}

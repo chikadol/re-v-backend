@@ -13,8 +13,8 @@ import java.time.Instant
 
 @Service
 class CommentService(
-    private val comments: CommentRepository,
-    private val commentReactions: CommentReactionRepository
+    private val commentRepository: CommentRepository,
+    private val commentReactionRepository: CommentReactionRepository
 ) {
     @Transactional
     fun createComment(authorId: Long, req: CreateCommentReq): Comment {
@@ -26,21 +26,26 @@ class CommentService(
             isAnonymous = req.isAnonymous,
             createdAt = Instant.now()
         )
-        return comments.save(c)
+        return commentRepository.save(c)
     }
 
     fun pageByThread(threadId: Long, size: Int, cursor: String?): PageCursorResp<Comment> {
-        val c = cursor?.let { CursorUtil.decode(it) }
-        val items = comments.pageByThreadKeysetAsc(threadId, c?.createdAt, c?.id, PageRequest.of(0, size))
+        val cur = cursor?.let { CursorUtil.decode(it) }
+        val items = commentRepository.pageByThreadKeysetAsc(
+            threadId = threadId,
+            cursorCreatedAt = cur?.createdAt,
+            cursorId = cur?.id,
+            pageable = PageRequest.of(0, size)
+        )
         val next = items.lastOrNull()?.let { CursorUtil.encode(it.createdAt, it.id!!) }
         return PageCursorResp(items, next)
     }
 
     @Transactional
     fun reactComment(commentId: Long, userId: Long, req: CommentReactionReq): CommentReaction {
-        val existing = commentReactions.findByUserIdAndCommentId(userId, commentId)
-        existing.forEach { commentReactions.delete(it) }
-        return commentReactions.save(
+        val existing = commentReactionRepository.findByUserIdAndCommentId(userId, commentId)
+        existing.forEach { commentReactionRepository.delete(it) }
+        return commentReactionRepository.save(
             CommentReaction(commentId = commentId, userId = userId, kind = req.kind)
         )
     }

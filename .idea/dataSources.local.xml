@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-252.26199.169">
+    <data-source name="rev@localhost" uuid="b3cdb57c-2b64-45d3-a805-b348c8c492c6">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>krchikadol_db_user</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="rev@localhost" uuid="e5ad7b11-0020-4d37-b51b-b0f07bd480bd">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>rev</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
