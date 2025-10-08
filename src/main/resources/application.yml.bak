@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: postgresql://postgres:chikadol123!@db.gsmbdibjiuwdqhrdvsfo.supabase.co:5432/postgres
+    username: ykkmr's Project
+    password: chikadol123!
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  sql:
+    init:
+      mode: never
+
+server:
+  port: ${PORT:8080}

@@ -1,16 +1,18 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/krchikadol_db_user
-    username: krchikadol_db_user
-    password: chikadol123!
-  jpa:
-    hibernate:
-      ddl-auto: validate
   flyway:
-    enabled: true
+    default-schema: public
+    schemas: public
+  jpa:
+    properties:
+      hibernate:
+        default_schema: public
   sql:
     init:
       mode: never
 
 server:
-  port: ${PORT:8080}
+  port: ${SERVER_PORT:8080}
+
+logging:
+  level:
+    root: ${LOG_LEVEL_ROOT:INFO}
