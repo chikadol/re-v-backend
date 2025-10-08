@@ -1,11 +1,16 @@
 spring:
-  flyway:
-    default-schema: public
-    schemas: public
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/revdb}
+    username: ${SPRING_DATASOURCE_USERNAME:rev}
+    password: ${SPRING_DATASOURCE_PASSWORD:revpass}
+
   jpa:
-    properties:
-      hibernate:
-        default_schema: public
+    hibernate:
+      ddl-auto: update
+  flyway:
+    default-schema: ${SPRING_FLYWAY_DEFAULT_SCHEMA:public}
+    schemas: ${SPRING_FLYWAY_SCHEMAS:public}
+
   sql:
     init:
       mode: never
@@ -15,4 +20,4 @@ server:
 
 logging:
   level:
-    root: ${LOG_LEVEL_ROOT:INFO}
+   org.mongodb.driver: WARN
