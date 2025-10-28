@@ -12,5 +12,25 @@
       <user-name>rev</user-name>
       <schema-mapping />
     </data-source>
+    <data-source name="revdb@localhost" uuid="c2212bdd-9aa3-4b73-b2b1-d0a7acf843f2">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>rev</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="postgres@db.gsmbdibjiuwdqhrdvsfo.supabase.co" uuid="7b31d901-74bd-4400-b11c-7bdbbdae23e5">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>ykkmr's Project</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="postgres@db.gsmbdibjiuwdqhrdvsfo.supabase.co" uuid="221e7eb0-6f8a-4fa1-8e10-1abd2760a936">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>ykkmr's Project</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="revdb@localhost" uuid="44437b96-2fd7-4399-87ad-8924cd8c5b10">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>rev</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>
