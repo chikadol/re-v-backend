@@ -1,45 +1,48 @@
 package com.rev.app.auth
 
-import com.rev.app.auth.dto.LoginRequest
-import com.rev.app.auth.dto.SignUpRequest
-import com.rev.app.auth.dto.TokenResponse
+import com.rev.app.auth.entity.RefreshToken
 import com.rev.app.auth.jwt.JwtProvider
-import org.springframework.security.crypto.password.PasswordEncoder
+import com.rev.app.auth.repo.RefreshTokenRepo
+import com.rev.app.auth.repo.hashToken
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
-
+import java.time.Instant
 
 @Service
 class AuthService(
-    private val users: UserRepository,
-    private val pe: PasswordEncoder,
-    private val jwt: JwtProvider,
+    private val jwtProvider: JwtProvider,
+    private val refreshTokenRepo: RefreshTokenRepo
 ) {
-    @Transactional
-    fun signUp(req: SignUpRequest): TokenResponse {
-        require(!users.existsByEmail(req.email)) { "EMAIL_TAKEN" }
-        val saved = users.save(UserEntity(email = req.email, password = pe.encode(req.password)))
-        val access = jwt.generateAccessToken(saved.email, roles = listOf("USER"))
-        val refresh = jwt.generateRefreshToken(saved.email)
-        return TokenResponse(access, refresh)
+    fun login(username: String, roles: List<String>): TokenPair {
+        val access = jwtProvider.generateAccessToken(username, roles)
+        val refresh = jwtProvider.generateRefreshToken(username)
+        refreshTokenRepo.save(
+            RefreshToken(
+                subject = username,
+                tokenHash = hashToken(refresh)
+//                expiresAt = jwtProvider.getExpiration(refresh)
+            )
+        )
+        return TokenPair(access, refresh)
     }
 
+    fun refresh(refreshToken: String): TokenPair {
+        require(jwtProvider.validate(refreshToken) && jwtProvider.isRefresh(refreshToken)) { "not a refresh token" }
 
-    fun login(req: LoginRequest): TokenResponse {
-        val user = users.findByEmail(req.email) ?: error("INVALID_CREDENTIALS")
-        check(pe.matches(req.password, user.password)) { "INVALID_CREDENTIALS" }
-        val roles = user.roles.split(',').map { it.trim() }.filter { it.isNotBlank() }
-        val access = jwt.generateAccessToken(user.email, roles)
-        val refresh = jwt.generateRefreshToken(user.email)
-        return TokenResponse(access, refresh)
-    }
+        val h = hashToken(refreshToken)
+        val row = refreshTokenRepo.findByTokenHash(h).orElseThrow { IllegalArgumentException("unknown refresh") }
+        require(!row.revoked && row.expiresAt.isAfter(Instant.now())) { "refresh expired/revoked" }
 
+        row.revoked = true
+        refreshTokenRepo.save(row)
 
-    fun refresh(refreshToken: String): TokenResponse {
-        val subject = jwt.parseSubject(refreshToken) ?: error("INVALID_REFRESH")
-        val roles = jwt.parseRoles(refreshToken).ifEmpty { listOf("USER") }
-        val access = jwt.generateAccessToken(subject, roles)
-        val newRefresh = jwt.generateRefreshToken(subject)
-        return TokenResponse(access, newRefresh)
+        val subject = jwtProvider.parseSubject(refreshToken)
+        val newAccess = jwtProvider.generateAccessToken(subject, emptyList())
+        val newRefresh = jwtProvider.generateRefreshToken(subject)
+        refreshTokenRepo.save(
+            RefreshToken(subject = subject, tokenHash = hashToken(newRefresh)/*, expiresAt = jwtProvider.getExpiration(newRefresh)*/)
+        )
+        return TokenPair(newAccess, newRefresh)
     }
 }
+
+data class TokenPair(val accessToken: String, val refreshToken: String)

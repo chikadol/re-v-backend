@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/revdb
@@ -7,9 +8,25 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: validate
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
 
   flyway:
     baseline-on-migrate: true
     baseline-version: 22   # 현재 코드의 최신 마이그 버전에 맞춰 설정
     # ⚠ 기본 프로필에서는 flyway.url/user/password 지정하지 마
     # (DataSource를 그대로 사용하게 둡니다)
+  web:
+    cors:
+      mappings:
+        - path: /**
+          allowed-origins: "https://YOUR-FRONTEND.DOMAIN"
+          allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+          allowed-headers: "*"
+          allow-credentials: true
+
+jwt:
+  issuer: rev-app
+  secret: ${JWT_SECRET:d0c41382-cae7-44c3-a401-77828c270ab3}
+  access-ttl-seconds: 900        # 15분
+  refresh-ttl-seconds: 1209600   # 14일
