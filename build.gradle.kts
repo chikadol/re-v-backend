@@ -49,5 +49,6 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 }
 tasks.test { useJUnitPlatform() }

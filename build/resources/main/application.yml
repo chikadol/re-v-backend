@@ -1,34 +1,15 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/revdb}
-    username: ${SPRING_DATASOURCE_USERNAME:rev}
-    password: ${SPRING_DATASOURCE_PASSWORD:revpass}
-
+    url: jdbc:postgresql://localhost:5433/revdb
+    username: rev
+    password: revpass
   jpa:
+    open-in-view: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+
   flyway:
-    default-schema: ${SPRING_FLYWAY_DEFAULT_SCHEMA:public}
-    schemas: ${SPRING_FLYWAY_SCHEMAS:public}
-
-  sql:
-    init:
-      mode: never
-
-server:
-  port: ${SERVER_PORT:8080}
-
-logging:
-  level:
-   org.mongodb.driver: WARN
-
-app:
-   jwt:
-   secret: ${APP_JWT_SECRET:change-this-in-prod}
-   issuer: re:v
-   access-token-minutes: 15
-   refresh-token-days: 7
-   spring:
-   security:
-   filter:
-   dispatcher-types: request
+    baseline-on-migrate: true
+    baseline-version: 22   # 현재 코드의 최신 마이그 버전에 맞춰 설정
+    # ⚠ 기본 프로필에서는 flyway.url/user/password 지정하지 마
+    # (DataSource를 그대로 사용하게 둡니다)

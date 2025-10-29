@@ -23,7 +23,7 @@ class JwtAuthFilter(
         if (!token.isNullOrBlank()) {
             val email = jwt.parseSubject(token)
             if (!email.isNullOrBlank() && SecurityContextHolder.getContext().authentication == null) {
-                val userDetails = uds.loadUserByUsername(email) 
+                val userDetails = uds.loadUserByUsername(email)
                 val auth = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
                 auth.details = WebAuthenticationDetailsSource().buildDetails(req)
                 SecurityContextHolder.getContext().authentication = auth

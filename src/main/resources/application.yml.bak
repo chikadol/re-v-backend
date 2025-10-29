@@ -7,7 +7,10 @@ spring:
     hibernate:
       ddl-auto: validate
   flyway:
-    enabled: true
+    # migrations + callbacks 둘 다 스캔
+    locations: classpath:db/migration,classpath:db/callbacks
+    default-schema: rev
+    schemas: rev
   sql:
     init:
       mode: never
