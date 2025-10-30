@@ -15,3 +15,11 @@ spring:
     properties:
       hibernate:
         default_schema: rev
+
+jwt:
+  secret: "Xk8s0a1Q2w3E4r5T6y7U8i9O0pAaBbCcDdEeFfGgHhIiJjKk"
+  issuer: re-v
+  access-ttl-seconds: 900
+  refresh-ttl-seconds: 1209600
+  header: Authorization
+  prefix: "Bearer "

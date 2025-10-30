@@ -1,64 +1,77 @@
 package com.rev.app.auth.jwt
 
-import io.jsonwebtoken.*
+import io.jsonwebtoken.Jwts
+import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
+import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Component
-import java.nio.charset.StandardCharsets
-import java.time.Instant
-import java.util.Date
+import java.util.*
 import javax.crypto.SecretKey
 
 @Component
-class JwtProvider(private val props: JwtProperties) {
-
+class JwtProvider(
+    private val props: JwtProperties
+) {
     private val key: SecretKey = run {
-        val sec = props.secret.trim()
-        require(sec.length >= 32) { "jwt.secret must be >= 32 chars" }
-        Keys.hmacShaKeyFor(sec.toByteArray(StandardCharsets.UTF_8))
+        require(props.secret.length >= 32) { "jwt.secret must be >= 32 chars" }
+        Keys.hmacShaKeyFor(props.secret.toByteArray(Charsets.UTF_8))
     }
 
-    fun generateAccessToken(subject: String, roles: List<String>): String =
-        Jwts.builder()
-            .setSubject(subject)
-            .claim("roles", roles)
-            .setIssuer(props.issuer)
-            .setExpiration(Date.from(Instant.now().plusSeconds(props.accessTtlSeconds)))
-            .signWith(key, SignatureAlgorithm.HS256)
-            .compact()
-
-    fun generateRefreshToken(subject: String): String =
-        Jwts.builder()
-            .setSubject(subject)
-            .claim("typ", "refresh")          // 리프레시 표식
-            .setIssuer(props.issuer)
-            .setExpiration(Date.from(Instant.now().plusSeconds(props.refreshTtlSeconds)))
-            .signWith(key, SignatureAlgorithm.HS256)
-            .compact()
+    fun resolveToken(request: HttpServletRequest): String? {
+        val hv = request.getHeader(props.header) ?: return null
+        val prefix = props.prefix
+        return if (hv.startsWith(prefix, true)) hv.substring(prefix.length).trim() else null
+    }
 
     fun validate(token: String): Boolean = try {
         Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token)
         true
-    } catch (_: JwtException) { false }      // Signature/Expired/Malformed 등
-    catch (_: IllegalArgumentException) { false }
-
-    fun isRefresh(token: String): Boolean = try {
-        val body = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
-        body["typ"] == "refresh"
     } catch (_: Exception) { false }
 
-    fun parseSubject(token: String): String =
-        Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body.subject
+    fun getSubject(token: String): String =
+        Jwts.parserBuilder().setSigningKey(key).build()
+            .parseClaimsJws(token).body.subject
 
-    fun parseRoles(token: String): List<String> {
-        val body = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
-        val raw = body["roles"]
-        return when (raw) {
+    fun getUserId(token: String): UUID = UUID.fromString(getSubject(token))
+
+    fun getRoles(token: String): List<String> {
+        val claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
+        return when (val raw = claims["roles"]) {
             is Collection<*> -> raw.filterIsInstance<String>()
-            is String -> raw.split(',').map { it.trim() }.filter { it.isNotEmpty() }
-            else -> emptyList()
+            is Array<*>       -> raw.filterIsInstance<String>()
+            is String         -> raw.split(',').map { it.trim() }.filter { it.isNotEmpty() }
+            else              -> emptyList()
         }
     }
 
-    fun accessTtlSeconds(): Long = props.accessTtlSeconds
-    fun refreshTtlSeconds(): Long = props.refreshTtlSeconds
+    fun isRefresh(token: String): Boolean {
+        val claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).body
+        return (claims["typ"] as? String)?.equals("refresh", true) == true
+    }
+
+    fun generateAccessToken(userId: UUID, username: String, roles: Collection<String> = emptyList()): String {
+        val now = Date()
+        val exp = Date(now.time + props.accessTtlSeconds * 1000)
+        return Jwts.builder()
+            .setSubject(userId.toString())
+            .claim("un", username)
+            .claim("roles", roles)
+            .claim("typ", "access")
+            .setIssuedAt(now)
+            .setExpiration(exp)
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact()
+    }
+
+    fun generateRefreshToken(userId: UUID): String {
+        val now = Date()
+        val exp = Date(now.time + props.refreshTtlSeconds * 1000)
+        return Jwts.builder()
+            .setSubject(userId.toString())
+            .claim("typ", "refresh")
+            .setIssuedAt(now)
+            .setExpiration(exp)
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact()
+    }
 }

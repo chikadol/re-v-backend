@@ -1,20 +1,24 @@
 package com.rev.app.auth
 
 import jakarta.persistence.*
-
-import java.time.Instant
+import java.util.*
 
 @Entity
-@Table(name = "app_user")
+@Table(name = "app_user", schema = "rev") // 실제 테이블명으로 변경
 class UserEntity(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
 
-    @Column(nullable = false, unique = true)
-    var username: String = "",
+    @Id
+    @Column(columnDefinition = "uuid")
+    var id: UUID? = null,
+
+    @Column(nullable = false, unique = true, length = 190)
+    var username: String,
+
+    // 실제 컬럼명이 email이 아니라면 name에 정확히 써주기 (예: user_email, email_address 등)
+    @Column(name = "email", nullable = false, unique = true, length = 320)
+    var email: String,
 
     @Column(nullable = false)
-    var password: String = "",
+    var password: String,
 
-    var createdAt: Instant = Instant.now()
 )

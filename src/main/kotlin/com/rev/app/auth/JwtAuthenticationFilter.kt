@@ -20,12 +20,10 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val token = resolveToken(request)
+        val token = jwtProvider.resolveToken(request)
         if (token != null && jwtProvider.validate(token)) {
-            val subject = jwtProvider.parseSubject(token)
-            val roles = jwtProvider.parseRoles(token).map { SimpleGrantedAuthority(it) }
-            val auth = UsernamePasswordAuthenticationToken(subject, null, roles)
-            SecurityContextHolder.getContext().authentication = auth
+            val userId = jwtProvider.getUserId(token)
+            val roles  = jwtProvider.getRoles(token)
         }
         filterChain.doFilter(request, response)
     }

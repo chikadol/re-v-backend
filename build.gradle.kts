@@ -65,7 +65,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")   // ← 이 줄 꼭 있어야 함
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
-
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 flyway {
