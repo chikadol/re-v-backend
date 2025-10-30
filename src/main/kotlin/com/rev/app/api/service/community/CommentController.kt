@@ -10,7 +10,8 @@ import com.rev.app.domain.community.entity.CommentEntity    // ✅ 추가
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/threads")
+@RequestMapping("/api/commentThreads")
+
 class CommentController(
     private val commentService: CommentService
 ) {

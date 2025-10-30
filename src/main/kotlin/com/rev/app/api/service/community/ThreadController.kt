@@ -32,7 +32,7 @@ class ThreadController(
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: Long): ThreadRes =
-        ThreadRes.from(threadService.get(id))
+        threadService.get(id).toRes()
 
     // 🔧 (중요) reactToThread 관련 호출이 있었다면 일단 주석 처리하거나,
     // 서비스에 구현이 준비될 때까지 엔드포인트를 잠깐 제거하세요.

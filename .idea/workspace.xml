@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="auth">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/CommentMappers.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/common/BaseTime.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/entity/CommentEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/BoardMappers.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/dto/BoardRes.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
@@ -37,6 +36,7 @@
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/BoardController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/BoardService.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/CommentController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/CommentMappersKt.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/CreateThreadReq.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ReactionType.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ThreadBookmarkEntity.class" beforeDir="false" />
@@ -50,7 +50,6 @@
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ThreadServiceImpl.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/BoardDto.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/CommentDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/CommentRes$Companion.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/CommentRes.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/CreateCommentReq.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/ThreadDetailDto.class" beforeDir="false" />
@@ -78,6 +77,7 @@
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/auth/jwt/JwtProperties.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/auth/jwt/JwtProps.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/auth/jwt/JwtProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/common/BaseTime.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/common/GlobalExceptionHandler$ErrorBody.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/common/GlobalExceptionHandler.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/config/FlywayRepairOnce.class" beforeDir="false" />
@@ -98,6 +98,7 @@
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/ThreadBookmark.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/ThreadReaction.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/ThreadReport.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/entity/CommentEntity.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/entity/ThreadEntity.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/BoardManagerRepository.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/BoardRepository.class" beforeDir="false" />
@@ -207,11 +208,16 @@
       <change beforePath="$PROJECT_DIR$/build/resolvedMainClassName" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/bootJar/MANIFEST.MF" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/CommentService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/CommentService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/BaseTimeEntity.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/BoardController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/BoardController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/BoardService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/BoardService.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/CommentController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/CommentController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/dto/CommentRes.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/dto/CommentRes.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/entity/ThreadEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/entity/ThreadEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/CommentRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/CommentRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadReactionEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadReactionEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/common/BaseTime.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/common/jpa/BaseTime.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/Comment.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/ThreadReaction.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/ThreadReaction.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/entity/CommentEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/entity/CommentEntity.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -403,7 +409,7 @@
       <workItem from="1761668763410" duration="546000" />
       <workItem from="1761712119845" duration="24721000" />
       <workItem from="1761788749190" duration="4898000" />
-      <workItem from="1761813204526" duration="34955000" />
+      <workItem from="1761813204526" duration="37104000" />
     </task>
     <task id="LOCAL-00001" summary="auth">
       <option name="closed" value="true" />

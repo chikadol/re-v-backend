@@ -1,5 +1,6 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.common.jpa.BaseTime
 import jakarta.persistence.*
 import java.util.UUID
 
@@ -21,4 +22,4 @@ class ThreadReactionEntity(
     @field:Column(name = "type", nullable = false)
     val type: ReactionType,
 
-    ) : BaseTimeEntity() // 시간 컬럼은 상속으로만
+    ) : BaseTime() // 시간 컬럼은 상속으로만

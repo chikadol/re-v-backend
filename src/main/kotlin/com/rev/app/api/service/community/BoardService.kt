@@ -1,6 +1,7 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.api.service.community.dto.BoardRes
 import com.rev.app.auth.UserEntity
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.repo.ThreadRepository

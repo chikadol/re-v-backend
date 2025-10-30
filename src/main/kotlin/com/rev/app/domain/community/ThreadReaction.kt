@@ -1,6 +1,6 @@
 package com.rev.app.domain.community
 
-import com.rev.app.api.service.community.BaseTimeEntity
+import com.rev.app.common.jpa.BaseTime
 import com.rev.app.domain.community.entity.ThreadEntity
 import jakarta.persistence.*
 import java.time.Instant
@@ -15,4 +15,4 @@ class ThreadReaction(
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "thread_id", nullable = false)
     var thread: ThreadEntity
-) : BaseTimeEntity()
+) : BaseTime()
