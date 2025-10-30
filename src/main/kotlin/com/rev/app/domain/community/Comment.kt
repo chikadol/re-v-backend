@@ -1,5 +1,6 @@
 package com.rev.app.domain.community
 
+import com.rev.app.auth.UserEntity
 import jakarta.persistence.*
 import java.time.Instant
 
@@ -15,5 +16,8 @@ class Comment(
     var isAnonymous: Boolean = false,
     var likeCount: Int = 0,
     var deletedAt: Instant? = null,
-    var createdAt: Instant = Instant.now()
+    var createdAt: Instant = Instant.now(),
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "author_id", nullable = false)
+    var author: UserEntity
 )

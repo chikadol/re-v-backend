@@ -1,41 +1,35 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.security.Me
-import com.rev.app.api.security.MeDto
 import com.rev.app.api.service.CommentService
-import com.rev.app.api.service.community.dto.CommentDto
-import com.rev.app.api.service.community.dto.ToggleResultDto
-import org.springframework.http.ResponseEntity
+import com.rev.app.api.service.community.dto.CommentRes
+import com.rev.app.api.service.community.dto.CreateCommentReq
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api/threads")
 class CommentController(
     private val commentService: CommentService
 ) {
-    @PostMapping("/{threadId}")
-    fun add(
-        @Me me: MeDto,
+    @PostMapping("/{threadId}/comments")
+    fun addComment(
         @PathVariable threadId: Long,
-        @RequestParam(required = false) parentId: String?,
+        @Me me: JwtPrincipal,
         @RequestBody req: CreateCommentReq
-    ): ResponseEntity<CommentDto> {
-        val parentIdLong = parentId?.toLong()
-        val saved = commentService.addComment(
+    ): CommentRes {
+        val dto = commentService.addComment(
             threadId = threadId,
-            authorId = me.userId,
+            authorId = me.userId,        // JWT에서 꺼낸 UUID
             content = req.content,
-            parentId = parentIdLong
+            parentId = req.parentId
         )
-        return ResponseEntity.ok(saved)
+        return CommentRes.from(dto)
     }
 
-    @PostMapping("/{commentId}/toggle-like")
+    @PostMapping("/comments/{commentId}/likes:toggle")
     fun toggleLike(
-        @Me me: MeDto,
-        @PathVariable commentId: Long
-    ): ResponseEntity<ToggleResultDto> =
-        ResponseEntity.ok(commentService.toggleLike(commentId, me.userId))
+        @PathVariable commentId: Long,
+        @Me me: JwtPrincipal
+    ) = commentService.toggleLike(commentId, me.userId)
 }
-
-data class CreateCommentReq(val content: String)

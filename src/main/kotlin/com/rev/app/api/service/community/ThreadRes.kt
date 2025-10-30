@@ -8,10 +8,10 @@ data class ThreadRes(
     val id: Long,
     val title: String,
     val content: String,
-    val authorId: UUID?,
+    val authorId: UUID?,     // ← 여기서만 노출
     val tags: List<String>,
     val categoryId: UUID?,
-    val parentId: ThreadEntity?,
+    val parentId: UUID?,
     val isPrivate: Boolean
 ) {
     companion object {
@@ -19,10 +19,10 @@ data class ThreadRes(
             id = e.id!!,
             title = e.title,
             content = e.content,
-            authorId = e.author.id,
+            authorId = e.author.id,   // ← 엔티티에서 꺼냄
             tags = e.tags.toList(),
             categoryId = e.categoryId,
-            parentId = e.parent,
+            parentId = e.parentId,
             isPrivate = e.isPrivate
         )
     }

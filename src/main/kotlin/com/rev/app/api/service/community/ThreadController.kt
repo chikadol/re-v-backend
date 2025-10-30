@@ -23,7 +23,7 @@ class ThreadController(
             author = me,
             tags = req.tags.toMutableList(),
             categoryId = req.categoryId,
-            parentThreadId = req.parentId,
+            parentId = req.parentId,
             isPrivate = req.isPrivate
         )
         val saved = threadService.create(entity)

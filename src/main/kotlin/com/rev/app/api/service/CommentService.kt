@@ -1,18 +1,21 @@
 package com.rev.app.api.service
 
 import com.rev.app.api.service.community.dto.CommentDto
+import com.rev.app.api.service.community.dto.ToggleResultDto
 import org.springframework.stereotype.Service
 import java.time.Instant
+import java.util.UUID
 
 @Service
 class CommentService {
+
     fun addComment(
         threadId: Long,
-        authorId: Long,
+        authorId: UUID,
         content: String,
-        parentId: Long?   // ← 여기 Long? 로
+        parentId: Long?      // ← 요구사항대로 Long?
     ): CommentDto {
-        // TODO: 실제 저장 로직. 지금은 컴파일용 더미
+        // TODO: 실제 저장 로직으로 교체
         return CommentDto(
             id = 1L,
             threadId = threadId,
@@ -24,9 +27,9 @@ class CommentService {
         )
     }
 
-    fun toggleLike(commentId: Long, userId: Long): com.rev.app.api.service.community.dto.ToggleResultDto {
-        // TODO: 실제 로직. 컴파일용 더미
-        return com.rev.app.api.service.community.dto.ToggleResultDto(
+    fun toggleLike(commentId: Long, userId: UUID): ToggleResultDto {
+        // TODO: 실제 토글 로직으로 교체
+        return ToggleResultDto(
             toggled = true,
             count = 1L
         )
