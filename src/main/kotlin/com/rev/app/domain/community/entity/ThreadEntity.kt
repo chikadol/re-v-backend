@@ -22,7 +22,7 @@ open class ThreadEntity(
 
     // ✅ author_id는 여기 하나만 매핑
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "author_id", nullable = false) // 여기서만 author_id 매핑
+    @JoinColumn(name = "author_id", nullable = false)
     var author: UserEntity,
 
     @ElementCollection(fetch = FetchType.LAZY)

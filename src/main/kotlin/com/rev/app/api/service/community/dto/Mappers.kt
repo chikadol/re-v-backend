@@ -9,7 +9,7 @@ data class CommentDto(
     val threadId: Long,
     val authorId: UUID,
     val content: String,
-    val parentId: Long? = null,
-    val createdAt: Instant,
-    val updatedAt: Instant? = null
+    val parentId: Long?,
+    val createdAt: Instant,      // non-null
+    val updatedAt: Instant?
 )

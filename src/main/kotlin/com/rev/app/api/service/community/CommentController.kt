@@ -1,3 +1,4 @@
+// src/main/kotlin/com/rev/app/api/service/community/CommentController.kt
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.JwtPrincipal
@@ -5,6 +6,7 @@ import com.rev.app.api.security.Me
 import com.rev.app.api.service.CommentService
 import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentReq
+import com.rev.app.domain.community.entity.CommentEntity    // ✅ 추가
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -12,24 +14,20 @@ import org.springframework.web.bind.annotation.*
 class CommentController(
     private val commentService: CommentService
 ) {
+
     @PostMapping("/{threadId}/comments")
     fun addComment(
         @PathVariable threadId: Long,
         @Me me: JwtPrincipal,
         @RequestBody req: CreateCommentReq
     ): CommentRes {
-        val dto = commentService.addComment(
+        // ✅ 서비스가 반환하는 타입을 Entity로 받기
+        val entity: CommentEntity = commentService.addComment(
             threadId = threadId,
-            authorId = me.userId,        // JWT에서 꺼낸 UUID
+            authorId = me.userId,          // UUID
             content = req.content,
             parentId = req.parentId
         )
-        return CommentRes.from(dto)
+        return entity.toRes()              // ✅ 방금 만든 매퍼 사용
     }
-
-    @PostMapping("/comments/{commentId}/likes:toggle")
-    fun toggleLike(
-        @PathVariable commentId: Long,
-        @Me me: JwtPrincipal
-    ) = commentService.toggleLike(commentId, me.userId)
 }
