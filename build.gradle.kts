@@ -1,14 +1,19 @@
+repositories {
+    mavenCentral()
+    gradlePluginPortal() // ← 플러그인 해석 못할 때 도움이 됨 (보통 settings에서 선언)
+}
 plugins {
     id("org.springframework.boot") version "3.3.3"
     id("io.spring.dependency-management") version "1.1.6"
 
-    kotlin("jvm") version "2.0.0"
-    kotlin("plugin.spring") version "2.0.0"
-    kotlin("plugin.jpa") version "2.0.0"
+    kotlin("jvm") version "1.9.25"
+    kotlin("plugin.spring") version "1.9.25"
+    kotlin("plugin.jpa") version "1.9.25"
 
     id("org.jetbrains.kotlin.plugin.noarg") version "2.0.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "2.0.0"
     id("org.flywaydb.flyway") version "10.17.0"
+
 }
 buildscript {
     dependencies {
@@ -62,20 +67,16 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
 
 }
+
 flyway {
-    // 풀러 URL (SSL 필수)
-    url = "jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres?sslmode=require"
+    // 앱에서 사용하는 spring.datasource.*와 동일하게!
+    url = System.getenv("SPRING_DATASOURCE_URL")
+        ?: "jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require"
+    user = System.getenv("SPRING_DATASOURCE_USERNAME") ?: "postgres.gsmbdibjiuwdqhrdvsfo"
+    password = System.getenv("SPRING_DATASOURCE_PASSWORD") ?: "chikadol123!"
 
-    // postgres.<프로젝트ref>
-    user = "postgres.gsmbdibjiuwdqhrdvsfo"
-
-    // DB 비밀번호
-    password = "chikadol123!"
-
-    // 스키마
-    schemas = arrayOf("rev")
-
-    // 마이그레이션 경로 (스프링 기본 사용 중이면 생략 가능)
-    locations = arrayOf("classpath:db/migration")
+    // 필요 시 스키마/경로 지정
+     schemas = arrayOf("rev")
+     locations = arrayOf("classpath:db/migration")
 }
 tasks.test { useJUnitPlatform() }

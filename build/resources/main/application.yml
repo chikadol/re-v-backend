@@ -5,15 +5,13 @@ spring:
     password: chikadol123!
     hikari:
       maximum-pool-size: 5
-
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  flyway:
+    schemas: rev
+    default-schema: rev
+    locations: classpath:db/migration,classpath:db/callback
   jpa:
-    hibernate:
-      ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
-  flyway:
-    default-schema: public
-    schemas: public, rev
-    locations: classpath:db/migration
+        default_schema: rev

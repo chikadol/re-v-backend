@@ -19,6 +19,6 @@ data class ThreadBookmark(
     @Column(name = "user_id", nullable = false)
     val userId: Long,
 
-    @Column(name = "created_at", nullable = false)
-    val createdAt: Instant = Instant.now()
+/*    @Column(name = "created_at", nullable = false)
+    val createdAt: Instant = Instant.now()*/
 )

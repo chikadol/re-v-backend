@@ -1,15 +1,14 @@
+
 import jakarta.persistence.*
-import org.hibernate.annotations.UuidGenerator
-import java.time.Instant
 import java.util.UUID
 
 @Entity
-@Table(schema = "rev", name = "thread")
+@Table(name = "thread", schema = "rev")
 class ThreadEntity(
+
     @Id
-    @GeneratedValue
-    @UuidGenerator
-    var id: UUID? = null,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
 
     @Column(nullable = false, length = 200)
     var title: String,
@@ -39,9 +38,5 @@ class ThreadEntity(
     @Column(name = "is_private", nullable = false)
     var isPrivate: Boolean = false,
 
-    @Column(name = "created_at", nullable = false)
-    var createdAt: Instant = Instant.now(),
 
-    @Column(name = "updated_at", nullable = false)
-    var updatedAt: Instant = Instant.now()
 )

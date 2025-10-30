@@ -25,6 +25,6 @@ class ThreadBookmarkEntity(
     @Column(name = "user_id", nullable = false)
     var userId: UUID,
 
-    @Column(name = "created_at", nullable = false)
-    var createdAt: Instant = Instant.now()
+/*    @Column(name = "created_at", nullable = false)
+    var createdAt: Instant = Instant.now()*/
 )

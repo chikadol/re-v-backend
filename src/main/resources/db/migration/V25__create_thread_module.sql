@@ -1,47 +1,58 @@
--- schema는 이미 rev가 있다고 했지만, 혹시 몰라서 생성문은 주석으로만 남겨둠
--- create schema if not exists rev;
+-- V25__create_thread_module.sql (수정안)
 
--- thread
-create table if not exists rev.thread (
-                                          id uuid primary key default gen_random_uuid(),
-                                          title varchar(200) not null,
-                                          content text not null,
-                                          author_id uuid not null,
-                                          category_id uuid,
-                                          parent_thread_id uuid,
-                                          is_private boolean not null default false,
-                                          created_at timestamptz not null default now(),
-                                          updated_at timestamptz not null default now()
+-- thread 테이블은 이미 존재하므로 생성문이 있다면 반드시 IF NOT EXISTS 사용
+CREATE TABLE IF NOT EXISTS rev.thread (
+                                          id BIGSERIAL PRIMARY KEY,
+                                          title        TEXT        NOT NULL,
+                                          content      TEXT        NOT NULL,
+                                          author_id    UUID        NOT NULL,
+                                          created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
+                                          updated_at   TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- thread_tag (ElementCollection 저장용)
-create table if not exists rev.thread_tag (
-                                              thread_id uuid not null,
-                                              tag varchar(50) not null,
-                                              primary key (thread_id, tag),
-                                              constraint fk_thread_tag_thread foreign key (thread_id) references rev.thread(id) on delete cascade
+-- tag 테이블(예시)도 없으면 생성
+CREATE TABLE IF NOT EXISTS rev.tag (
+                                       id BIGSERIAL PRIMARY KEY,
+                                       name TEXT UNIQUE NOT NULL
 );
 
--- thread_reaction
-create table if not exists rev.thread_reaction (
-                                                   id uuid primary key default gen_random_uuid(),
-                                                   thread_id uuid not null,
-                                                   user_id uuid not null,
-                                                   type varchar(20) not null,
-                                                   created_at timestamptz not null default now(),
-                                                   updated_at timestamptz not null default now(),
-                                                   constraint fk_thread_reaction_thread foreign key (thread_id) references rev.thread(id) on delete cascade
+-- 🔧 문제 테이블: thread_tag
+-- thread_id를 UUID가 아니라 BIGINT로!
+CREATE TABLE IF NOT EXISTS rev.thread_tag (
+                                              id BIGSERIAL PRIMARY KEY,
+                                              thread_id BIGINT NOT NULL,
+                                              tag_id    BIGINT NOT NULL,
+                                              CONSTRAINT thread_tag_thread_id_fkey
+                                                  FOREIGN KEY (thread_id) REFERENCES rev.thread(id) ON DELETE CASCADE,
+                                              CONSTRAINT thread_tag_tag_id_fkey
+                                                  FOREIGN KEY (tag_id)    REFERENCES rev.tag(id)    ON DELETE CASCADE
 );
-create unique index if not exists uk_thread_reaction_thread_user
-    on rev.thread_reaction(thread_id, user_id);
 
--- thread_bookmark
-create table if not exists rev.thread_bookmark (
-                                                   id uuid primary key default gen_random_uuid(),
-                                                   thread_id uuid not null,
-                                                   user_id uuid not null,
-                                                   created_at timestamptz not null default now(),
-                                                   constraint fk_thread_bookmark_thread foreign key (thread_id) references rev.thread(id) on delete cascade
+-- 필요시 인덱스
+CREATE INDEX IF NOT EXISTS idx_thread_tag_thread_id ON rev.thread_tag(thread_id);
+CREATE INDEX IF NOT EXISTS idx_thread_tag_tag_id    ON rev.thread_tag(tag_id);
+
+-- (다른 모듈 테이블들도 thread.id를 참조한다면 전부 thread_id를 BIGINT로 통일)
+-- 예: 리액션, 북마크 등
+CREATE TABLE IF NOT EXISTS rev.thread_reaction (
+                                                   id BIGSERIAL PRIMARY KEY,
+                                                   thread_id BIGINT NOT NULL,
+                                                   user_id   UUID   NOT NULL,
+                                                   type      TEXT   NOT NULL, -- enum 매핑은 애플리케이션에서
+                                                   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+                                                   CONSTRAINT fk_thread_reaction_thread
+                                                       FOREIGN KEY (thread_id) REFERENCES rev.thread(id) ON DELETE CASCADE
 );
-create unique index if not exists uk_thread_bookmark_thread_user
-    on rev.thread_bookmark(thread_id, user_id);
+
+CREATE INDEX IF NOT EXISTS idx_thread_reaction_thread_id ON rev.thread_reaction(thread_id);
+
+CREATE TABLE IF NOT EXISTS rev.thread_bookmark (
+                                                   id BIGSERIAL PRIMARY KEY,
+                                                   thread_id BIGINT NOT NULL,
+                                                   user_id   UUID   NOT NULL,
+                                                   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+                                                   CONSTRAINT fk_thread_bookmark_thread
+                                                       FOREIGN KEY (thread_id) REFERENCES rev.thread(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_thread_bookmark_thread_id ON rev.thread_bookmark(thread_id);

@@ -23,6 +23,4 @@ data class ThreadBookmarkEntity(
     @Column(name = "thread_id", nullable = false /*, columnDefinition = "uuid"*/)
     val threadId: UUID,     // ← 스레드가 BIGINT면 Long 로 바꿔
 
-    @Column(name = "created_at", nullable = false)
-    val createdAt: Instant = Instant.now()
 )

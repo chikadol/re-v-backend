@@ -1,37 +1,24 @@
 package com.rev.app.api.service.community
 
 import jakarta.persistence.*
-import org.hibernate.annotations.UuidGenerator
-import java.time.Instant
 import java.util.UUID
 
 @Entity
-@Table(
-    schema = "rev",
-    name = "thread_reaction",
-    uniqueConstraints = [
-        UniqueConstraint(name = "uk_thread_reaction_thread_user", columnNames = ["thread_id", "user_id"])
-    ]
-)
+@Table(name = "thread_reaction", schema = "rev")
 class ThreadReactionEntity(
-    @Id
-    @GeneratedValue
-    @UuidGenerator
-    var id: UUID? = null,
 
-    @Column(name = "thread_id", nullable = false)
-    var threadId: UUID,
+    @field:Id
+    @field:GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long? = null,
 
-    @Column(name = "user_id", nullable = false)
-    var userId: UUID,
+    @field:Column(name = "thread_id", nullable = false)
+    val threadId: Long,
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false, length = 20)
-    var type: ReactionType,
+    @field:Column(name = "user_id", nullable = false, columnDefinition = "uuid")
+    val userId: UUID,
 
-    @Column(name = "created_at", nullable = false)
-    var createdAt: Instant = Instant.now(),
+    @field:Enumerated(EnumType.STRING)
+    @field:Column(name = "type", nullable = false)
+    val type: ReactionType,
 
-    @Column(name = "updated_at", nullable = false)
-    var updatedAt: Instant = Instant.now()
-)
+    ) : BaseTimeEntity() // 시간 컬럼은 상속으로만
