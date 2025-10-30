@@ -1,6 +1,6 @@
 package com.rev.app.domain.community.repo
 
-import ThreadEntity
+import com.rev.app.domain.community.entity.ThreadEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 

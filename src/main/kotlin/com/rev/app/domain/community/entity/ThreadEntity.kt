@@ -1,4 +1,6 @@
+package com.rev.app.domain.community.entity
 
+import com.rev.app.auth.UserEntity
 import jakarta.persistence.*
 import java.util.UUID
 
@@ -17,8 +19,9 @@ class ThreadEntity(
     @Column(nullable = false)
     var content: String,
 
-    @Column(name = "author_id", nullable = false)
-    var authorId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "author_id", nullable = false)
+    var author: UserEntity,
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(

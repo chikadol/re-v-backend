@@ -1,7 +1,7 @@
 package com.rev.app.domain.community
 
-import ThreadEntity
 import com.rev.app.api.service.community.BaseTimeEntity
+import com.rev.app.domain.community.entity.ThreadEntity
 import jakarta.persistence.*
 import java.time.Instant
 
