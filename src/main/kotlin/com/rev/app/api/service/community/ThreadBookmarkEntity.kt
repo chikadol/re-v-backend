@@ -1,30 +1,24 @@
-package com.rev.app.api.service.community
+// src/main/kotlin/com/rev/app/domain/community/entity/ThreadBookmarkEntity.kt
+package com.rev.app.domain.community.entity
 
+import com.rev.app.auth.UserEntity
 import jakarta.persistence.*
-import org.hibernate.annotations.UuidGenerator
 import java.time.Instant
-import java.util.UUID
 
 @Entity
-@Table(
-    schema = "rev",
-    name = "thread_bookmark",
-    uniqueConstraints = [
-        UniqueConstraint(name = "uk_thread_bookmark_thread_user", columnNames = ["thread_id", "user_id"])
-    ]
-)
-class ThreadBookmarkEntity(
-    @Id
-    @GeneratedValue
-    @UuidGenerator
-    var id: UUID? = null,
+@Table(name = "thread_bookmark", schema = "rev")
+open class ThreadBookmarkEntity(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    open var id: Long? = null,
 
-    @Column(name = "thread_id", nullable = false)
-    var threadId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "thread_id", nullable = false)
+    open var thread: ThreadEntity,
 
-    @Column(name = "user_id", nullable = false)
-    var userId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    open var user: UserEntity,
 
-/*    @Column(name = "created_at", nullable = false)
-    var createdAt: Instant = Instant.now()*/
+    @Column(name = "created_at", nullable = false)
+    open var createdAt: Instant = Instant.now()
 )

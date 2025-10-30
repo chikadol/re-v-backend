@@ -1,25 +1,33 @@
-package com.rev.app.api.service.community
-
-import com.rev.app.common.jpa.BaseTime
-import jakarta.persistence.*
-import java.util.UUID
+import com.rev.app.api.service.community.ReactionType
+import com.rev.app.auth.UserEntity
+import com.rev.app.domain.community.entity.ThreadEntity
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.EnumType
+import jakarta.persistence.Enumerated
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.Table
 
 @Entity
 @Table(name = "thread_reaction", schema = "rev")
-class ThreadReactionEntity(
-
-    @field:Id
-    @field:GeneratedValue(strategy = GenerationType.IDENTITY)
+open class ThreadReaction(
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @field:Column(name = "thread_id", nullable = false)
-    val threadId: Long,
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "thread_id", nullable = false)
+    val thread: ThreadEntity,
 
-    @field:Column(name = "user_id", nullable = false, columnDefinition = "uuid")
-    val userId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    val user: UserEntity,
 
-    @field:Enumerated(EnumType.STRING)
-    @field:Column(name = "type", nullable = false)
-    val type: ReactionType,
-
-    ) : BaseTime() // 시간 컬럼은 상속으로만
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    val type: ReactionType
+)
