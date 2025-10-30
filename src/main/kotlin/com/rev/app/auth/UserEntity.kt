@@ -2,17 +2,19 @@ package com.rev.app.auth
 
 import jakarta.persistence.*
 
+import java.time.Instant
 
 @Entity
-@Table(name = "user", schema = "rev")
-data class UserEntity(
+@Table(name = "app_user")
+class UserEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
-    @Column(unique = true)
-    val email: String,
-    val password: String,
-    /**
-     * 콤마구분(예: "USER,ADMIN")
-     */
-    val roles: String = "USER",
+    var id: Long? = null,
+
+    @Column(nullable = false, unique = true)
+    var username: String = "",
+
+    @Column(nullable = false)
+    var password: String = "",
+
+    var createdAt: Instant = Instant.now()
 )

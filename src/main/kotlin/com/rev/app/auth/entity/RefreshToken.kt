@@ -1,3 +1,4 @@
+/*
 package com.rev.app.auth.entity
 
 import jakarta.persistence.*
@@ -14,3 +15,4 @@ class RefreshToken(
     var revoked: Boolean = false,
     @Column(name="created_at") var createdAt: Instant = Instant.now()
 )
+*/

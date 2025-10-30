@@ -1,44 +1,41 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.api.PageCursorResp
-import com.rev.app.api.service.community.dto.*
-import com.rev.app.domain.community.ReactionKind
-import com.rev.app.api.service.CommentReactionReq
+import com.rev.app.api.security.Me
+import com.rev.app.api.security.MeDto
 import com.rev.app.api.service.CommentService
-import com.rev.app.api.service.CreateCommentReq
-import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.tags.Tag
+import com.rev.app.api.service.community.dto.CommentDto
+import com.rev.app.api.service.community.dto.ToggleResultDto
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@Tag(name = "Comment")
 @RestController
-class CommentController(private val svc: CommentService) {
-
-    @Operation(summary = "댓글 생성")
-    @PostMapping("/threads/{threadId}/comments")
-    fun create(
+@RequestMapping("/api/comments")
+class CommentController(
+    private val commentService: CommentService
+) {
+    @PostMapping("/{threadId}")
+    fun add(
+        @Me me: MeDto,
         @PathVariable threadId: Long,
-        @RequestParam authorId: Long,
-        @RequestParam content: String,
-        @RequestParam(required = false) parentId: Long?,
-        @RequestParam(required = false, defaultValue = "false") isAnonymous: Boolean
-    ): CommentDto = commentDto(svc.createComment(authorId, CreateCommentReq(threadId, content, parentId, isAnonymous)))
-
-    @Operation(summary = "댓글 목록 (커서 기반)")
-    @GetMapping("/threads/{threadId}/comments")
-    fun list(
-        @PathVariable threadId: Long,
-        @RequestParam(required = false) cursor: String?,
-        @RequestParam(defaultValue = "50") size: Int
-    ): PageCursorResp<CommentDto> {
-        val page = svc.pageByThread(threadId, size, cursor)
-        return PageCursorResp(page.items.map(::commentDto), page.nextCursor)
+        @RequestParam(required = false) parentId: String?,
+        @RequestBody req: CreateCommentReq
+    ): ResponseEntity<CommentDto> {
+        val parentIdLong = parentId?.toLong()
+        val saved = commentService.addComment(
+            threadId = threadId,
+            authorId = me.userId,
+            content = req.content,
+            parentId = parentIdLong
+        )
+        return ResponseEntity.ok(saved)
     }
 
-    @Operation(summary = "댓글 리액션")
-    @PostMapping("/comments/{id}/reactions")
-    fun react(@PathVariable id: Long, @RequestParam userId: Long, @RequestParam kind: ReactionKind): ToggleResultDto {
-        svc.reactComment(id, userId, CommentReactionReq(kind))
-        return ToggleResultDto(ok = true)
-    }
+    @PostMapping("/{commentId}/toggle-like")
+    fun toggleLike(
+        @Me me: MeDto,
+        @PathVariable commentId: Long
+    ): ResponseEntity<ToggleResultDto> =
+        ResponseEntity.ok(commentService.toggleLike(commentId, me.userId))
 }
+
+data class CreateCommentReq(val content: String)

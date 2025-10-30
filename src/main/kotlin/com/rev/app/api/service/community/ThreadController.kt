@@ -1,41 +1,43 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.api.security.Me
+import com.rev.app.api.security.MeDto
 import com.rev.app.api.service.community.dto.*
-import com.rev.app.domain.community.ReactionKind
-import com.rev.app.service.community.CreateThreadReq
-import com.rev.app.service.community.ReactionReq
-import com.rev.app.service.community.ThreadService
-import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.tags.Tag
+import com.rev.app.api.service.community.dto.ThreadDto
+import io.swagger.v3.oas.models.responses.ApiResponse
+import jakarta.validation.Valid
+import org.springframework.http.ResponseEntity
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import com.rev.app.api.service.community.ReactionType
+
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.*
+import java.util.UUID
 
-@Tag(name = "Thread")
 @RestController
-@RequestMapping("/threads")
-class ThreadController(private val svc: ThreadService) {
-
-    @Operation(summary = "스레드 생성 (임시: authorId 파라미터 사용)")
+@RequestMapping("/api/threads")
+class ThreadController(
+    private val threadService: ThreadService
+) {
     @PostMapping
-    fun create(@RequestParam authorId: Long, @RequestBody req: ThreadCreateReq): ThreadDetailDto =
-        threadDetailDto(svc.createThread(authorId,
-            CreateThreadReq(req.boardSlug, req.title, req.content, req.isAnonymous)
-        ))
+    fun createThread(
+        @Me me: MeDto,
+        @RequestBody req: CreateThreadReq
+    ): ResponseEntity<ThreadDto> =
+        ResponseEntity.ok(threadService.create(me.userId, req))
 
-    @Operation(summary = "스레드 상세 조회")
-    @GetMapping("/{id}")
-    fun get(@PathVariable id: Long): ThreadDetailDto =
-        threadDetailDto(svc.getThread(id))
+    @GetMapping("/{threadId}")
+    fun getThread(
+        @Me me: MeDto,
+        @PathVariable threadId: Long
+    ): ResponseEntity<ThreadDto> =
+        ResponseEntity.ok(threadService.get(me.userId, threadId))
 
-
-    @Operation(summary = "북마크 토글")
-    @PostMapping("/{id}/bookmarks")
-    fun toggleBookmark(@PathVariable id: Long, @RequestParam userId: Long): ToggleResultDto =
-        ToggleResultDto(ok = true, state = svc.toggleBookmark(id, userId))
-
-    @Operation(summary = "스레드 리액션")
-    @PostMapping("/{id}/reactions")
-    fun react(@PathVariable id: Long, @RequestParam userId: Long, @RequestParam kind: ReactionKind): ToggleResultDto {
-        svc.reactThread(id, userId, ReactionReq(kind))
-        return ToggleResultDto(ok = true)
-    }
+    @PostMapping("/{threadId}/reactions")
+    fun reactThread(
+        @Me me: MeDto,
+        @PathVariable threadId: Long,
+        @RequestBody req: ThreadReactionReq
+    ): ResponseEntity<ThreadDto> =
+        ResponseEntity.ok(threadService.reactToThread(me.userId, threadId, req.type))
 }

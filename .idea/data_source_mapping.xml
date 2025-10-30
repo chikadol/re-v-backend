@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/ee054916-0121-401f-9dab-b53c586156c7/console.sql" value="ee054916-0121-401f-9dab-b53c586156c7" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V21__auth_refresh_tokens.sql" value="ee054916-0121-401f-9dab-b53c586156c7" />
   </component>
 </project>

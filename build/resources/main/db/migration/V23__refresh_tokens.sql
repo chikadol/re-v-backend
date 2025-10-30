@@ -1,9 +1,12 @@
-create table if not exists rev.refresh_token(
-                                                id uuid primary key default gen_random_uuid(),
-                                                subject text not null,
-                                                token_hash text not null unique,
-                                                expires_at timestamptz not null,
-                                                revoked boolean not null default false,
-                                                created_at timestamptz not null default now()
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+                                              id           BIGSERIAL PRIMARY KEY,
+                                              username     VARCHAR(100) NOT NULL,
+                                              token        TEXT NOT NULL UNIQUE,
+                                              expires_at   TIMESTAMPTZ NOT NULL,
+                                              revoked      BOOLEAN NOT NULL DEFAULT FALSE,
+                                              last_used_at TIMESTAMPTZ,
+                                              created_at   TIMESTAMPTZ NOT NULL DEFAULT now()
 );
-create index if not exists ix_refresh_subject on rev.refresh_token(subject);
+
+CREATE INDEX IF NOT EXISTS idx_refresh_tokens_username
+    ON refresh_tokens(username);

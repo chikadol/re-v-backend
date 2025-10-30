@@ -1,25 +1,19 @@
+// BoardService.kt
 package com.rev.app.api.service.community
+
 import com.rev.app.api.PageCursorResp
-import com.rev.app.domain.community.Thread
-import com.rev.app.domain.community.repo.BoardRepository
-import com.rev.app.domain.community.repo.ThreadRepository
-import com.rev.app.util.CursorUtil
-import org.springframework.data.domain.PageRequest
+import com.rev.app.api.service.community.dto.ThreadDto
 import org.springframework.stereotype.Service
+import java.time.Instant
 
 @Service
-class BoardService(
-    private val boards: BoardRepository,
-    private val threads: ThreadRepository
-) {
-    fun getBoardBySlug(slug: String) =
-        boards.findBySlug(slug) ?: throw IllegalArgumentException("BOARD_NOT_FOUND")
-
-    fun listThreadsBySlug(slug: String, size: Int, cursor: String?): PageCursorResp<Thread> {
-        val board = getBoardBySlug(slug)
-        val c = cursor?.let { CursorUtil.decode(it) }
-        val items = threads.pageByBoardKeyset(board.id!!, c?.createdAt, c?.id, PageRequest.of(0, size))
-        val next = items.lastOrNull()?.let { CursorUtil.encode(it.createdAt, it.id!!) }
-        return PageCursorResp(items, next)
+class BoardService {
+    fun listThreads(boardKey: String, cursor: Long?, size: Int): PageCursorResp<ThreadDto> {
+        // 임시: 더미 데이터
+        val sample = ThreadDto(
+            id = 1L, title = "sample", content = "sample",
+            authorId = 1L, createdAt = Instant.now()
+        )
+        return PageCursorResp(items = listOf(sample), nextCursor = null)
     }
 }
