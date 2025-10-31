@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.3.3/fd463f6cf1f3766bdf8574ee09865c3b6481ab60/spring-boot-configuration-processor-3.3.3.jar" />
+        </processorPath>
+        <module name="re-v-backend.main" />
+      </profile>
+    </annotationProcessing>
     <bytecodeTargetLevel target="21">
       <module name="rev-server-only" target="21" />
       <module name="rev-server-only.main" target="21" />

@@ -3,7 +3,6 @@ package com.rev.app.domain.community.entity
 import com.rev.app.auth.UserEntity
 import com.rev.app.common.jpa.BaseTime
 import jakarta.persistence.*
-import java.util.*
 
 @Entity
 @Table(name = "comment", schema = "rev")
@@ -22,7 +21,7 @@ open class CommentEntity(
     @Column(nullable = false)
     var content: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    var parent: CommentEntity? = null
+    // 🔽 연관관계 제거하고 숫자 FK로만 보관
+    @Column(name = "parent_id")
+    var parentId: Long? = null
 ) : BaseTime()

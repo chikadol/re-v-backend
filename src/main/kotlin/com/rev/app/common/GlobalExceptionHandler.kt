@@ -1,29 +1,30 @@
-package com.rev.app.common
-
+// src/main/kotlin/com/rev/app/common/web/GlobalExceptionHandler.kt
+package com.rev.app.common.web
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.BindException
 import org.springframework.web.bind.MethodArgumentNotValidException
+import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import org.springframework.web.bind.annotation.RestControllerAdvice
 
+data class ErrorRes(val code: String, val message: String)
 
-@RestControllerAdvice
+@ControllerAdvice
 class GlobalExceptionHandler {
-    data class ErrorBody(val code: String, val message: String?)
 
+    @ExceptionHandler(MethodArgumentNotValidException::class, BindException::class)
+    fun handleValidation(ex: Exception): ResponseEntity<ErrorRes> =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorRes("VALIDATION_ERROR", ex.message ?: "Invalid request"))
 
-    @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIAE(e: IllegalArgumentException) =
-        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorBody(e.message ?: "BAD_REQUEST", e.message))
+    @ExceptionHandler(IllegalArgumentException::class, NoSuchElementException::class)
+    fun handleBadRequest(ex: RuntimeException): ResponseEntity<ErrorRes> =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorRes("BAD_REQUEST", ex.message ?: "Bad request"))
 
-
-    @ExceptionHandler(IllegalStateException::class)
-    fun handleISE(e: IllegalStateException) =
-        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorBody(e.message ?: "BAD_REQUEST", e.message))
-
-
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleValidation(e: MethodArgumentNotValidException) =
-        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorBody("VALIDATION", e.bindingResult.allErrors.firstOrNull()?.defaultMessage))
+    @ExceptionHandler(Exception::class)
+    fun handleUnknown(ex: Exception): ResponseEntity<ErrorRes> =
+        ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(ErrorRes("INTERNAL_ERROR", "Unexpected error"))
 }

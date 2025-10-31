@@ -46,5 +46,24 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="postgres@aws-1-ap-northeast-2.pooler.supabase.com" uuid="abf126c1-1f05-435f-9faa-fa542ce182b9">
+      <database-info product="PostgreSQL" version="17.6" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="17.6" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <user-name>postgres.gsmbdibjiuwdqhrdvsfo</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="postgres@aws-1-ap-northeast-2.pooler.supabase.com" uuid="1f00eeb7-ece5-488e-8fcc-085b81866668">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <user-name>postgres.gsmbdibjiuwdqhrdvsfo</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>

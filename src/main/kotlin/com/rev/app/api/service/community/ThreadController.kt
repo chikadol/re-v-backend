@@ -1,10 +1,15 @@
-// com.rev.app.api.service.community.ThreadController.kt
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.Me
-import com.rev.app.auth.UserEntity
-import com.rev.app.domain.community.entity.ThreadEntity
+import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.api.service.community.dto.CreateThreadReq
+import com.rev.app.api.service.community.dto.ThreadRes
+import com.rev.app.api.service.community.dto.UpdateThreadReq
+import jakarta.validation.Valid
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.web.bind.annotation.*
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/threads")
@@ -12,28 +17,26 @@ class ThreadController(
     private val threadService: ThreadService
 ) {
     @PostMapping
-    fun create(
-        @RequestBody req: CreateThreadReq,
-        @Me me: UserEntity
-    ): ThreadRes {
-        // DTO -> Entity 매핑 (author는 UserEntity로 설정)
-        val entity = ThreadEntity(
-            title = req.title,
-            content = req.content,
-            author = me,
-            tags = req.tags.toMutableList(),
-            categoryId = req.categoryId,
-            parentId = req.parentId,
-            isPrivate = req.isPrivate
-        )
-        val saved = threadService.create(entity)
-        return ThreadRes.from(saved)
-    }
+    fun create(@Me me: JwtPrincipal, @RequestBody @Valid req: CreateThreadReq): ThreadRes =
+        threadService.create(me.userId, req).toRes()
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: Long): ThreadRes =
         threadService.get(id).toRes()
 
-    // 🔧 (중요) reactToThread 관련 호출이 있었다면 일단 주석 처리하거나,
-    // 서비스에 구현이 준비될 때까지 엔드포인트를 잠깐 제거하세요.
+    @GetMapping
+    fun listPublic(@PageableDefault(size = 20) pageable: Pageable) =
+        threadService.listPublic(pageable).map { it.toRes() }
+
+    @PatchMapping("/{id}")
+    fun update(
+        @PathVariable id: Long,
+        @Me me: JwtPrincipal,
+        @RequestBody req: UpdateThreadReq
+    ): ThreadRes = threadService.update(id, me.userId, req).toRes()
+
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long, @Me me: JwtPrincipal) {
+        threadService.delete(id, me.userId)
+    }
 }

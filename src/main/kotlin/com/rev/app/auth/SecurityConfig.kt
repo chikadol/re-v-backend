@@ -1,9 +1,6 @@
 // src/main/kotlin/com/rev/app/auth/SecurityConfig.kt
 package com.rev.app.auth
 
-import jakarta.servlet.FilterChain
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -16,34 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)   // ✅ 오타 수정 (Mathod → Method)
+@EnableMethodSecurity(prePostEnabled = true)
 class SecurityConfig(
     private val jwtAuthenticationFilter: JwtAuthenticationFilter
 ) {
-    fun doFilterInternal(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        filterChain: FilterChain
-    ) {
-        val p = request.servletPath
-        if (
-            p == "/" ||
-            p.startsWith("/swagger-ui") ||
-            p == "/swagger-ui.html" ||
-            p.startsWith("/v3/api-docs") ||
-            p.startsWith("/swagger-resources") ||
-            p.startsWith("/webjars") ||
-            p.startsWith("/actuator") ||
-            p.startsWith("/api/auth")
-        ) {
-            filterChain.doFilter(request, response)
-            return
-        }
-    }
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
@@ -55,22 +31,13 @@ class SecurityConfig(
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf { csrf ->
-                // ✅ 스웨거/문서 경로는 CSRF 예외
-                csrf.ignoringRequestMatchers(
-                    AntPathRequestMatcher("/v3/api-docs/**"),
-                    AntPathRequestMatcher("/swagger-ui/**"),
-                    AntPathRequestMatcher("/swagger-ui.html"),
-                    AntPathRequestMatcher("/swagger-resources/**"),
-                    AntPathRequestMatcher("/webjars/**")
-                )
-                // 필요 없으면 전체 disable 해도 됨: csrf.disable()
-            }
-            .cors { } // 필요시 CORS 설정
+            // JWT 기반이면 CSRF 비활성화가 가장 단순/안전
+            .csrf { it.disable() }
+            .cors { }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .authorizeHttpRequests { auth ->
-                auth
-                    // ✅ 스웨거/문서/정적 리소스 허용
+            .authorizeHttpRequests {
+                it
+                    // Swagger & 문서, 오류/헬스체크, 인증 API 공개
                     .requestMatchers(
                         "/",
                         "/error",
@@ -78,17 +45,17 @@ class SecurityConfig(
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
                         "/swagger-resources/**",
-                        "/webjars/**"
+                        "/webjars/**",
+                        "/actuator/**",
+                        "/api/auth/**"
                     ).permitAll()
-                    // ✅ 인증 없이 열어둘 API
-                    .requestMatchers("/actuator/**", "/api/auth/**").permitAll()
-                    // 그 외는 인증 필요
+                    // 나머지는 인증 필요
                     .anyRequest().authenticated()
             }
-            // ✅ JWT 필터는 UsernamePasswordAuthenticationFilter 앞에
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
+            // UsernamePasswordAuthenticationFilter 앞에 JWT 필터
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }

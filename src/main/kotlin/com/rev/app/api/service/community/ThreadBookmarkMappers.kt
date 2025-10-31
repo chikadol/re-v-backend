@@ -2,7 +2,6 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.ThreadBookmarkDto
-import java.time.Instant
 
 // ★ FQCN으로 receiver를 지정해서 import 충돌/그림자(이름 중복) 방지
 fun com.rev.app.domain.community.entity.ThreadBookmarkEntity.toRes(): ThreadBookmarkDto {

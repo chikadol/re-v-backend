@@ -16,7 +16,7 @@ class BoardController(
 ) {
     // ✅ Board 정보를 반환해야 하므로 BoardRes 리턴 & boardService.get(boardId) 사용
     @GetMapping("/{boardId}")
-    fun get(@PathVariable boardId: Long): ThreadRes =
+    fun get(@PathVariable boardId: Long): com.rev.app.api.service.community.dto.ThreadRes =
         boardService.get(boardId) // 여기서 이미 BoardRes를 리턴하도록 서비스가 설계되어 있어야 함
 
     // ✅ 보드 내 스레드 목록 (보드별 필터를 쓰지 않는 버전)
@@ -24,7 +24,7 @@ class BoardController(
     fun listThreads(
         @PathVariable boardId: Long,
         @PageableDefault(size = 20) pageable: Pageable
-    ): Page<ThreadRes> =
+    ): Page<com.rev.app.api.service.community.dto.ThreadRes> =
         boardService.listThreads(pageable) // 서비스 시그니처가 pageable만 받는 버전일 때
 
     // (보드별 필터를 쓰고 싶다면 위 대신 아래 오버로드 사용)
@@ -42,6 +42,6 @@ class BoardController(
     fun getThreadInBoard(
         @PathVariable boardId: Long,
         @PathVariable threadId: Long
-    ): ThreadRes =
+    ): com.rev.app.api.service.community.dto.ThreadRes =
         threadService.get(threadId).toRes()
 }

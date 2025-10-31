@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository
 interface ThreadRepository : JpaRepository<ThreadEntity, Long> {
     // 공개글만 목록
     fun findAllByIsPrivateFalse(pageable: Pageable): Page<ThreadEntity>
+    fun findByIsPrivateFalse(pageable: Pageable): Page<ThreadEntity>
+    fun findByCategoryIdIsNullAndIsPrivateFalse(pageable: Pageable): Page<ThreadEntity>
 }
