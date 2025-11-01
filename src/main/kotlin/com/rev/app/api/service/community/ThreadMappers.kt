@@ -1,4 +1,3 @@
-// src/main/kotlin/com/rev/app/api/service/community/ThreadMappers.kt
 package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.CreateThreadReq

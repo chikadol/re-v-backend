@@ -1,4 +1,3 @@
-// src/main/kotlin/com/rev/app/domain/community/repo/BoardRepository.kt
 package com.rev.app.domain.community.repo
 
 import com.rev.app.domain.community.Board

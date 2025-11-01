@@ -1,4 +1,3 @@
-// src/main/kotlin/com/rev/app/domain/community/repo/ThreadRepository.kt
 package com.rev.app.domain.community.repo
 
 import com.rev.app.domain.community.entity.ThreadEntity

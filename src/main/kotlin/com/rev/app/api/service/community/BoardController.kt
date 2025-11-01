@@ -1,4 +1,3 @@
-// src/main/kotlin/com/rev/app/api/service/community/BoardController.kt
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.JwtPrincipal
