@@ -1,41 +1,46 @@
-
 package com.rev.app.api.service.community
 
+import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentReq
+import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.CommentEntity
+import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.domain.community.repo.CommentRepository
 import com.rev.app.domain.community.repo.ThreadRepository
-import com.rev.app.auth.UserRepository
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import java.util.UUID
-
-interface CommentService {
-    fun addComment(threadId: Long, authorId: UUID, req: CreateCommentReq): CommentEntity
-    fun listByThread(threadId: Long): List<CommentEntity>
-}
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-class CommentServiceImpl(
+class CommentService(
     private val commentRepository: CommentRepository,
     private val threadRepository: ThreadRepository,
     private val userRepository: UserRepository
-) : CommentService {
+) {
+    @Transactional
+    fun addComment(me: JwtPrincipal, threadId: Long, req: CreateCommentReq): CommentRes {
+        val thread: ThreadEntity = threadRepository.findById(threadId)
+            .orElseThrow { NoSuchElementException("thread $threadId not found") }
+        val author = userRepository.getReferenceById(requireNotNull(me.userId))
+        val parentEntity = req.parentId?.let { commentRepository.findById(it).orElse(null) }
 
-    override fun addComment(threadId: Long, authorId: UUID, req: CreateCommentReq): CommentEntity {
-        val thread = threadRepository.findById(threadId)
-            .orElseThrow { NoSuchElementException("Thread $threadId not found") }
-        val author = userRepository.findById(authorId)
-            .orElseThrow { IllegalArgumentException("Author not found") }
-
-        val entity = CommentEntity(
-            thread = thread,
-            author = author,
-            content = req.content,
-            parentId = req.parentId
+        val saved = commentRepository.save(
+            CommentEntity(
+                thread = thread,
+                author = author,
+                content = req.content,
+                parent = parentEntity
+            )
         )
-        return commentRepository.save(entity)
+        return saved.toRes()
     }
 
-    override fun listByThread(threadId: Long): List<CommentEntity> =
-        commentRepository.findByThread_Id(threadId)
+    @Transactional(readOnly = true)
+    fun listRootComments(threadId: Long, pageable: Pageable): List<CommentRes> =
+        commentRepository.findByThread_IdAndParentIsNullOrderByIdAsc(threadId, pageable).map { it.toRes() }
+
+    @Transactional(readOnly = true)
+    fun listChildren(parentId: Long): List<CommentRes> =
+        commentRepository.findByParent_IdOrderByIdAsc(parentId).map { it.toRes() }
 }

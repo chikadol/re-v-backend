@@ -1,4 +1,3 @@
-// src/main/kotlin/com/rev/app/api/service/community/ThreadMappers.kt
 package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.CreateThreadReq
@@ -15,10 +14,10 @@ fun ThreadEntity.toRes(): ThreadRes =
         authorId = requireNotNull(author.id),
         tags = tags,
         categoryId = categoryId,
-        parentThreadId = parentThreadId,
+        parentThreadId = parentId,
         isPrivate = isPrivate,
-        createdAt = createdAt ?: Instant.now(),  // ✅ BaseTime에서 가져옴
-        updatedAt = updatedAt
+        createdAt = this.createdAt ?: Instant.now(),
+        updatedAt = this.updatedAt
     )
 
 fun CreateThreadReq.toEntity(author: UserEntity): ThreadEntity =
@@ -26,8 +25,8 @@ fun CreateThreadReq.toEntity(author: UserEntity): ThreadEntity =
         title = this.title,
         content = this.content,
         author = author,
-        tags = this.tags?.toMutableList() ?: mutableListOf(),
+        tags = this.tags.toMutableList(),
         categoryId = this.categoryId,
-        parentThreadId = this.parentThreadId,
-        isPrivate = this.isPrivate ?: false
+        parentId = this.parentThreadId,
+        isPrivate = this.isPrivate
     )

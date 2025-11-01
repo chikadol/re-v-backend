@@ -10,8 +10,7 @@ fun CommentEntity.toRes(): CommentRes =
         threadId = requireNotNull(thread.id),
         authorId = requireNotNull(author.id),
         content = content,
-        parentId = parentId,                        // ✅ 부모가 없으면 null
+        parentId = parent?.id,     // ✅ parent는 CommentEntity?, id로 노출
         createdAt = this.createdAt ?: Instant.now(),
         updatedAt = this.updatedAt
     )
-

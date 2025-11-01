@@ -34,7 +34,7 @@ class ThreadServiceImpl(
             author = author,
             tags = req.tags.toMutableList(),
             categoryId = req.categoryId,
-            parentThreadId = req.parentThreadId,
+            parentId = req.parentThreadId,
             isPrivate = req.isPrivate
         )
         return threadRepository.save(entity)

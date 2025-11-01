@@ -18,10 +18,11 @@ open class CommentEntity(
     @JoinColumn(name = "author_id", nullable = false)
     var author: UserEntity,
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     var content: String,
 
-    // 🔽 연관관계 제거하고 숫자 FK로만 보관
-    @Column(name = "parent_id")
-    var parentId: Long? = null
+    // ✅ 자기참조(대댓글)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    var parent: CommentEntity? = null
 ) : BaseTime()
