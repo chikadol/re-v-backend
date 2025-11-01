@@ -1,4 +1,4 @@
-// src/main/kotlin/com/rev/app/common/web/GlobalExceptionHandler.kt
+
 package com.rev.app.common.web
 
 import jakarta.validation.ConstraintViolationException

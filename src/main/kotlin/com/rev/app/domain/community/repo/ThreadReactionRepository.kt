@@ -6,6 +6,7 @@ import com.rev.app.api.service.community.ReactionType
 import com.rev.app.auth.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 
 interface ThreadReactionRepository : JpaRepository<ThreadReaction, Long> {
 
@@ -18,4 +19,11 @@ interface ThreadReactionRepository : JpaRepository<ThreadReaction, Long> {
           and tr.reaction = :reaction
     """)
     fun countByThreadAndReaction(threadId: Long, reaction: ReactionType): Long
+    @Query("""
+ select tr.reaction, count(tr) 
+ from ThreadReaction tr 
+ where tr.thread.id = :threadId 
+ group by tr.reaction
+""")
+    fun countGroupByReaction(@Param("threadId") threadId: Long): List<Array<Any>>
 }

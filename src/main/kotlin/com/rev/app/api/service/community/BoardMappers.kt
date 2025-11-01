@@ -1,10 +1,14 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.BoardRes
-import com.rev.app.domain.community.Board
 
-fun Board.toRes(): BoardRes =
+
+
+import com.rev.app.domain.community.Board
+fun Board.toBoardRes(): BoardRes =
     BoardRes(
-        id = requireNotNull(this.id) { "Board.id is null before persistence" },
-        createdAt = this.createdAt
+        id = requireNotNull(id),
+        createdAt = this.createdAt,
+        updatedAt = null
     )
+

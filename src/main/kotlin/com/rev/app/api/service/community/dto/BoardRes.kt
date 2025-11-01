@@ -4,5 +4,6 @@ import java.time.Instant
 
 data class BoardRes(
     val id: Long,
-    val createdAt: Instant
+    val createdAt: Instant? = null,
+    val updatedAt: Instant? = null
 )

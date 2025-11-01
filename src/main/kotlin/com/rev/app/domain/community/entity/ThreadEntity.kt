@@ -2,6 +2,7 @@ package com.rev.app.domain.community.entity
 
 import com.rev.app.auth.UserEntity
 import com.rev.app.common.jpa.BaseTime
+import com.rev.app.domain.community.Board
 import jakarta.persistence.*
 
 @Entity
@@ -32,5 +33,9 @@ open class ThreadEntity(
     var parentId: Long? = null,
 
     @Column(name = "is_private", nullable = false)
-    var isPrivate: Boolean = false
+    var isPrivate: Boolean = false,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id", nullable = false)
+    var board: Board
 ) : BaseTime()
