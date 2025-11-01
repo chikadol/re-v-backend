@@ -1,36 +1,36 @@
+// src/main/kotlin/com/rev/app/common/web/GlobalExceptionHandler.kt
 package com.rev.app.common.web
 
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.validation.BindException
+import jakarta.validation.ConstraintViolationException
+import org.springframework.http.*
 import org.springframework.web.bind.MethodArgumentNotValidException
-import org.springframework.web.bind.annotation.ControllerAdvice
-import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.*
+import org.springframework.web.context.request.WebRequest
 
-data class ApiError(val status: Int, val message: String)
+data class ApiError(val code: String, val message: String, val details: Map<String, Any?>? = null)
 
-@ControllerAdvice
+@RestControllerAdvice
 class GlobalExceptionHandler {
 
-    @ExceptionHandler(NoSuchElementException::class)
-    fun handleNotFound(ex: NoSuchElementException) =
-        ResponseEntity(ApiError(404, ex.message ?: "Not Found"), HttpStatus.NOT_FOUND)
-
-    @ExceptionHandler(IllegalArgumentException::class, IllegalStateException::class)
-    fun handleBadRequest(ex: RuntimeException) =
-        ResponseEntity(ApiError(400, ex.message ?: "Bad Request"), HttpStatus.BAD_REQUEST)
-
-    @ExceptionHandler(MethodArgumentNotValidException::class, BindException::class)
-    fun handleValidation(ex: Exception): ResponseEntity<ApiError> {
-        val msg = when (ex) {
-            is MethodArgumentNotValidException -> ex.bindingResult.fieldErrors.joinToString { "${it.field}:${it.defaultMessage}" }
-            is BindException -> ex.bindingResult.fieldErrors.joinToString { "${it.field}:${it.defaultMessage}" }
-            else -> "Validation error"
-        }
-        return ResponseEntity(ApiError(400, msg), HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleInvalid(e: MethodArgumentNotValidException): ResponseEntity<ApiError> {
+        val details = e.bindingResult.fieldErrors.associate { it.field to (it.defaultMessage ?: "invalid") }
+        return ResponseEntity(ApiError("VALIDATION_ERROR", "Request validation failed", details), HttpStatus.BAD_REQUEST)
     }
 
+    @ExceptionHandler(ConstraintViolationException::class)
+    fun handleConstraint(e: ConstraintViolationException) =
+        ResponseEntity(ApiError("CONSTRAINT_VIOLATION", e.message ?: "constraint violation"), HttpStatus.BAD_REQUEST)
+
+    @ExceptionHandler(NoSuchElementException::class)
+    fun handleNotFound(e: NoSuchElementException) =
+        ResponseEntity(ApiError("NOT_FOUND", e.message ?: "not found"), HttpStatus.NOT_FOUND)
+
+    @ExceptionHandler(IllegalArgumentException::class, IllegalStateException::class)
+    fun handleBad(e: RuntimeException) =
+        ResponseEntity(ApiError("BAD_REQUEST", e.message ?: "bad request"), HttpStatus.BAD_REQUEST)
+
     @ExceptionHandler(Exception::class)
-    fun handleOthers(ex: Exception) =
-        ResponseEntity(ApiError(500, "Internal error"), HttpStatus.INTERNAL_SERVER_ERROR)
+    fun handleUnknown(e: Exception, req: WebRequest) =
+        ResponseEntity(ApiError("INTERNAL_ERROR", "Unexpected error"), HttpStatus.INTERNAL_SERVER_ERROR)
 }

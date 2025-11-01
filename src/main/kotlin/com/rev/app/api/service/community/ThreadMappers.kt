@@ -1,3 +1,4 @@
+// src/main/kotlin/com/rev/app/api/service/community/ThreadMappers.kt
 package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.CreateThreadReq
@@ -6,7 +7,8 @@ import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.entity.ThreadEntity
 import java.time.Instant
 
-fun ThreadEntity.toRes(): ThreadRes =
+// ── Entity -> DTO (스레드)
+fun ThreadEntity.toThreadRes(): ThreadRes =
     ThreadRes(
         id = requireNotNull(id),
         title = title,
@@ -16,17 +18,21 @@ fun ThreadEntity.toRes(): ThreadRes =
         categoryId = categoryId,
         parentThreadId = parentId,
         isPrivate = isPrivate,
-        createdAt = this.createdAt ?: Instant.now(),
-        updatedAt = this.updatedAt
+        createdAt = createdAt ?: Instant.now(),
+        updatedAt = updatedAt
     )
 
+// 이름이 겹치는 확장함수도 그대로 필요하면 얇게 위임
+fun ThreadEntity.toRes(): ThreadRes = this.toThreadRes()
+
+// ── Create 요청 -> Entity
 fun CreateThreadReq.toEntity(author: UserEntity): ThreadEntity =
     ThreadEntity(
         title = this.title,
         content = this.content,
         author = author,
-        tags = this.tags.toMutableList(),
+        tags = this.tags?.toMutableList() ?: mutableListOf(),
         categoryId = this.categoryId,
         parentId = this.parentThreadId,
-        isPrivate = this.isPrivate
+        isPrivate = this.isPrivate ?: false
     )
