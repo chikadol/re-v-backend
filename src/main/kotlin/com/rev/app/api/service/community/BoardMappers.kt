@@ -1,14 +1,7 @@
-package com.rev.app.api.service.community
+package com.rev.app.api.service.community.dto
 
-import com.rev.app.api.service.community.dto.BoardRes
-
-
-
-import com.rev.app.domain.community.Board
-fun Board.toBoardRes(): BoardRes =
-    BoardRes(
-        id = requireNotNull(id),
-        createdAt = this.createdAt,
-        updatedAt = null
-    )
-
+data class BoardRes(
+    val id: Long,
+    val slug: String,
+    val name: String
+)

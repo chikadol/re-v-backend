@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
+    username: postgres.gsmbdibjiuwdqhrdvsfo
+    password: chikadol123!
+    hikari:
+      maximum-pool-size: 5
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  flyway:
+    schemas: rev
+    default-schema: rev
+    locations: classpath:db/migration,classpath:db/callback
+  jpa:
+    properties:
+      hibernate:
+        default_schema: rev
+
+jwt:
+  secret: "Xk8s0a1Q2w3E4r5T6y7U8i9O0pAaBbCcDdEeFfGgHhIiJjKk"
+  issuer: re-v
+  access-ttl-seconds: 900
+  refresh-ttl-seconds: 1209600
+  header: Authorization
+  prefix: "Bearer "
