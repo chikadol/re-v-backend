@@ -1,6 +1,7 @@
 package com.rev.app.api.service.community
 
 import java.time.Instant
+import java.util.Collections.emptyList
 import java.util.UUID
 
 data class ThreadRes(

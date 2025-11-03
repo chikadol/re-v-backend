@@ -1,9 +1,14 @@
 spring:
-  flyway:
-    enabled: false
   jpa:
-    hibernate:
-      ddl-auto: create-drop   # 테스트 때만 사용 권장
+    show-sql: true
     properties:
       hibernate:
-        default_schema: rev   # rev 스키마를 쓴다면
+        format_sql: true
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

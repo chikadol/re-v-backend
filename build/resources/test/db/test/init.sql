@@ -1,4 +1,4 @@
--- V29__init.sql
+-- init.sql
 -- 스키마가 필요하면 만들고
 CREATE SCHEMA IF NOT EXISTS rev;
 

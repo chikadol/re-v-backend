@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-11-03T18:14:25.005Z" hostname="DESKTOP-2GU54QS" time="3.44">
+<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-11-03T19:52:52.139Z" hostname="DESKTOP-2GU54QS" time="3.633">
   <properties/>
-  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="2.82"/>
-  <testcase name="listPublic_pagingAndSort_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.509"/>
-  <testcase name="createInBoard_badRequest_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.071"/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.023"/>
-  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.012"/>
-  <system-out><![CDATA[03:14:26.321 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
-03:14:26.902 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-03:14:26.902 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-03:14:26.906 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 3 ms
-03:14:27.836 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-03:14:27.836 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-03:14:27.836 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-03:14:28.345 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-03:14:28.345 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-03:14:28.345 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-03:14:28.417 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-03:14:28.417 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-03:14:28.418 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
-03:14:28.440 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-03:14:28.440 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-03:14:28.440 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="3.053"/>
+  <testcase name="listPublic_pagingAndSort_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.453"/>
+  <testcase name="createInBoard_badRequest_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.08"/>
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.029"/>
+  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.011"/>
+  <system-out><![CDATA[04:52:53.470 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+04:52:54.056 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+04:52:54.057 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+04:52:54.062 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 4 ms
+04:52:55.202 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+04:52:55.203 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+04:52:55.203 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+04:52:55.656 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+04:52:55.656 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+04:52:55.656 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+04:52:55.740 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+04:52:55.740 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+04:52:55.740 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+04:52:55.768 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+04:52:55.769 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+04:52:55.769 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
 ]]></system-out>
   <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
 WARNING: A Java agent has been loaded dynamically (C:\Users\luelue\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)

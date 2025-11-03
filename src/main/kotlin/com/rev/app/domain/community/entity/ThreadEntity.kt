@@ -1,14 +1,14 @@
 package com.rev.app.domain.community.entity
 
 import com.rev.app.auth.UserEntity
-import com.rev.app.common.jpa.BaseTime
 import com.rev.app.domain.community.Board
 import jakarta.persistence.*
+import java.time.Instant
 import java.util.UUID
 
 @Entity
 @Table(name = "thread", schema = "rev")
-open class ThreadEntity(
+class ThreadEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
@@ -20,12 +20,15 @@ open class ThreadEntity(
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
-    var author: UserEntity?,
+    var author: UserEntity? = null
+,
 
-    @ElementCollection
-    @CollectionTable(name = "thread_tags", schema = "rev", joinColumns = [JoinColumn(name = "thread_id")])
-    @Column(name = "tag")
-    var tags: MutableList<String> = mutableListOf(),
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "board_id", nullable = false)
+    var board: Board,
+
+    @Column(name = "is_private", nullable = false)
+    var isPrivate: Boolean = false,
 
     @Column(name = "category_id")
     var categoryId: UUID? = null,
@@ -33,10 +36,14 @@ open class ThreadEntity(
     @Column(name = "parent_id")
     var parentId: Long? = null,
 
-    @Column(name = "is_private", nullable = false)
-    var isPrivate: Boolean = false,
+    @ElementCollection
+    @CollectionTable(name = "thread_tags", schema = "rev", joinColumns = [JoinColumn(name = "thread_id")])
+    @Column(name = "tag")
+    var tags: List<String>? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id", nullable = false)
-    var board: Board? = null,
-) : BaseTime()
+    @Column(name = "created_at", nullable = false)
+    var createdAt: Instant = Instant.now(),
+
+    @Column(name = "updated_at")
+    var updatedAt: Instant? = null
+)

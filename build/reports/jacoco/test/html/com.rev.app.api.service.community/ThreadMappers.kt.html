@@ -14,7 +14,7 @@ fun ThreadEntity.toRes(): ThreadRes =
 <span class="nc" id="L14">        title = title,</span>
 <span class="nc" id="L15">        content = content,</span>
 <span class="nc" id="L16">        authorId = author as UUID,     // UserEntity.id = UUID</span>
-<span class="nc" id="L17">        tags = tags,</span>
+<span class="nc bnc" id="L17" title="All 4 branches missed.">        tags = tags?.toList() ?: emptyList(),</span>
 <span class="nc" id="L18">        categoryId = categoryId,</span>
 <span class="nc" id="L19">        parentThreadId = parentId,</span>
 <span class="nc" id="L20">        isPrivate = isPrivate,</span>

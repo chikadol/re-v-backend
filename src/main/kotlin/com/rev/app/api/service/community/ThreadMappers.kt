@@ -14,7 +14,7 @@ fun ThreadEntity.toRes(): ThreadRes =
         title = title,
         content = content,
         authorId = author as UUID,     // UserEntity.id = UUID
-        tags = tags,
+        tags = tags?.toList() ?: emptyList(),
         categoryId = categoryId,
         parentThreadId = parentId,
         isPrivate = isPrivate,
