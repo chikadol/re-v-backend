@@ -1,37 +1,36 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.CreateThreadReq
-import com.rev.app.api.service.community.ThreadRes
 import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.Board
 import com.rev.app.domain.community.entity.ThreadEntity
 import java.time.Instant
+import java.util.UUID
 
+// 엔티티 -> 응답 DTO
 fun ThreadEntity.toRes(): ThreadRes =
     ThreadRes(
         id = requireNotNull(id),
         title = title,
         content = content,
-        authorId = requireNotNull(author.id),   // ← 여기 수정 (UUID? -> UUID)
+        authorId = author.id as UUID,     // UserEntity.id = UUID
         tags = tags,
         categoryId = categoryId,
         parentThreadId = parentId,
         isPrivate = isPrivate,
-        createdAt = createdAt ?: Instant.now(),
-        updatedAt = updatedAt
+        createdAt = this.createdAt ?: Instant.now(),
+        updatedAt = this.updatedAt
     )
 
-fun CreateThreadReq.toEntity(
-    author: UserEntity,
-    board: Board
-): ThreadEntity =
+// 생성 요청 -> 엔티티  (boardId: Long ❌ → board: Board ✅)
+fun CreateThreadReq.toEntity(board: Board, author: UserEntity): ThreadEntity =
     ThreadEntity(
+        board = board,
         title = this.title,
         content = this.content,
         author = author,
-        board = board,
-        tags = this.tags?.toMutableList() ?: mutableListOf(),
+        tags = this.tags.toMutableList(),
         categoryId = this.categoryId,
         parentId = this.parentThreadId,
-        isPrivate = this.isPrivate ?: false
+        isPrivate = this.isPrivate
     )

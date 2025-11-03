@@ -28,6 +28,6 @@ open class ThreadReaction(
     val user: UserEntity,
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    val type: ReactionType
+    @Column(name = "reaction", nullable = false)
+    var reaction: ReactionType
 )

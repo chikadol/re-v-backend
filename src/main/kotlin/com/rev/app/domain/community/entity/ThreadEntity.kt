@@ -4,6 +4,7 @@ import com.rev.app.auth.UserEntity
 import com.rev.app.common.jpa.BaseTime
 import com.rev.app.domain.community.Board
 import jakarta.persistence.*
+import java.util.UUID
 
 @Entity
 @Table(name = "thread", schema = "rev")
@@ -27,7 +28,7 @@ open class ThreadEntity(
     var tags: MutableList<String> = mutableListOf(),
 
     @Column(name = "category_id")
-    var categoryId: java.util.UUID? = null,
+    var categoryId: UUID? = null,
 
     @Column(name = "parent_id")
     var parentId: Long? = null,

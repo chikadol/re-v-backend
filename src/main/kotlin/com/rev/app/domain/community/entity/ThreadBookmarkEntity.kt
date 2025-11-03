@@ -15,6 +15,6 @@ open class ThreadBookmarkEntity(
     var thread: ThreadEntity,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user", nullable = false)
     var user: UserEntity,
 ) : BaseTime()

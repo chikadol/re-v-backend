@@ -7,11 +7,11 @@ data class ThreadRes(
     val id: Long,
     val title: String,
     val content: String,
-    val authorId: UUID,              // ✅ Long → UUID
-    val tags: List<String>,
-    val categoryId: UUID?,           // (엔티티가 UUID면 유지)
-    val parentThreadId: Long?,       // (스레드 PK가 Long이면 Long? 유지)
-    val isPrivate: Boolean,
-    val createdAt: Instant,
-    val updatedAt: Instant?
+    val authorId: UUID,
+    val tags: List<String> = emptyList(),
+    val categoryId: UUID? = null,
+    val parentThreadId: Long? = null,
+    val isPrivate: Boolean = false,
+    val createdAt: Instant? = null,
+    val updatedAt: Instant? = null
 )

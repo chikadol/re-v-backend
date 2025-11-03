@@ -1,32 +1,40 @@
-package com.rev.app.common
+package com.rev.app.api.common
 
+import jakarta.validation.ConstraintViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.validation.BindException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.server.ResponseStatusException
 
 @RestControllerAdvice
 class ApiExceptionHandler {
 
-    @ExceptionHandler(MethodArgumentNotValidException::class)
-    fun handleValidation(ex: MethodArgumentNotValidException): ResponseEntity<ApiError> {
-        val body = ApiError.fromBindingResult(ex.bindingResult)
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body)
-    }
+    data class ErrorBody(val code: String, val message: String?)
 
-    @ExceptionHandler(ResponseStatusException::class)
-    fun handleResponseStatus(ex: ResponseStatusException): ResponseEntity<ApiError> {
-        val body = ApiError(ex.reason ?: ex.message ?: "Error")
-        return ResponseEntity.status(ex.statusCode).body(body)
-    }
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgument(e: IllegalArgumentException) =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorBody("BAD_REQUEST", e.message))
 
-    @ExceptionHandler(IllegalArgumentException::class, NoSuchElementException::class)
-    fun handleBadRequest(ex: RuntimeException): ResponseEntity<ApiError> =
-        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiError(ex.message ?: "Bad request"))
+    @ExceptionHandler(
+        MethodArgumentNotValidException::class,
+        BindException::class,
+        ConstraintViolationException::class
+    )
+    fun handleValidation(e: Exception) =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorBody("BAD_REQUEST", e.message))
+
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleJson(e: HttpMessageNotReadableException) =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ErrorBody("BAD_REQUEST", e.mostSpecificCause?.message ?: e.message))
 
     @ExceptionHandler(Exception::class)
-    fun handleOthers(ex: Exception): ResponseEntity<ApiError> =
-        ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ApiError("Internal server error"))
+    fun handleOthers(e: Exception) =
+        ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(ErrorBody("INTERNAL_SERVER_ERROR", e.message))
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2025-11-03T16:03:48.247Z" hostname="DESKTOP-2GU54QS" time="1.85">
+  <properties/>
+  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="1.486"/>
+  <testcase name="listPublic_pagingAndSort_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.281"/>
+  <testcase name="createInBoard_badRequest_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.056"/>
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.014"/>
+  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.008"/>
+  <system-out><![CDATA[01:03:48.791 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+01:03:49.088 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+01:03:49.088 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+01:03:49.091 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 2 ms
+01:03:49.743 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+01:03:49.743 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+01:03:49.743 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+01:03:50.026 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+01:03:50.026 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+01:03:50.026 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+01:03:50.081 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+01:03:50.081 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+01:03:50.081 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+01:03:50.094 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+01:03:50.094 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+01:03:50.095 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\luelue\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

@@ -3,9 +3,13 @@ package com.rev.app.domain.community.entity
 import com.rev.app.auth.UserEntity
 import com.rev.app.common.jpa.BaseTime
 import jakarta.persistence.*
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.SQLRestriction
+
 
 @Entity
 @Table(name = "comment", schema = "rev")
+@SQLRestriction("deleted = false")
 open class CommentEntity(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
@@ -18,11 +22,13 @@ open class CommentEntity(
     @JoinColumn(name = "author_id", nullable = false)
     var author: UserEntity,
 
-    @Column(nullable = false, columnDefinition = "text")
+    @Column(nullable = false)
     var content: String,
 
-    // ✅ 자기참조(대댓글)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    var parent: CommentEntity? = null
+    var parent: CommentEntity? = null,
+
+    @Column(nullable = false)
+    var deleted: Boolean = false
 ) : BaseTime()

@@ -65,5 +65,15 @@
       <user-name>postgres.gsmbdibjiuwdqhrdvsfo</user-name>
       <schema-mapping />
     </data-source>
+    <data-source name="revdb" uuid="d088ed13-96da-4490-80c0-06718bbad5e3">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="H2" />
+      <user-name>sa</user-name>
+      <schema-mapping />
+    </data-source>
+    <data-source name="revdb" uuid="c02ebcb9-6bf5-4e8e-8d06-2446597c181a">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="H2" />
+      <user-name>sa</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>

@@ -1,26 +1,18 @@
-// src/main/kotlin/com/rev/app/config/OpenApiConfig.kt
 package com.rev.app.config
 
-import io.swagger.v3.oas.models.*
-import io.swagger.v3.oas.models.info.Info
-import io.swagger.v3.oas.models.security.*
+
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
+@Profile("!test") // ✅ 테스트 프로필에서는 아예 제외(권장)
 class OpenApiConfig {
-
     @Bean
-    fun openAPI(): OpenAPI {
-        val scheme = SecurityScheme()
-            .type(SecurityScheme.Type.HTTP)
-            .`in`(SecurityScheme.In.HEADER)
-            .scheme("bearer")
-            .bearerFormat("JWT")
-            .name("Authorization")
-        return OpenAPI()
-            .info(Info().title("re-v API").version("v1"))
-            .components(Components().addSecuritySchemes("bearerAuth", scheme))
-            .addSecurityItem(SecurityRequirement().addList("bearerAuth"))
-    }
+    fun openAPI(): io.swagger.v3.oas.models.OpenAPI =
+        io.swagger.v3.oas.models.OpenAPI().info(
+            io.swagger.v3.oas.models.info.Info()
+                .title("re:v API")
+                .version("v1")
+        )
 }

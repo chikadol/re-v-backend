@@ -10,7 +10,7 @@ spring:
   flyway:
     schemas: rev
     default-schema: rev
-    locations: classpath:db/migration,classpath:db/callback
+    locations: locations classpath:db/migration,classpath:db/migration/{vendor}
   jpa:
     properties:
       hibernate:

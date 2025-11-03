@@ -3,13 +3,13 @@ repositories {
     gradlePluginPortal() // ← 플러그인 해석 못할 때 도움이 됨 (보통 settings에서 선언)
 }
 plugins {
+/*    kotlin("jvm") version "1.9.25"
+    kotlin("plugin.spring") version "1.9.25"*/
+    kotlin("plugin.jpa") version "1.9.25"
+    kotlin("jvm") version "2.0.0" // 프로젝트에 맞게
+    kotlin("plugin.spring") version "2.0.0"
     id("org.springframework.boot") version "3.3.3"
     id("io.spring.dependency-management") version "1.1.6"
-
-    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
-    kotlin("plugin.jpa") version "1.9.25"
-
     id("org.jetbrains.kotlin.plugin.noarg") version "2.0.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "2.0.0"
     id("org.flywaydb.flyway") version "10.17.0"
@@ -46,6 +46,7 @@ dependencies {
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("junit:junit:4.12")
 
     val flywayVersion = "10.17.0"
     implementation("org.flywaydb:flyway-core:$flywayVersion")
@@ -66,7 +67,31 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.flywaydb:flyway-database-postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    implementation(kotlin("test"))
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.mockito:mockito-core:5.12.0")
+    testImplementation(kotlin("test"))
 
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
+    testImplementation("io.kotest:kotest-assertions-core:5.9.1")
+    testImplementation("io.mockk:mockk:1.13.12")
+    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.3.0")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("com.h2database:h2") // 테스트에서 in-memory로 사용
+
+    // Mockito-Kotlin (Kotlin-friendly any(), whenever 등)
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
+    // WebMvcTest에서 PageImpl 사용 시 필요
+    testImplementation("org.springframework.data:spring-data-commons")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.11.0") // 선택
+    testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    testImplementation("org.testcontainers:junit-jupiter:1.20.1")
+    testImplementation("org.testcontainers:postgresql:1.20.1")
+    testImplementation("au.com.origin.snapshots:java-junit5:3.1.0") // 선택
 }
 
 flyway {

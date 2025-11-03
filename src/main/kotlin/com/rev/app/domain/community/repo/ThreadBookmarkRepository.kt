@@ -6,4 +6,6 @@ import java.util.UUID
 
 interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, Long> {
     fun findByThread_IdAndUser_Id(threadId: Long, userId: UUID): ThreadBookmarkEntity?
+    fun deleteByThread_IdAndUser_Id(threadId: Long, userId: UUID): Long
+    fun countByThread_Id(threadId: Long): Long
 }

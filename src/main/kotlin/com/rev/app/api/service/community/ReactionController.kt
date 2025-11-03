@@ -1,7 +1,7 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.JwtPrincipal
-import com.rev.app.api.security.Me
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -9,23 +9,20 @@ import org.springframework.web.bind.annotation.*
 class ReactionController(
     private val reactionService: ReactionService
 ) {
-
-    @PostMapping
+    @PostMapping("/{type}")
     fun toggle(
+        @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable threadId: Long,
-        @RequestParam type: ReactionType,
-        @Me me: JwtPrincipal
-    ): Map<String, Long> {
-        val count = reactionService.toggle(threadId, type, me)
-        return mapOf("count" to count)
+        @PathVariable type: ReactionType
+    ): Map<String, Any> {
+        val added = reactionService.toggleThreadReaction(me, threadId, type)
+        return mapOf("added" to added)
     }
 
-    @GetMapping("/count")
+    @GetMapping("/{type}/count")
     fun count(
         @PathVariable threadId: Long,
-        @RequestParam type: ReactionType
-    ): Map<String, Long> {
-        val count = reactionService.count(threadId, type)
-        return mapOf("count" to count)
-    }
+        @PathVariable type: ReactionType
+    ): Map<String, Long> =
+        mapOf("count" to reactionService.countThreadReaction(threadId, type))
 }
