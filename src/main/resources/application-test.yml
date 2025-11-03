@@ -1,26 +1,9 @@
 spring:
   flyway:
-    enabled: true
-    encoding: UTF-8
-  datasource:
-    url: jdbc:h2:mem:revdb;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-
+    enabled: false
   jpa:
     hibernate:
-      ddl-auto: update   # 또는 create-drop (마이그레이션/엔티티 상태에 따라 선택)
+      ddl-auto: create-drop   # 테스트 때만 사용 권장
     properties:
       hibernate:
-        format_sql: true
-  sql:
-    init:
-      mode: always       # schema.sql/data.sql 쓰면 활성화
-logging:
-  level:
-    org.springframework: INFO
-    org.hibernate.SQL: DEBUG
-springdoc:
-  api-docs.enabled: false
-  swagger-ui.enabled: false
+        default_schema: rev   # rev 스키마를 쓴다면

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.auth</a> &gt; <span class="el_source">AuthService.kt</span></div><h1>AuthService.kt</h1><pre class="source lang-java linenums">package com.rev.app.auth
+
+import com.rev.app.auth.jwt.JwtProvider
+import org.springframework.stereotype.Service
+import java.util.*
+
+@Service
+<span class="nc" id="L8">class AuthService(</span>
+<span class="nc" id="L9">    private val userRepository: UserRepository,</span>
+<span class="nc" id="L10">    private val jwtProvider: JwtProvider</span>
+) {
+    fun loginByEmail(email: String, rawPassword: String): TokenPair {
+<span class="nc bnc" id="L13" title="All 2 branches missed.">        val user = userRepository.findByEmail(email)</span>
+<span class="nc" id="L14">            ?: throw IllegalArgumentException(&quot;Invalid credentials&quot;)</span>
+
+        // TODO: 비밀번호 검증(PasswordEncoder) 추가
+
+<span class="nc bnc" id="L18" title="All 2 branches missed.">        val uid: UUID = userIdOf(user)</span>
+<span class="nc" id="L19">            ?: throw IllegalStateException(&quot;User id is null&quot;)</span>
+<span class="nc" id="L20">        val username: String = usernameOf(user)</span>
+
+<span class="nc" id="L22">        val roles: List&lt;String&gt; = rolesOf(user)</span>
+
+<span class="nc" id="L24">        val access  = jwtProvider.generateAccessToken(uid, username, roles)</span>
+<span class="nc" id="L25">        val refresh = jwtProvider.generateRefreshToken(uid)</span>
+<span class="nc" id="L26">        return TokenPair(access, refresh)</span>
+    }
+
+    fun refresh(refreshToken: String): TokenPair {
+<span class="nc bnc" id="L30" title="All 4 branches missed.">        if (!jwtProvider.validate(refreshToken) || !jwtProvider.isRefresh(refreshToken)) {</span>
+<span class="nc" id="L31">            throw IllegalArgumentException(&quot;Invalid refresh token&quot;)</span>
+        }
+<span class="nc" id="L33">        val uid: UUID = jwtProvider.getUserId(refreshToken)</span>
+<span class="nc" id="L34">        val user = userRepository.findById(uid).orElseThrow()</span>
+<span class="nc" id="L35">        val username: String = usernameOf(user)</span>
+<span class="nc" id="L36">        val roles: List&lt;String&gt; = rolesOf(user)</span>
+
+<span class="nc" id="L38">        val newAccess  = jwtProvider.generateAccessToken(uid, username, roles)</span>
+<span class="nc" id="L39">        val newRefresh = jwtProvider.generateRefreshToken(uid)</span>
+<span class="nc" id="L40">        return TokenPair(newAccess, newRefresh)</span>
+    }
+
+    // ---------------------- helpers (reflection only) ----------------------
+
+    private fun userIdOf(user: Any): UUID? {
+        // id: UUID?
+<span class="nc" id="L47">        return try {</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">            (user::class.java.getMethod(&quot;getId&quot;).invoke(user) as? UUID)</span>
+<span class="nc" id="L49">        } catch (_: Exception) { null }</span>
+    }
+
+    private fun usernameOf(user: Any): String {
+        // 우선순위: getUsername() -&gt; getEmail() -&gt; toString()
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        return tryGet&lt;String&gt;(user, &quot;getUsername&quot;)</span>
+<span class="nc" id="L55">            ?: tryGet&lt;String&gt;(user, &quot;getEmail&quot;)</span>
+<span class="nc" id="L56">            ?: user.toString()</span>
+    }
+
+    private fun rolesOf(user: Any): List&lt;String&gt; {
+        // 1) getRoles(): Collection&lt;*&gt; (각 요소에 getName() 있으면 name, 아니면 toString)
+<span class="nc" id="L61">        try {</span>
+<span class="nc" id="L62">            val m = user::class.java.getMethod(&quot;getRoles&quot;)</span>
+<span class="nc" id="L63">            val v = m.invoke(user)</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">            if (v is Collection&lt;*&gt;) {</span>
+<span class="nc" id="L65">                return v.mapNotNull { elem -&gt;</span>
+                    // elem.getName() -&gt; String
+<span class="nc bnc" id="L67" title="All 4 branches missed.">                    tryGet&lt;String&gt;(elem ?: return@mapNotNull null, &quot;getName&quot;)</span>
+<span class="nc" id="L68">                        ?: elem.toString()</span>
+                }
+            }
+<span class="nc" id="L71">        } catch (_: Exception) { /* ignore */ }</span>
+
+        // 2) getRole(): String
+<span class="nc" id="L74">        try {</span>
+<span class="nc" id="L75">            val m = user::class.java.getMethod(&quot;getRole&quot;)</span>
+<span class="nc bnc" id="L76" title="All 4 branches missed.">            (m.invoke(user) as? String)?.let { return listOf(it) }</span>
+<span class="nc" id="L77">        } catch (_: Exception) { /* ignore */ }</span>
+
+        // 3) getAuthorities(): Collection&lt;GrantedAuthority&gt; -&gt; each.getAuthority(): String
+<span class="nc" id="L80">        try {</span>
+<span class="nc" id="L81">            val m = user::class.java.getMethod(&quot;getAuthorities&quot;)</span>
+<span class="nc" id="L82">            val v = m.invoke(user)</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">            if (v is Collection&lt;*&gt;) {</span>
+<span class="nc" id="L84">                return v.mapNotNull { ga -&gt;</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">                    tryGet&lt;String&gt;(ga ?: return@mapNotNull null, &quot;getAuthority&quot;)</span>
+                }
+            }
+<span class="nc" id="L88">        } catch (_: Exception) { /* ignore */ }</span>
+
+        // 없으면 빈 리스트
+<span class="nc" id="L91">        return emptyList()</span>
+    }
+
+    private inline fun &lt;reified T&gt; tryGet(target: Any, methodName: String): T? =
+        try { target::class.java.getMethod(methodName).invoke(target) as? T }
+        catch (_: Exception) { null }
+}
+
+<span class="nc" id="L99">data class TokenPair(val accessToken: String, val refreshToken: String)</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

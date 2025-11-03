@@ -13,7 +13,7 @@ fun ThreadEntity.toRes(): ThreadRes =
         id = requireNotNull(id),
         title = title,
         content = content,
-        authorId = author.id as UUID,     // UserEntity.id = UUID
+        authorId = author as UUID,     // UserEntity.id = UUID
         tags = tags,
         categoryId = categoryId,
         parentThreadId = parentId,

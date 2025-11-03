@@ -63,7 +63,7 @@ class ThreadApiTest {
 
     @BeforeEach
     fun setup() {
-        val controller = ThreadControllerImpl(threadService)
+        val controller = ThreadController(threadService)
 
         objectMapper = ObjectMapper()
             .registerModule(KotlinModule.Builder().build())

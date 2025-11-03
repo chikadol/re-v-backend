@@ -11,6 +11,8 @@ abstract class PostgresTC {
             withDatabaseName("testdb")
             withUsername("test")
             withPassword("test")
+            // ⛔ init.sql 호출 제거
+            // withInitScript("testdb/init.sql")
             start()
         }
 
@@ -20,7 +22,11 @@ abstract class PostgresTC {
             reg.add("spring.datasource.url") { pg.jdbcUrl }
             reg.add("spring.datasource.username") { pg.username }
             reg.add("spring.datasource.password") { pg.password }
-            reg.add("spring.jpa.hibernate.ddl-auto") { "update" }
+
+            // ✅ 테스트에서 스키마/테이블 자동 생성
+            reg.add("spring.jpa.hibernate.ddl-auto") { "create-drop" }
+            reg.add("spring.jpa.properties.hibernate.hbm2ddl.create_namespaces") { "true" }
+            reg.add("spring.jpa.properties.hibernate.default_schema") { "rev" }
         }
 
         @BeforeAll @JvmStatic

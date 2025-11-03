@@ -1,108 +1,171 @@
-repositories {
-    mavenCentral()
-    gradlePluginPortal() // ← 플러그인 해석 못할 때 도움이 됨 (보통 settings에서 선언)
-}
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-/*    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"*/
-    kotlin("plugin.jpa") version "1.9.25"
-    kotlin("jvm") version "2.0.0" // 프로젝트에 맞게
+    // Kotlin & Spring
+    kotlin("jvm") version "2.0.0"
     kotlin("plugin.spring") version "2.0.0"
-    id("org.springframework.boot") version "3.3.3"
-    id("io.spring.dependency-management") version "1.1.6"
+    kotlin("plugin.jpa") version "1.9.25" // JPA엔 1.9.x 안정적
     id("org.jetbrains.kotlin.plugin.noarg") version "2.0.0"
     id("org.jetbrains.kotlin.plugin.allopen") version "2.0.0"
-    id("org.flywaydb.flyway") version "10.17.0"
 
-}
-buildscript {
-    dependencies {
-        classpath("org.flywaydb:flyway-database-postgresql:10.17.0")
-        classpath("org.postgresql:postgresql:42.7.4")
-    }
+    // Spring Boot & Dependency Management
+    id("org.springframework.boot") version "3.3.3"
+    id("io.spring.dependency-management") version "1.1.6"
+
+    // Flyway & Jacoco
+    id("org.flywaydb.flyway") version "10.17.0"
+    jacoco
 }
 
 java {
     toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
 }
 
+// Kotlin 2.0 compilerOptions (kotlinOptions deprecated 대체)
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+        freeCompilerArgs.addAll("-Xjsr305=strict")
+    }
+}
+
+// JPA용 open/no-arg
 allOpen {
     annotation("jakarta.persistence.Entity")
     annotation("jakarta.persistence.MappedSuperclass")
     annotation("jakarta.persistence.Embeddable")
 }
-
 noArg {
     annotation("jakarta.persistence.Entity")
     annotation("jakarta.persistence.Embeddable")
 }
 
 dependencies {
+    // --- Main ---
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.security:spring-security-core")      // 안전빵(Starter가 끌어오지만 명시)
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("junit:junit:4.12")
 
+    // Database (runtime)
+    runtimeOnly("org.postgresql:postgresql:42.7.4")
+
+    // Flyway (runtime 마이그레이션)
     val flywayVersion = "10.17.0"
     implementation("org.flywaydb:flyway-core:$flywayVersion")
     implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
 
+    // OpenAPI (선택)
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-
+    // JWT (선택)
     implementation("io.jsonwebtoken:jjwt-api:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    runtimeOnly("org.postgresql:postgresql:42.7.4")
-    runtimeOnly("org.flywaydb:flyway-database-postgresql:10.17.0")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("org.postgresql:postgresql")   // ← 이 줄 꼭 있어야 함
-    implementation("org.flywaydb:flyway-core")
-    implementation("org.flywaydb:flyway-database-postgresql")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    implementation(kotlin("test"))
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.mockito:mockito-core:5.12.0")
-    testImplementation(kotlin("test"))
 
+    // --- Test ---
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "junit", module = "junit") // JUnit4 제외
+    }
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
-    testImplementation("io.kotest:kotest-assertions-core:5.9.1")
-    testImplementation("io.mockk:mockk:1.13.12")
-    testImplementation("io.kotest.extensions:kotest-extensions-spring:1.3.0")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    runtimeOnly("com.h2database:h2") // 테스트에서 in-memory로 사용
 
-    // Mockito-Kotlin (Kotlin-friendly any(), whenever 등)
+    // Mockito & Mockito-Kotlin
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
-    testImplementation("org.mockito:mockito-inline:5.2.0")
-    // WebMvcTest에서 PageImpl 사용 시 필요
-    testImplementation("org.springframework.data:spring-data-commons")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.11.0") // 선택
+   // testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
+
+    // Jackson (테스트에서 objectMapper 필요 시)
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    testImplementation("org.testcontainers:junit-jupiter:1.20.1")
-    testImplementation("org.testcontainers:postgresql:1.20.1")
-    testImplementation("au.com.origin.snapshots:java-junit5:3.1.0") // 선택
+
+    // Testcontainers (리포지토리 테스트용)
+    testImplementation("org.testcontainers:junit-jupiter:1.20.2")
+    testImplementation("org.testcontainers:postgresql:1.20.2")
+
+    // 스냅샷 테스트 (문제났던 좌표를 안정 버전으로 고정)
+    testImplementation(platform("org.junit:junit-bom:5.10.3"))
+    testImplementation("io.github.origin-energy:java-snapshot-testing-junit5:4.0.8")
+    testImplementation("io.github.origin-energy:java-snapshot-testing-plugin-jackson:4.0.8")
+
+    // H2 (원하면 in-memory 테스트 대체용)
+    testRuntimeOnly("com.h2database:h2:2.3.232")
+
+    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.14.2")
+
 }
 
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    // buildDir deprecated 경고 회피
+    val buildDirFile = layout.buildDirectory.get().asFile
+    executionData.setFrom(
+        fileTree(buildDirFile).include("jacoco/test.exec", "jacoco/*.exec")
+    )
+}
+
+// ---- replace the old jacocoTestCoverageVerification block with this ----
+val buildDirFile = layout.buildDirectory.get().asFile
+
+val maybeExisting = tasks.findByName("jacocoTestCoverageVerification")
+if (maybeExisting is JacocoCoverageVerification) {
+    maybeExisting.apply {
+        dependsOn(tasks.test)
+        executionData.setFrom(fileTree(buildDirFile).include("jacoco/test.exec", "jacoco/*.exec"))
+        sourceDirectories.setFrom(files("src/main/kotlin"))
+        classDirectories.setFrom(files("build/classes/kotlin/main"))
+        violationRules {
+            rule {
+                limit {
+                    minimum = "0.60".toBigDecimal()
+                }
+            }
+        }
+    }
+} else {
+    tasks.register("jacocoTestCoverageVerification", JacocoCoverageVerification::class) {
+        dependsOn(tasks.test)
+        executionData.setFrom(fileTree(buildDirFile).include("jacoco/test.exec", "jacoco/*.exec"))
+        sourceDirectories.setFrom(files("src/main/kotlin"))
+        classDirectories.setFrom(files("build/classes/kotlin/main"))
+        violationRules {
+            rule {
+                limit {
+                    minimum = "0.60".toBigDecimal()
+                }
+            }
+        }
+    }
+}
+
+
+// Flyway Gradle 플러그인 설정 (실행 시에만 사용; 일반 애플리케이션 런타임은 Spring Boot가 관리)
+// 환경변수 없으면 굳이 url/user/password를 지정하지 않아도 됨. 지정하려면 주석 해제해서 사용.
 flyway {
-    // 앱에서 사용하는 spring.datasource.*와 동일하게!
-    url = System.getenv("SPRING_DATASOURCE_URL")
-        ?: "jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require"
-    user = System.getenv("SPRING_DATASOURCE_USERNAME") ?: "postgres.gsmbdibjiuwdqhrdvsfo"
-    password = System.getenv("SPRING_DATASOURCE_PASSWORD") ?: "chikadol123!"
+    // schemas와 locations만 기본 지정
+    schemas = arrayOf("rev")
+    locations = arrayOf("classpath:db/migration")
 
-    // 필요 시 스키마/경로 지정
-     schemas = arrayOf("rev")
-     locations = arrayOf("classpath:db/migration")
+    // 필요 시 Gradle에서 직접 flywayMigrate 쓸 때만 아래 설정 사용
+    // url = System.getenv("SPRING_DATASOURCE_URL") ?: "jdbc:postgresql://localhost:5432/postgres"
+    // user = System.getenv("SPRING_DATASOURCE_USERNAME") ?: "postgres"
+    // password = System.getenv("SPRING_DATASOURCE_PASSWORD") ?: "postgres"
 }
-tasks.test { useJUnitPlatform() }

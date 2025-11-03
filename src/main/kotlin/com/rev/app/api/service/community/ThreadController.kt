@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/threads")
-class ThreadControllerImpl(
+class ThreadController(
     private val threadService: ThreadService
 ) {
 

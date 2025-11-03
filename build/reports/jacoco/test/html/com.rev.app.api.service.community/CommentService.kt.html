@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommentService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.api.service.community</a> &gt; <span class="el_source">CommentService.kt</span></div><h1>CommentService.kt</h1><pre class="source lang-java linenums">package com.rev.app.api.service.community
+
+import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.api.service.community.dto.CommentRes
+import com.rev.app.domain.community.entity.CommentEntity
+import com.rev.app.domain.community.entity.ThreadEntity
+import com.rev.app.domain.community.repo.CommentRepository
+import com.rev.app.domain.community.repo.ThreadRepository
+import com.rev.app.auth.UserRepository
+import jakarta.transaction.Transactional
+import org.springframework.stereotype.Service
+
+@Service
+<span class="nc" id="L14">class CommentService(</span>
+<span class="nc" id="L15">    private val threadRepository: ThreadRepository,</span>
+<span class="nc" id="L16">    private val commentRepository: CommentRepository,</span>
+<span class="nc" id="L17">    private val userRepository: UserRepository,</span>
+) {
+
+    @Transactional
+    fun create(me: JwtPrincipal, threadId: Long, content: String, parentId: Long?): CommentRes {
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        val author = userRepository.getReferenceById(requireNotNull(me.userId))</span>
+<span class="nc" id="L23">        val thread: ThreadEntity = threadRepository.getReferenceById(threadId)</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        val parent = parentId?.let { commentRepository.getReferenceById(it) }</span>
+
+<span class="nc" id="L26">        val saved = commentRepository.save(</span>
+<span class="nc" id="L27">            CommentEntity(</span>
+<span class="nc" id="L28">                thread = thread,</span>
+<span class="nc" id="L29">                author = author,</span>
+<span class="nc" id="L30">                content = content,</span>
+<span class="nc" id="L31">                parent = parent,          // ✅ parent는 엔티티</span>
+            )
+        )
+<span class="nc" id="L34">        return saved.toRes()</span>
+    }
+
+    @Transactional
+    fun listThreadComments(threadId: Long): List&lt;CommentRes&gt; {
+<span class="nc" id="L39">        val roots = commentRepository.findByThread_IdAndParentIsNullOrderByIdAsc(threadId)</span>
+        // 간단한 2단 트리(루트 + 자식)
+<span class="nc" id="L41">        val res = mutableListOf&lt;CommentRes&gt;()</span>
+<span class="nc" id="L42">        roots.forEach { r -&gt;</span>
+<span class="nc" id="L43">            res += r.toRes()</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">            val children = commentRepository.findByParent_IdOrderByIdAsc(requireNotNull(r.id))</span>
+<span class="nc" id="L45">            res += children.map { it.toRes() }</span>
+<span class="nc" id="L46">        }</span>
+<span class="nc" id="L47">        return res</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

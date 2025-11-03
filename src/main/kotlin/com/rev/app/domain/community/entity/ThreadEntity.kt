@@ -20,7 +20,7 @@ open class ThreadEntity(
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
-    var author: UserEntity,
+    var author: UserEntity?,
 
     @ElementCollection
     @CollectionTable(name = "thread_tags", schema = "rev", joinColumns = [JoinColumn(name = "thread_id")])
@@ -38,5 +38,5 @@ open class ThreadEntity(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id", nullable = false)
-    var board: Board
+    var board: Board? = null,
 ) : BaseTime()
