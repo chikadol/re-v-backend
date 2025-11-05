@@ -23,8 +23,12 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/callback/beforeEachMigrate__settings.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/callback/beforeMigrate__bootstrap.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/db/test/init.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/01_fix_users_fk.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/00_fix_users_uuid.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/01_align_users_uuid.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/02_seed_minimal.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/03_fix_thread_fk.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/04_align_thread_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/05_align_thread_and_tags.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/99_cleanup.sql" dialect="PostgreSQL" />
     <file url="PROJECT" dialect="MongoDB" />
   </component>

@@ -2,21 +2,28 @@
 package com.rev.app.auth
 
 import jakarta.persistence.*
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.annotations.UuidGenerator
+import org.hibernate.type.SqlTypes
 import java.util.UUID
 
 
-@Table(schema = "rev", name = "\"user\"")
 @Entity
+@Table(name = "users", schema = "rev")
 class UserEntity(
     @Id
-    var id: UUID = UUID.randomUUID(),
+    @GeneratedValue
+    @UuidGenerator
+    @JdbcTypeCode(SqlTypes.UUID)
+    var id: UUID? = null,
+
+    @Column(nullable = false, unique = true)
+    var email: String,
 
     @Column(nullable = false, unique = true)
     var username: String,
 
     @Column(nullable = false)
-    var password: String,
-
-    @Column(nullable = false, unique = true)
-    var email: String
+    var password: String
 )
+

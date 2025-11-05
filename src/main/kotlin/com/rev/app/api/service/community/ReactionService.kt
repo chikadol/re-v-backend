@@ -8,6 +8,7 @@ import com.rev.app.domain.community.repo.ThreadReactionRepository
 import com.rev.app.domain.community.repo.ThreadRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 
 @Service
@@ -17,7 +18,7 @@ class ReactionService(
     private val userRepository: UserRepository          // ✅ 추가 주입
 ) {
     @Transactional
-    fun toggleThreadReaction(me: JwtPrincipal, threadId: Long, type: ReactionType): Boolean {
+    fun toggleThreadReaction(me: JwtPrincipal, threadId: UUID, type: ReactionType): Boolean {
         val uid = requireNotNull(me.userId)
 
         // 있으면 제거하고 false 반환

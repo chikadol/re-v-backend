@@ -1,49 +1,40 @@
+// src/main/kotlin/com/rev/app/api/service/community/ThreadController.kt
 package com.rev.app.api.service.community
 
-import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.CreateThreadReq
-import jakarta.validation.Valid
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
+import com.rev.app.api.service.community.dto.ThreadRes
 import org.springframework.http.HttpStatus
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/threads")
 class ThreadController(
     private val threadService: ThreadService
 ) {
-
-    private val allowedSort = setOf("createdAt", "updatedAt", "title", "id")
-
-    private fun validateSort(pageable: Pageable) {
-        pageable.sort.forEach { order ->
-            require(order.property in allowedSort) { "Invalid sort: ${order.property}" }
-        }
-    }
-
-    @GetMapping("/{id}")
-    fun get(@PathVariable id: Long): ThreadRes =
-        threadService.get(id)
-
-    @PostMapping("/boards/{boardId}")
-    @ResponseStatus(HttpStatus.OK) // 필요하면 CREATED로 변경
-    fun createInBoard(
-        @AuthenticationPrincipal principal: JwtPrincipal,
-        @PathVariable boardId: Long,
-        @Valid @RequestBody req: CreateThreadReq
-    ): ThreadRes {
-        val me = requireNotNull(principal.userId) { "No user id in principal" }
-        return threadService.createInBoard(me, boardId, req)
-    }
-
     @GetMapping("/{boardId}/threads")
     fun listPublic(
-        @PathVariable boardId: Long,
-        pageable: Pageable
-    ): Page<ThreadRes> {
-        validateSort(pageable)
-        return threadService.listPublic(boardId, pageable)
+        @PathVariable boardId: UUID,
+        @RequestParam(required = false, name = "sort") sorts: List<String>?
+    ): List<ThreadRes> {
+        val allowed = setOf("createdAt","updatedAt")
+        sorts?.forEach { s ->
+            val key = s.substringBefore(',').trim()
+            if (key.isNotBlank() && key !in allowed) {
+                throw ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid sort key: $key")
+            }
+        }
+        return threadService.listPublic(boardId)
+    }
+
+    @PostMapping("/boards/{boardId}")
+    fun createInBoard(
+        @PathVariable boardId: UUID,
+        @RequestBody req: CreateThreadReq,   // 이미 CreateThreadReq 로 정리하셨던 버전
+        @AuthenticationPrincipal principal: com.rev.app.api.security.JwtPrincipal
+    ): ThreadRes {
+        return threadService.createInBoard(principal.userId, boardId, req)
     }
 }

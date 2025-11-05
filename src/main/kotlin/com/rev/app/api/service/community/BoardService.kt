@@ -1,27 +1,25 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.BoardRes
-import com.rev.app.api.service.community.ThreadRes
-import com.rev.app.api.service.community.toRes
 import com.rev.app.domain.community.repo.BoardRepository
-import com.rev.app.domain.community.repo.ThreadRepository
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class BoardService(
-    private val boardRepository: BoardRepository,
-    private val threadRepository: ThreadRepository
+    private val boardRepository: BoardRepository
 ) {
     @Transactional(readOnly = true)
-    fun get(boardId: Long): BoardRes =
-        boardRepository.findById(boardId)
-            .orElseThrow { NoSuchElementException("board $boardId not found") }
-            .toRes()
+    fun get(id: UUID): BoardRes =
+        boardRepository.findById(id).orElseThrow().toRes()
 
     @Transactional(readOnly = true)
-    fun listThreads(boardId: Long, pageable: Pageable): Page<ThreadRes> =
-        threadRepository.findAllByBoard_IdAndIsPrivateFalse(boardId, pageable).map { it.toRes() }
+    fun list(): List<BoardRes> =
+        boardRepository.findAll().map { it.toRes() }
+
+    @Transactional
+    fun create(name: String, slug: String, description: String?): BoardRes =
+        boardRepository.save(com.rev.app.domain.community.Board(name = name, slug = slug, description = description))
+            .toRes()
 }

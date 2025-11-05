@@ -1,19 +1,6 @@
-DO $do$
-    BEGIN
-        IF to_regclass('rev.thread') IS NOT NULL THEN
-            EXECUTE 'TRUNCATE TABLE rev.thread RESTART IDENTITY CASCADE';
-        END IF;
+-- 99_cleanup.sql
+-- Robust cleanup for tests: avoid TRUNCATE ... IF EXISTS (not supported on some PG versions)
+-- Simply drop and recreate the schema. No DO $$ blocks (Spring ScriptUtils-safe).
 
-        IF to_regclass('rev.board') IS NOT NULL THEN
-            EXECUTE 'TRUNCATE TABLE rev.board RESTART IDENTITY CASCADE';
-        END IF;
-
-        IF to_regclass('rev.users') IS NOT NULL THEN
-            EXECUTE 'TRUNCATE TABLE rev.users RESTART IDENTITY CASCADE';
-        END IF;
-
-        IF to_regclass('rev."user"') IS NOT NULL THEN
-            EXECUTE 'TRUNCATE TABLE rev."user" RESTART IDENTITY CASCADE';
-        END IF;
-    END;
-$do$;
+DROP SCHEMA IF EXISTS rev CASCADE;
+CREATE SCHEMA IF NOT EXISTS rev;

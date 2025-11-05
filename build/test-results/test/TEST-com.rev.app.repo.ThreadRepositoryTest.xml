@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.repo.ThreadRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-05T05:19:57.599Z" hostname="DESKTOP-2GU54QS" time="0.176">
+<testsuite name="com.rev.app.repo.ThreadRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-05T09:06:04.378Z" hostname="DESKTOP-2GU54QS" time="0.324">
   <properties/>
-  <testcase name="saveAndFind()" classname="com.rev.app.repo.ThreadRepositoryTest" time="0.176"/>
-  <system-out><![CDATA[2025-11-05T14:19:51.409+09:00  INFO 9772 --- [    Test worker] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
-2025-11-05T14:19:51.414+09:00  INFO 9772 --- [    Test worker] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
-2025-11-05T14:19:51.685+09:00  INFO 9772 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
-2025-11-05T14:19:51.995+09:00  INFO 9772 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
-2025-11-05T14:19:51.997+09:00  INFO 9772 --- [    Test worker] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
-2025-11-05T14:19:52.018+09:00  INFO 9772 --- [    Test worker] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  <testcase name="saveAndFind()" classname="com.rev.app.repo.ThreadRepositoryTest" time="0.324"/>
+  <system-out><![CDATA[2025-11-05T18:05:57.886+09:00  INFO 8132 --- [    Test worker] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2025-11-05T18:05:57.890+09:00  INFO 8132 --- [    Test worker] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-11-05T18:05:58.166+09:00  INFO 8132 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-11-05T18:05:58.454+09:00  INFO 8132 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-11-05T18:05:58.457+09:00  INFO 8132 --- [    Test worker] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2025-11-05T18:05:58.481+09:00  INFO 8132 --- [    Test worker] org.testcontainers.DockerClientFactory   : Connected to docker: 
   Server Version: 28.4.0
   API Version: 1.51
   Operating System: Docker Desktop
   Total Memory: 11874 MB
-2025-11-05T14:19:52.101+09:00  INFO 9772 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Creating container for image: testcontainers/ryuk:0.7.0
-2025-11-05T14:19:52.203+09:00  INFO 9772 --- [    Test worker] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
-2025-11-05T14:19:52.330+09:00  INFO 9772 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 is starting: b9cecfba401e4c2899284386dde8e18b666731489d2af341370801222e704149
-2025-11-05T14:19:52.648+09:00  INFO 9772 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 started in PT0.5479132S
-2025-11-05T14:19:52.653+09:00  INFO 9772 --- [    Test worker] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
-2025-11-05T14:19:52.654+09:00  INFO 9772 --- [    Test worker] org.testcontainers.DockerClientFactory   : Checking the system...
-2025-11-05T14:19:52.654+09:00  INFO 9772 --- [    Test worker] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
-2025-11-05T14:19:52.655+09:00  INFO 9772 --- [    Test worker] tc.postgres:15-alpine                    : Creating container for image: postgres:15-alpine
-2025-11-05T14:19:52.731+09:00  INFO 9772 --- [    Test worker] tc.postgres:15-alpine                    : Container postgres:15-alpine is starting: fb92c7cd4edceefc48bd84fb2d5e2d0bda2beae6e8db0a9e89c77a244a37fdee
-2025-11-05T14:19:54.276+09:00  INFO 9772 --- [    Test worker] tc.postgres:15-alpine                    : Container postgres:15-alpine started in PT1.6212118S
-2025-11-05T14:19:54.277+09:00  INFO 9772 --- [    Test worker] tc.postgres:15-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:63778/testdb?loggerLevel=OFF)
-2025-11-05T14:19:54.288+09:00  INFO 9772 --- [    Test worker] org.testcontainers.ext.ScriptUtils       : Executing database script from db/test/init.sql
-2025-11-05T14:19:54.460+09:00  INFO 9772 --- [    Test worker] org.testcontainers.ext.ScriptUtils       : Executed database script from db/test/init.sql in 172 ms.
-2025-11-05T14:19:54.465+09:00  INFO 9772 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rev.app.repo.ThreadRepositoryTest]: ThreadRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-05T14:19:54.482+09:00  INFO 9772 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadRepositoryTest
+2025-11-05T18:05:58.578+09:00  INFO 8132 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Creating container for image: testcontainers/ryuk:0.7.0
+2025-11-05T18:05:58.684+09:00  INFO 8132 --- [    Test worker] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-11-05T18:05:58.817+09:00  INFO 8132 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 is starting: 0c8b7715aec2f552e2633d0954f40529b2bf2776c0356ddc8e7f656fa58ca802
+2025-11-05T18:05:59.163+09:00  INFO 8132 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 started in PT0.5845389S
+2025-11-05T18:05:59.168+09:00  INFO 8132 --- [    Test worker] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-11-05T18:05:59.169+09:00  INFO 8132 --- [    Test worker] org.testcontainers.DockerClientFactory   : Checking the system...
+2025-11-05T18:05:59.169+09:00  INFO 8132 --- [    Test worker] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2025-11-05T18:05:59.170+09:00  INFO 8132 --- [    Test worker] tc.postgres:16-alpine                    : Creating container for image: postgres:16-alpine
+2025-11-05T18:05:59.244+09:00  INFO 8132 --- [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine is starting: ac32a7bdfd04c01954c4453422fa894f8b816c350066819c1744969da73be3f8
+2025-11-05T18:06:00.849+09:00  INFO 8132 --- [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine started in PT1.6792538S
+2025-11-05T18:06:00.850+09:00  INFO 8132 --- [    Test worker] tc.postgres:16-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:53576/test?loggerLevel=OFF)
+2025-11-05T18:06:00.854+09:00  INFO 8132 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rev.app.repo.ThreadRepositoryTest]: ThreadRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-11-05T18:06:00.868+09:00  INFO 8132 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -37,114 +35,33 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2025-11-05T14:19:54.507+09:00  INFO 9772 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Starting ThreadRepositoryTest using Java 21.0.8 with PID 9772 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
-2025-11-05T14:19:54.508+09:00  INFO 9772 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
-2025-11-05T14:19:54.646+09:00  INFO 9772 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-05T14:19:54.702+09:00  INFO 9772 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 12 JPA repository interfaces.
-2025-11-05T14:19:54.905+09:00  INFO 9772 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-05T14:19:54.986+09:00  INFO 9772 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-11-05T14:19:55.035+09:00  INFO 9772 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-11-05T14:19:55.184+09:00  INFO 9772 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-05T14:19:55.212+09:00  INFO 9772 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-11-05T14:19:55.252+09:00  INFO 9772 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@3d603c6c
-2025-11-05T14:19:55.254+09:00  INFO 9772 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-11-05T14:19:56.418+09:00  INFO 9772 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-Hibernate: 
-    alter table if exists rev.board 
-       alter column description set data type varchar(255)
-Hibernate: 
-    create table rev.board_manager (
-        board_id bigint not null,
-        user_id bigint not null,
-        primary key (board_id, user_id)
-    )
-Hibernate: 
-    create table rev.bookmark (
-        thread_id bigint not null,
-        user_id bigint not null,
-        created_at timestamp(6) with time zone,
-        primary key (thread_id, user_id)
-    )
-Hibernate: 
-    create table rev.comment (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone not null,
-        updated_at timestamp(6) with time zone,
-        content varchar(255) not null,
-        deleted boolean not null,
-        author_id uuid not null,
-        parent_id bigint,
-        thread_id bigint not null,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.comment_reaction (
-        id bigint generated by default as identity,
-        comment_id bigint not null,
-        created_at timestamp(6) with time zone,
-        kind varchar(255) not null check (kind in ('LIKE','DISLIKE')),
-        user_id bigint not null,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.comment_report (
-        id bigint generated by default as identity,
-        comment_id bigint not null,
-        created_at timestamp(6) with time zone,
-        detail text,
-        reason varchar(255),
-        reporter_id bigint not null,
-        resolved_at timestamp(6) with time zone,
-        resolved_by bigint,
-        status varchar(255) check (status in ('OPEN','REVIEWING','RESOLVED','REJECTED')),
-        primary key (id)
-    )
-Hibernate: 
-    alter table if exists rev.thread 
-       alter column content set data type text
-Hibernate: 
-    create table rev.thread_attachment (
-        id bigint generated by default as identity,
-        duration integer,
-        height integer,
-        metadata jsonb,
-        order_no integer not null,
-        path varchar(255) not null,
-        thread_id bigint not null,
-        type varchar(255) not null,
-        width integer,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread_bookmark (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone not null,
-        updated_at timestamp(6) with time zone,
-        thread_id bigint not null,
-        user uuid not null,
-        primary key (id)
-    )
-2025-11-05T14:19:56.513+09:00  WARN 9772 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
-    create table rev.thread_bookmark (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone not null,
-        updated_at timestamp(6) with time zone,
-        thread_id bigint not null,
-        user uuid not null,
-        primary key (id)
-    )" via JDBC [ERROR: syntax error at or near "user"
-  Position: 247]
+2025-11-05T18:06:00.893+09:00  INFO 8132 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Starting ThreadRepositoryTest using Java 21.0.8 with PID 8132 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
+2025-11-05T18:06:00.894+09:00  INFO 8132 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2025-11-05T18:06:01.061+09:00  INFO 8132 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-05T18:06:01.135+09:00  INFO 8132 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 12 JPA repository interfaces.
+2025-11-05T18:06:01.340+09:00  INFO 8132 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-05T18:06:01.411+09:00  INFO 8132 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-11-05T18:06:01.468+09:00  INFO 8132 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-05T18:06:01.625+09:00  INFO 8132 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-05T18:06:01.662+09:00  INFO 8132 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-05T18:06:01.852+09:00  INFO 8132 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@453f92db
+2025-11-05T18:06:01.854+09:00  INFO 8132 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-05T18:06:03.080+09:00  INFO 8132 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create schema rev
+Hibernate: create table rev.board (id uuid not null, description varchar(255), name varchar(255) not null, slug varchar(255) not null, primary key (id))
+Hibernate: create table rev.board_manager (board_id bigint not null, user_id bigint not null, primary key (board_id, user_id))
+Hibernate: create table rev.bookmark (thread_id bigint not null, user_id bigint not null, created_at timestamp(6) with time zone, primary key (thread_id, user_id))
+Hibernate: create table rev.comment (id uuid not null, content text not null, created_at timestamp(6) with time zone, updated_at timestamp(6) with time zone, author_id uuid, parent_id uuid, thread_id uuid, primary key (id))
+Hibernate: create table rev.comment_reaction (id bigint generated by default as identity, comment_id bigint not null, created_at timestamp(6) with time zone, kind varchar(255) not null check (kind in ('LIKE','DISLIKE')), user_id bigint not null, primary key (id))
+Hibernate: create table rev.comment_report (id bigint generated by default as identity, comment_id bigint not null, created_at timestamp(6) with time zone, detail text, reason varchar(255), reporter_id bigint not null, resolved_at timestamp(6) with time zone, resolved_by bigint, status varchar(255) check (status in ('OPEN','REVIEWING','RESOLVED','REJECTED')), primary key (id))
+Hibernate: create table rev.thread (id uuid not null, category_id uuid, content text not null, is_private boolean not null, title varchar(255) not null, author_id uuid, board_id uuid, parent_id uuid, primary key (id))
+Hibernate: create table rev.thread_attachment (id bigint generated by default as identity, duration integer, height integer, metadata jsonb, order_no integer not null, path varchar(255) not null, thread_id bigint not null, type varchar(255) not null, width integer, primary key (id))
+Hibernate: create table rev.thread_bookmark (id bigint generated by default as identity, created_at timestamp(6) with time zone not null, updated_at timestamp(6) with time zone, thread_id uuid not null, user uuid not null, primary key (id))
+2025-11-05T18:06:03.173+09:00  WARN 8132 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "create table rev.thread_bookmark (id bigint generated by default as identity, created_at timestamp(6) with time zone not null, updated_at timestamp(6) with time zone, thread_id uuid not null, user uuid not null, primary key (id))" via JDBC [ERROR: syntax error at or near "user"
+  Position: 193]
 
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
-    create table rev.thread_bookmark (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone not null,
-        updated_at timestamp(6) with time zone,
-        thread_id bigint not null,
-        user uuid not null,
-        primary key (id)
-    )" via JDBC [ERROR: syntax error at or near "user"
-  Position: 247]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "create table rev.thread_bookmark (id bigint generated by default as identity, created_at timestamp(6) with time zone not null, updated_at timestamp(6) with time zone, thread_id uuid not null, user uuid not null, primary key (id))" via JDBC [ERROR: syntax error at or near "user"
+  Position: 193]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:575) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:515) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
@@ -273,7 +190,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69) ~[gradle-worker.jar:na]
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74) ~[gradle-worker.jar:na]
 Caused by: org.postgresql.util.PSQLException: ERROR: syntax error at or near "user"
-  Position: 247
+  Position: 193
 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733) ~[postgresql-42.7.4.jar:42.7.4]
 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420) ~[postgresql-42.7.4.jar:42.7.4]
 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372) ~[postgresql-42.7.4.jar:42.7.4]
@@ -288,88 +205,33 @@ Caused by: org.postgresql.util.PSQLException: ERROR: syntax error at or near "us
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
 	... 126 common frames omitted
 
-Hibernate: 
-    create table rev.thread_reaction (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone not null,
-        updated_at timestamp(6) with time zone,
-        reaction varchar(255) not null check (reaction in ('LIKE','DISLIKE','WOW')),
-        thread_id bigint not null,
-        user_id uuid not null,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread_report (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone,
-        detail text,
-        reason varchar(255),
-        reporter_id bigint not null,
-        resolved_at timestamp(6) with time zone,
-        resolved_by bigint,
-        status varchar(255) check (status in ('OPEN','REVIEWING','RESOLVED','REJECTED')),
-        thread_id bigint not null,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread_tags (
-        thread_id bigint not null,
-        tag varchar(255)
-    )
-Hibernate: 
-    alter table if exists rev."user" 
-       add column password varchar(255) not null
-Hibernate: 
-    alter table if exists rev."user" 
-       add column username varchar(255) not null
-Hibernate: 
-    alter table if exists rev."user" 
-       drop constraint if exists UK5c856itaihtmi69ni04cmpc4m
-2025-11-05T14:19:56.546+09:00  WARN 9772 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-05T14:19:56.546+09:00  WARN 9772 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk5c856itaihtmi69ni04cmpc4m" of relation "user" does not exist, skipping
-Hibernate: 
-    alter table if exists rev."user" 
-       add constraint UK5c856itaihtmi69ni04cmpc4m unique (username)
-Hibernate: 
-    alter table if exists rev.comment 
-       add constraint FKrhy3r0t23ktix2xv13vri24n3 
-       foreign key (author_id) 
-       references rev."user"
-Hibernate: 
-    alter table if exists rev.comment 
-       add constraint FKde3rfu96lep00br5ov0mdieyt 
-       foreign key (parent_id) 
-       references rev.comment
-Hibernate: 
-    alter table if exists rev.comment 
-       add constraint FKehf7mvstlwwl8fy9ahfo515rm 
-       foreign key (thread_id) 
-       references rev.thread
-Hibernate: 
-    alter table if exists rev.thread_bookmark 
-       add constraint FK9dkl3jpalyih1k44a4m26wodl 
-       foreign key (thread_id) 
-       references rev.thread
-2025-11-05T14:19:56.619+09:00  WARN 9772 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-05T14:19:56.619+09:00  WARN 9772 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : relation "thread_bookmark" does not exist, skipping
-Hibernate: 
-    alter table if exists rev.thread_bookmark 
-       add constraint FKa3p687vmjgv91ifqlipmiy1ls 
-       foreign key (user) 
-       references rev."user"
-2025-11-05T14:19:56.620+09:00  WARN 9772 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
-    alter table if exists rev.thread_bookmark 
-       add constraint FKa3p687vmjgv91ifqlipmiy1ls 
-       foreign key (user) 
-       references rev."user"" via JDBC [ERROR: syntax error at or near "user"
-  Position: 123]
+Hibernate: create table rev.thread_reaction (id bigint generated by default as identity, created_at timestamp(6) with time zone not null, updated_at timestamp(6) with time zone, reaction varchar(255) not null check (reaction in ('LIKE','DISLIKE','WOW')), thread_id uuid not null, user_id uuid not null, primary key (id))
+Hibernate: create table rev.thread_report (id bigint generated by default as identity, created_at timestamp(6) with time zone, detail text, reason varchar(255), reporter_id bigint not null, resolved_at timestamp(6) with time zone, resolved_by bigint, status varchar(255) check (status in ('OPEN','REVIEWING','RESOLVED','REJECTED')), thread_id bigint not null, primary key (id))
+Hibernate: create table rev.thread_tags (thread_id uuid not null, tag varchar(255) not null)
+Hibernate: create table rev.users (id uuid not null, email varchar(255) not null, password varchar(255) not null, username varchar(255) not null, primary key (id))
+Hibernate: alter table if exists rev.users drop constraint if exists UK6dotkott2kjsp8vw4d0m25fb7
+2025-11-05T18:06:03.195+09:00  WARN 8132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-11-05T18:06:03.195+09:00  WARN 8132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk6dotkott2kjsp8vw4d0m25fb7" of relation "users" does not exist, skipping
+Hibernate: alter table if exists rev.users add constraint UK6dotkott2kjsp8vw4d0m25fb7 unique (email)
+Hibernate: alter table if exists rev.users drop constraint if exists UKr43af9ap4edm43mmtq01oddj6
+2025-11-05T18:06:03.199+09:00  WARN 8132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-11-05T18:06:03.199+09:00  WARN 8132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "ukr43af9ap4edm43mmtq01oddj6" of relation "users" does not exist, skipping
+Hibernate: alter table if exists rev.users add constraint UKr43af9ap4edm43mmtq01oddj6 unique (username)
+Hibernate: alter table if exists rev.comment add constraint FKir20vhrx08eh4itgpbfxip0s1 foreign key (author_id) references rev.users
+Hibernate: alter table if exists rev.comment add constraint FKde3rfu96lep00br5ov0mdieyt foreign key (parent_id) references rev.comment
+Hibernate: alter table if exists rev.comment add constraint FKehf7mvstlwwl8fy9ahfo515rm foreign key (thread_id) references rev.thread
+Hibernate: alter table if exists rev.thread add constraint FKsoku9fxjl3uunwb3wdwkegv43 foreign key (author_id) references rev.users
+Hibernate: alter table if exists rev.thread add constraint FKmhcs3jvpy4xqxnqw0f406u7gk foreign key (board_id) references rev.board
+Hibernate: alter table if exists rev.thread add constraint FKphko4l28q3sywielqnsqd3y3m foreign key (parent_id) references rev.thread
+Hibernate: alter table if exists rev.thread_bookmark add constraint FK9dkl3jpalyih1k44a4m26wodl foreign key (thread_id) references rev.thread
+2025-11-05T18:06:03.235+09:00  WARN 8132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-11-05T18:06:03.235+09:00  WARN 8132 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : relation "thread_bookmark" does not exist, skipping
+Hibernate: alter table if exists rev.thread_bookmark add constraint FKbxaf5jvxmn4lyy1t0ldsjqhc1 foreign key (user) references rev.users
+2025-11-05T18:06:03.236+09:00  WARN 8132 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "alter table if exists rev.thread_bookmark add constraint FKbxaf5jvxmn4lyy1t0ldsjqhc1 foreign key (user) references rev.users" via JDBC [ERROR: syntax error at or near "user"
+  Position: 99]
 
-org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
-    alter table if exists rev.thread_bookmark 
-       add constraint FKa3p687vmjgv91ifqlipmiy1ls 
-       foreign key (user) 
-       references rev."user"" via JDBC [ERROR: syntax error at or near "user"
-  Position: 123]
+org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "alter table if exists rev.thread_bookmark add constraint FKbxaf5jvxmn4lyy1t0ldsjqhc1 foreign key (user) references rev.users" via JDBC [ERROR: syntax error at or near "user"
+  Position: 99]
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:94) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlString(AbstractSchemaMigrator.java:575) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
 	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.applySqlStrings(AbstractSchemaMigrator.java:515) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
@@ -497,7 +359,7 @@ org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL "
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69) ~[gradle-worker.jar:na]
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74) ~[gradle-worker.jar:na]
 Caused by: org.postgresql.util.PSQLException: ERROR: syntax error at or near "user"
-  Position: 123
+  Position: 99
 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733) ~[postgresql-42.7.4.jar:42.7.4]
 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420) ~[postgresql-42.7.4.jar:42.7.4]
 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372) ~[postgresql-42.7.4.jar:42.7.4]
@@ -512,71 +374,18 @@ Caused by: org.postgresql.util.PSQLException: ERROR: syntax error at or near "us
 	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80) ~[hibernate-core-6.5.2.Final.jar:6.5.2.Final]
 	... 125 common frames omitted
 
-Hibernate: 
-    alter table if exists rev.thread_reaction 
-       add constraint FKk4ojpmmbcgxlsl6kqedm4u9ei 
-       foreign key (thread_id) 
-       references rev.thread
-Hibernate: 
-    alter table if exists rev.thread_reaction 
-       add constraint FKgt0uhp0wr7j3on14pye9ya4e8 
-       foreign key (user_id) 
-       references rev."user"
-Hibernate: 
-    alter table if exists rev.thread_tags 
-       add constraint FK4mckl9rh8gysqxt2kb0mpvitk 
-       foreign key (thread_id) 
-       references rev.thread
-2025-11-05T14:19:56.634+09:00  INFO 9772 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-05T14:19:57.050+09:00  INFO 9772 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-11-05T14:19:57.597+09:00  INFO 9772 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Started ThreadRepositoryTest in 3.111 seconds (process running for 13.641)
-Hibernate: 
-    select
-        ue1_0.id,
-        ue1_0.email,
-        ue1_0.password,
-        ue1_0.username 
-    from
-        rev."user" ue1_0 
-    where
-        ue1_0.id=?
-Hibernate: 
-    insert 
-    into
-        rev.
-        "user" (email, password, username, id) 
-    values
-        (?, ?, ?, ?)
-Hibernate: 
-    insert 
-    into
-        rev.board
-        (description, name, slug) 
-    values
-        (?, ?, ?) 
-    returning id
-Hibernate: 
-    insert 
-    into
-        rev.thread
-        (author_id, board_id, category_id, content, created_at, is_private, parent_id, title, updated_at) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?) 
-    returning id
-Hibernate: 
-    insert 
-    into
-        rev.thread_tags
-        (thread_id, tag) 
-    values
-        (?, ?)
-Hibernate: 
-    insert 
-    into
-        rev.thread_tags
-        (thread_id, tag) 
-    values
-        (?, ?)
+Hibernate: alter table if exists rev.thread_reaction add constraint FKk4ojpmmbcgxlsl6kqedm4u9ei foreign key (thread_id) references rev.thread
+Hibernate: alter table if exists rev.thread_reaction add constraint FKoi5chnr77a4rok8ke2a8tmses foreign key (user_id) references rev.users
+Hibernate: alter table if exists rev.thread_tags add constraint FK4mckl9rh8gysqxt2kb0mpvitk foreign key (thread_id) references rev.thread
+2025-11-05T18:06:03.249+09:00  INFO 8132 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-05T18:06:03.835+09:00  INFO 8132 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-05T18:06:04.373+09:00  INFO 8132 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Started ThreadRepositoryTest in 3.501 seconds (process running for 13.576)
+Hibernate: select ue1_0.id,ue1_0.email,ue1_0.password,ue1_0.username from rev.users ue1_0 where ue1_0.id=?
+Hibernate: insert into rev.users (email,password,username,id) values (?,?,?,?)
+Hibernate: insert into rev.board (description,name,slug,id) values (?,?,?,?)
+Hibernate: insert into rev.thread (author_id,board_id,category_id,content,is_private,parent_id,title,id) values (?,?,?,?,?,?,?,?)
+Hibernate: insert into rev.thread_tags (thread_id,tag) values (?,?)
+Hibernate: insert into rev.thread_tags (thread_id,tag) values (?,?)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

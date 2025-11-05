@@ -12,12 +12,3 @@ data class UpdateCommentReq(
     val content: String
 )
 
-data class CommentRes(
-    val id: Long,
-    val threadId: Long,
-    val authorId: UUID,
-    val content: String,
-    val parentId: Long?,
-    val createdAt: Instant,
-    val updatedAt: Instant?
-)

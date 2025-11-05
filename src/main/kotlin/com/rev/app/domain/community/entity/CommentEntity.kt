@@ -1,34 +1,37 @@
 package com.rev.app.domain.community.entity
 
 import com.rev.app.auth.UserEntity
-import com.rev.app.common.jpa.BaseTime
 import jakarta.persistence.*
-import org.hibernate.annotations.SQLDelete
-import org.hibernate.annotations.SQLRestriction
-
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.annotations.UuidGenerator
+import org.hibernate.type.SqlTypes
+import java.time.Instant
+import java.util.UUID
 
 @Entity
 @Table(name = "comment", schema = "rev")
-@SQLRestriction("deleted = false")
-open class CommentEntity(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+class CommentEntity(
+    @Id @GeneratedValue @UuidGenerator @JdbcTypeCode(SqlTypes.UUID)
+    var id: UUID? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "thread_id", nullable = false)
-    var thread: ThreadEntity,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "thread_id")
+    var thread: ThreadEntity? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "author_id", nullable = false)
-    var author: UserEntity,
-
-    @Column(nullable = false)
-    var content: String,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    var author: UserEntity? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     var parent: CommentEntity? = null,
 
-    @Column(nullable = false)
-    var deleted: Boolean = false
-) : BaseTime()
+    @Column(nullable = false, columnDefinition = "text")
+    var content: String,
+
+    @Column(name = "created_at")
+    var createdAt: Instant? = null,
+
+    @Column(name = "updated_at")
+    var updatedAt: Instant? = null
+)

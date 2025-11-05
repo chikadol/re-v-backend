@@ -1,49 +1,39 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.CommentRes
+import com.rev.app.api.service.community.dto.CreateCommentRequest
 import com.rev.app.domain.community.entity.CommentEntity
-import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.domain.community.repo.CommentRepository
 import com.rev.app.domain.community.repo.ThreadRepository
 import com.rev.app.auth.UserRepository
-import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class CommentService(
-    private val threadRepository: ThreadRepository,
     private val commentRepository: CommentRepository,
-    private val userRepository: UserRepository,
+    private val threadRepository: ThreadRepository,
+    private val userRepository: UserRepository
 ) {
-
     @Transactional
-    fun create(me: JwtPrincipal, threadId: Long, content: String, parentId: Long?): CommentRes {
-        val author = userRepository.getReferenceById(requireNotNull(me.userId))
-        val thread: ThreadEntity = threadRepository.getReferenceById(threadId)
-        val parent = parentId?.let { commentRepository.getReferenceById(it) }
+    fun create(userId: UUID, req: CreateCommentRequest): CommentRes {
+        val thread = threadRepository.findById(req.threadId).orElseThrow()
+        val parent = req.parentId?.let { commentRepository.findById(it).orElse(null) }
+        val author = userRepository.findById(userId).orElseThrow()
 
         val saved = commentRepository.save(
             CommentEntity(
                 thread = thread,
                 author = author,
-                content = content,
-                parent = parent,          // ✅ parent는 엔티티
+                parent = parent,
+                content = req.content
             )
         )
         return saved.toRes()
     }
 
-    @Transactional
-    fun listThreadComments(threadId: Long): List<CommentRes> {
-        val roots = commentRepository.findByThread_IdAndParentIsNullOrderByIdAsc(threadId)
-        // 간단한 2단 트리(루트 + 자식)
-        val res = mutableListOf<CommentRes>()
-        roots.forEach { r ->
-            res += r.toRes()
-            val children = commentRepository.findByParent_IdOrderByIdAsc(requireNotNull(r.id))
-            res += children.map { it.toRes() }
-        }
-        return res
-    }
+    @Transactional(readOnly = true)
+    fun listThreadComments(threadId: UUID): List<CommentRes> =
+        commentRepository.findAllByThreadId(threadId).map { it.toRes() }
 }

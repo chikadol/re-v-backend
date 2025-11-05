@@ -1,12 +1,19 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.api.service.community.dto.BoardRes
 import com.rev.app.domain.community.Board
+import java.util.UUID
 
-fun Board.toRes(): BoardRes =
-    BoardRes(
-        id = requireNotNull(id),
-        slug = slug,
-        name = name,
-        description = null       // 엔티티에 없으므로 일단 null
+data class BoardDto(
+    val id: UUID,
+    val name: String,
+    val slug: String,
+    val description: String?
+)
+
+fun Board.toDto(): BoardDto =
+    BoardDto(
+        id = requireNotNull(this.id),
+        name = this.name,
+        slug = this.slug,
+        description = this.description
     )

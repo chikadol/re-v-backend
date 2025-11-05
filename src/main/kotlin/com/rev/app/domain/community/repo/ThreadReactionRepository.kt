@@ -10,9 +10,9 @@ import java.util.UUID
 
 interface ThreadReactionRepository : JpaRepository<ThreadReaction, Long> {
 
-    fun findByThread_IdAndUser_Id(threadId: Long, userId: UUID): List<ThreadReaction>
+    fun findByThread_IdAndUser_Id(threadId: UUID, userId: UUID): List<ThreadReaction>
 
-    fun deleteByThread_IdAndUser_IdAndReaction(threadId: Long, userId: UUID, reaction: ReactionType): Long
+    fun deleteByThread_IdAndUser_IdAndReaction(threadId: UUID, userId: UUID, reaction: ReactionType): Long
 
     @Query(
         """

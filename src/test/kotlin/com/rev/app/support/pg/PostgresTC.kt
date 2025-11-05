@@ -1,3 +1,4 @@
+// src/test/kotlin/com/rev/app/support/pg/PostgresTC.kt
 package com.rev.app.support.pg
 
 import org.springframework.test.context.DynamicPropertyRegistry
@@ -6,40 +7,31 @@ import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
-/**
- * JUnit5 @Testcontainers 방식만 사용. 수동 start() 금지.
- * 테스트에서는 Flyway 끄고, init.sql로 스키마 생성.
- */
 @Testcontainers
 abstract class PostgresTC {
-
     companion object {
         @Container
         @JvmStatic
-        val postgres: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:15-alpine")
-            .withDatabaseName("testdb")
-            .withUsername("test")
-            .withPassword("test")
-            // ✅ 테스트 리소스에 넣은 스크립트로 스키마 생성
-            .withInitScript("db/test/init.sql")
+        val postgres = PostgreSQLContainer("postgres:16-alpine").apply {
+            withDatabaseName("test")
+            withUsername("test")
+            withPassword("test")
+        }
 
         @JvmStatic
         @DynamicPropertySource
-        fun dbProps(reg: DynamicPropertyRegistry) {
-            reg.add("spring.datasource.url", postgres::getJdbcUrl)
-            reg.add("spring.datasource.username", postgres::getUsername)
-            reg.add("spring.datasource.password", postgres::getPassword)
+        fun props(reg: DynamicPropertyRegistry) {
+            reg.add("spring.datasource.url") { postgres.jdbcUrl }
+            reg.add("spring.datasource.username") { postgres.username }
+            reg.add("spring.datasource.password") { postgres.password }
+            reg.add("spring.datasource.driver-class-name") { "org.postgresql.Driver" }
 
-            // 테스트에선 Flyway 비활성 + 하이버네이트가 테이블 생성
-            reg.add("spring.flyway.enabled") { false }
+            reg.add("spring.flyway.enabled") { "false" }
+            reg.add("spring.sql.init.mode") { "never" } // ★ 스프링 기본 초기화 비활성화
+
             reg.add("spring.jpa.hibernate.ddl-auto") { "update" }
-
-            // 기본 스키마 지정 (엔티티 테이블을 여기로 생성함)
+            reg.add("spring.jpa.properties.hibernate.hbm2ddl.create_namespaces") { "true" }
             reg.add("spring.jpa.properties.hibernate.default_schema") { "rev" }
-
-            // 디버깅 옵션
-            reg.add("spring.jpa.show-sql") { true }
-            reg.add("spring.jpa.properties.hibernate.format_sql") { true }
         }
     }
 }
