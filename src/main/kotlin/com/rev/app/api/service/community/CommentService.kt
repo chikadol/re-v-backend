@@ -9,9 +9,6 @@ import com.rev.app.auth.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
-import com.rev.app.api.service.community.toRes
-import com.rev.app.api.service.community.dto.BoardRes
-import com.rev.app.api.service.community.dto.ThreadRes
 
 @Service
 class CommentService(

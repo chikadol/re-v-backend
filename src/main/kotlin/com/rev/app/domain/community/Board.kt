@@ -7,22 +7,20 @@ import org.hibernate.type.SqlTypes
 import java.util.UUID
 
 @Entity
-@Table(name = "board", schema = "rev",
-    uniqueConstraints = [UniqueConstraint(name = "uk_board_slug", columnNames = ["slug"])])
+@Table(name = "board", schema = "rev", uniqueConstraints = [UniqueConstraint(columnNames = ["slug"])])
 class Board(
-
     @Id
     @GeneratedValue
     @UuidGenerator
     @JdbcTypeCode(SqlTypes.UUID)
     var id: UUID? = null,
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false)
     var name: String,
 
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false)
     var slug: String,
 
-    @Column(nullable = true, length = 500)
-    var description: String? = null
+    @Column(nullable = false)
+    var description: String
 )

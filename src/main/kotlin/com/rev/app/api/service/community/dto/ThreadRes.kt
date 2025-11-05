@@ -4,7 +4,7 @@ import java.time.Instant
 import java.util.UUID
 
 data class ThreadRes(
-    val id: UUID?,
+    val id: UUID,
     val title: String,
     val content: String,
     val boardId: UUID?,

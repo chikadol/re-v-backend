@@ -3,6 +3,7 @@
 import com.rev.app.auth.UserEntity
 import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.annotations.UuidGenerator
 import org.hibernate.type.SqlTypes
 import java.util.UUID
 
@@ -10,20 +11,21 @@ import java.util.UUID
 @Table(
     name = &quot;thread_bookmark&quot;,
     schema = &quot;rev&quot;,
-    uniqueConstraints = [UniqueConstraint(name = &quot;uk_bookmark_user_thread&quot;, columnNames = [&quot;user_id&quot;, &quot;thread_id&quot;])]
+    uniqueConstraints = [UniqueConstraint(columnNames = [&quot;thread_id&quot;, &quot;user_id&quot;])]
 )
-<span class="nc" id="L15">class ThreadBookmarkEntity(</span>
-<span class="nc" id="L16">    @Id</span>
+<span class="fc" id="L16">class ThreadBookmarkEntity(</span>
+<span class="pc" id="L17">    @Id</span>
+    @GeneratedValue
+    @UuidGenerator
     @JdbcTypeCode(SqlTypes.UUID)
-    @Column(nullable = false)
-<span class="nc" id="L19">    var id: UUID = UUID.randomUUID(),</span>
+<span class="pc" id="L21">    var id: UUID? = null,</span>
 
-<span class="nc" id="L21">    @ManyToOne(fetch = FetchType.LAZY)</span>
-    @JoinColumn(name = &quot;user_id&quot;, nullable = false)
-<span class="nc" id="L23">    var user: UserEntity,</span>
+<span class="pc" id="L23">    @ManyToOne(fetch = FetchType.LAZY)</span>
+    @JoinColumn(name = &quot;thread_id&quot;)
+<span class="pc" id="L25">    var thread: ThreadEntity? = null,</span>
 
-<span class="nc" id="L25">    @ManyToOne(fetch = FetchType.LAZY)</span>
-    @JoinColumn(name = &quot;thread_id&quot;, nullable = false)
-<span class="nc" id="L27">    var thread: ThreadEntity</span>
-<span class="nc" id="L28">)</span>
+<span class="pc" id="L27">    @ManyToOne(fetch = FetchType.LAZY)</span>
+    @JoinColumn(name = &quot;user_id&quot;)
+<span class="pc" id="L29">    var user: UserEntity? = null</span>
+<span class="fc" id="L30">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

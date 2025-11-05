@@ -76,8 +76,7 @@ class ThreadRepositoryTest : PostgresTC() {
                 author = user,
                 board = board,
                 categoryId = UUID.randomUUID(),
-                parent = null,
-                tags = listOf("x", "y")
+                parent = null
             )
         )
         threadRepository.flush()

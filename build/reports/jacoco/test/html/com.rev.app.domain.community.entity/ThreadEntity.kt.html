@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ThreadEntity.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.domain.community.entity</a> &gt; <span class="el_source">ThreadEntity.kt</span></div><h1>ThreadEntity.kt</h1><pre class="source lang-java linenums">// src/main/kotlin/com/rev/app/domain/community/entity/ThreadEntity.kt
-package com.rev.app.domain.community.entity
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ThreadEntity.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.domain.community.entity</a> &gt; <span class="el_source">ThreadEntity.kt</span></div><h1>ThreadEntity.kt</h1><pre class="source lang-java linenums">package com.rev.app.domain.community.entity
 
 import com.rev.app.auth.UserEntity
-import com.rev.app.domain.community.Board               // ✅ 엔티티 임포트
+import com.rev.app.domain.community.Board
 import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.annotations.UuidGenerator
@@ -12,55 +11,42 @@ import java.util.UUID
 
 @Entity
 @Table(name = &quot;thread&quot;, schema = &quot;rev&quot;)
-<span class="fc" id="L15">class ThreadEntity(</span>
-
-<span class="pc" id="L17">    @Id</span>
+<span class="fc" id="L14">class ThreadEntity(</span>
+<span class="pc" id="L15">    @Id</span>
     @GeneratedValue
     @UuidGenerator
     @JdbcTypeCode(SqlTypes.UUID)
-<span class="pc" id="L21">    var id: UUID? = null,</span>
+<span class="pc" id="L19">    var id: UUID? = null,</span>
 
-<span class="pc" id="L23">    @Column(nullable = false)</span>
-<span class="nc" id="L24">    var title: String,</span>
+<span class="pc" id="L21">    @Column(nullable = false)</span>
+<span class="nc" id="L22">    var title: String,</span>
 
-<span class="pc" id="L26">    @Column(nullable = false, columnDefinition = &quot;text&quot;)</span>
-<span class="nc" id="L27">    var content: String,</span>
+<span class="pc" id="L24">    @Column(nullable = false, columnDefinition = &quot;text&quot;)</span>
+<span class="nc" id="L25">    var content: String,</span>
 
-    // ✅ 연관관계는 엔티티 Board 를 가리켜야 함 (절대 BoardRes 아님)
-<span class="pc" id="L30">    @ManyToOne(fetch = FetchType.LAZY)</span>
+<span class="pc" id="L27">    @ManyToOne(fetch = FetchType.LAZY)</span>
     @JoinColumn(name = &quot;board_id&quot;)
-<span class="nc" id="L32">    var board: Board? = null,</span>
+<span class="nc" id="L29">    var board: Board? = null,</span>
 
-<span class="pc" id="L34">    @ManyToOne(fetch = FetchType.LAZY)</span>
+<span class="pc" id="L31">    @ManyToOne(fetch = FetchType.LAZY)</span>
     @JoinColumn(name = &quot;author_id&quot;)
-<span class="nc" id="L36">    var author: UserEntity? = null,</span>
+<span class="nc" id="L33">    var author: UserEntity? = null,</span>
 
-    // self FK: parent_id (uuid, ON DELETE SET NULL)
-<span class="pc" id="L39">    @ManyToOne(fetch = FetchType.LAZY)</span>
+<span class="pc" id="L35">    @ManyToOne(fetch = FetchType.LAZY)</span>
     @JoinColumn(name = &quot;parent_id&quot;)
-<span class="nc" id="L41">    var parent: ThreadEntity? = null,</span>
+<span class="nc" id="L37">    var parent: ThreadEntity? = null,</span>
 
-<span class="pc" id="L43">    @Column(name = &quot;is_private&quot;, nullable = false)</span>
-<span class="pc" id="L44">    var isPrivate: Boolean = false,</span>
+<span class="pc" id="L39">    @Column(name = &quot;is_private&quot;, nullable = false)</span>
+<span class="pc" id="L40">    var isPrivate: Boolean = false,</span>
 
-<span class="pc" id="L46">    @JdbcTypeCode(SqlTypes.UUID)</span>
+<span class="pc" id="L42">    @JdbcTypeCode(SqlTypes.UUID)</span>
     @Column(name = &quot;category_id&quot;)
-<span class="nc" id="L48">    var categoryId: UUID? = null,</span>
+<span class="nc" id="L44">    var categoryId: UUID? = null,</span>
 
-<span class="pc" id="L50">    @Column(name = &quot;created_at&quot;)</span>
-<span class="pc" id="L51">    var createdAt: Instant? = null,</span>
+<span class="pc" id="L46">    @Column(name = &quot;created_at&quot;, nullable = false)</span>
+<span class="pc" id="L47">    var createdAt: Instant = Instant.now(),</span>
 
-<span class="pc" id="L53">    @Column(name = &quot;updated_at&quot;)</span>
-<span class="pc" id="L54">    var updatedAt: Instant? = null,</span>
-
-    // 태그 컬럼/조인테이블 구조에 맞게 매핑해두셨다면 그에 맞춰 유지
-<span class="pc" id="L57">    @ElementCollection</span>
-    @CollectionTable(
-        name = &quot;thread_tags&quot;,
-        schema = &quot;rev&quot;,
-        joinColumns = [JoinColumn(name = &quot;thread_id&quot;)]
-    )
-    @Column(name = &quot;tag&quot;, nullable = false)
-<span class="nc" id="L64">    var tags: List&lt;String&gt; = emptyList()</span>
-<span class="fc" id="L65">)</span>
+<span class="pc" id="L49">    @Column(name = &quot;updated_at&quot;, nullable = false)</span>
+<span class="pc" id="L50">    var updatedAt: Instant = Instant.now()</span>
+<span class="fc" id="L51">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

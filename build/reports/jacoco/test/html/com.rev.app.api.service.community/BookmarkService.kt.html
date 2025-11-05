@@ -5,8 +5,8 @@ import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.repo.ThreadBookmarkRepository
 import com.rev.app.domain.community.repo.ThreadRepository
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
@@ -17,21 +17,18 @@ import java.util.UUID
 ) {
     @Transactional
     fun toggle(me: JwtPrincipal, threadId: UUID): Boolean {
-<span class="nc" id="L20">        val uid = me.userId!!</span>
-<span class="nc" id="L21">        val exists = bookmarkRepository.existsByUser_IdAndThread_Id(uid, threadId)</span>
-<span class="nc bnc" id="L22" title="All 2 branches missed.">        return if (exists) {</span>
-<span class="nc" id="L23">            bookmarkRepository.deleteByUser_IdAndThread_Id(uid, threadId)</span>
-<span class="nc" id="L24">            false</span>
-        } else {
-<span class="nc" id="L26">            val thread = threadRepository.getReferenceById(threadId)</span>
-<span class="nc" id="L27">            val user = userRepository.getReferenceById(uid)</span>
-<span class="nc" id="L28">            bookmarkRepository.save(ThreadBookmarkEntity(user = user, thread = thread))</span>
-<span class="nc" id="L29">            true</span>
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        val uid = requireNotNull(me.userId)</span>
+<span class="nc" id="L21">        val already = bookmarkRepository.existsByThread_IdAndUser_Id(threadId, uid)</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        if (already) {</span>
+<span class="nc" id="L23">            bookmarkRepository.deleteByThread_IdAndUser_Id(threadId, uid)</span>
+<span class="nc" id="L24">            return false</span>
         }
+<span class="nc" id="L26">        val thread = threadRepository.getReferenceById(threadId)</span>
+<span class="nc" id="L27">        val user = userRepository.getReferenceById(uid)</span>
+<span class="nc" id="L28">        bookmarkRepository.save(ThreadBookmarkEntity(thread = thread, user = user))</span>
+<span class="nc" id="L29">        return true</span>
     }
 
-    @Transactional(readOnly = true)
-    fun count(threadId: UUID): Long =
-<span class="nc" id="L35">        bookmarkRepository.countByThread_Id(threadId)</span>
+<span class="nc" id="L32">    fun count(threadId: UUID): Long = bookmarkRepository.countByThread_Id(threadId)</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

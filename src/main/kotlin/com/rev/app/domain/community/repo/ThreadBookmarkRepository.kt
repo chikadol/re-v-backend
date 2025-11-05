@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
 interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {
-    fun existsByUser_IdAndThread_Id(userId: UUID, threadId: UUID): Boolean
-    fun deleteByUser_IdAndThread_Id(userId: UUID, threadId: UUID)
     fun countByThread_Id(threadId: UUID): Long
+    fun existsByThread_IdAndUser_Id(threadId: UUID, userId: UUID): Boolean
+    fun deleteByThread_IdAndUser_Id(threadId: UUID, userId: UUID)
 }

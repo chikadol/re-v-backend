@@ -7,23 +7,21 @@ import org.hibernate.type.SqlTypes
 import java.util.UUID
 
 @Entity
-@Table(name = &quot;board&quot;, schema = &quot;rev&quot;,
-    uniqueConstraints = [UniqueConstraint(name = &quot;uk_board_slug&quot;, columnNames = [&quot;slug&quot;])])
-<span class="pc" id="L12">class Board(</span>
-
-<span class="pc" id="L14">    @Id</span>
+@Table(name = &quot;board&quot;, schema = &quot;rev&quot;, uniqueConstraints = [UniqueConstraint(columnNames = [&quot;slug&quot;])])
+<span class="pc" id="L11">class Board(</span>
+<span class="pc" id="L12">    @Id</span>
     @GeneratedValue
     @UuidGenerator
     @JdbcTypeCode(SqlTypes.UUID)
-<span class="nc" id="L18">    var id: UUID? = null,</span>
+<span class="nc" id="L16">    var id: UUID? = null,</span>
 
-<span class="pc" id="L20">    @Column(nullable = false, length = 100)</span>
-<span class="nc" id="L21">    var name: String,</span>
+<span class="pc" id="L18">    @Column(nullable = false)</span>
+<span class="nc" id="L19">    var name: String,</span>
 
-<span class="pc" id="L23">    @Column(nullable = false, length = 120)</span>
-<span class="nc" id="L24">    var slug: String,</span>
+<span class="pc" id="L21">    @Column(nullable = false)</span>
+<span class="nc" id="L22">    var slug: String,</span>
 
-<span class="pc" id="L26">    @Column(nullable = true, length = 500)</span>
-<span class="nc" id="L27">    var description: String? = null</span>
-<span class="nc" id="L28">)</span>
+<span class="pc" id="L24">    @Column(nullable = false)</span>
+<span class="nc" id="L25">    var description: String</span>
+<span class="nc" id="L26">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
