@@ -1,12 +1,14 @@
-// src/main/kotlin/com/rev/app/api/service/community/ThreadController.kt
 package com.rev.app.api.service.community
 
+import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.CreateThreadReq
 import com.rev.app.api.service.community.dto.ThreadRes
-import org.springframework.http.HttpStatus
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
+import org.springframework.http.MediaType
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.server.ResponseStatusException
 import java.util.UUID
 
 @RestController
@@ -14,27 +16,30 @@ import java.util.UUID
 class ThreadController(
     private val threadService: ThreadService
 ) {
-    @GetMapping("/{boardId}/threads")
+    // 허용 정렬 키 목록
+    private val allowedSort = setOf("createdAt", "updatedAt", "title")
+
+    @GetMapping("/{boardId}/threads", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun listPublic(
-        @PathVariable boardId: UUID,
-        @RequestParam(required = false, name = "sort") sorts: List<String>?
-    ): List<ThreadRes> {
-        val allowed = setOf("createdAt","updatedAt")
-        sorts?.forEach { s ->
-            val key = s.substringBefore(',').trim()
-            if (key.isNotBlank() && key !in allowed) {
-                throw ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid sort key: $key")
+        @PathVariable boardId: UUID,  // ✅ UUID
+        @PageableDefault(size = 10) pageable: Pageable
+    ): Page<ThreadRes> {
+        // ✅ 정렬 검증: 허용 키 외엔 400
+        pageable.sort.forEach { order ->
+            val prop = order.property
+            if (!allowedSort.contains(prop)) {
+                throw IllegalArgumentException("Unsupported sort key: $prop")
             }
         }
-        return threadService.listPublic(boardId)
+        return threadService.listPublic(boardId, pageable)
     }
 
-    @PostMapping("/boards/{boardId}")
+    @PostMapping("/boards/{boardId}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun createInBoard(
-        @PathVariable boardId: UUID,
-        @RequestBody req: CreateThreadReq,   // 이미 CreateThreadReq 로 정리하셨던 버전
-        @AuthenticationPrincipal principal: com.rev.app.api.security.JwtPrincipal
+        @AuthenticationPrincipal me: JwtPrincipal,
+        @PathVariable boardId: UUID,  // ✅ UUID
+        @RequestBody req: CreateThreadReq
     ): ThreadRes {
-        return threadService.createInBoard(principal.userId, boardId, req)
+        return threadService.createInBoard(me.userId, boardId, req)
     }
 }

@@ -4,6 +4,7 @@ import com.rev.app.api.service.community.dto.ThreadCreateReq
 import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.BoardRes
+import org.springframework.data.domain.Page
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -22,8 +23,11 @@ class BoardController(
     fun list(): List<BoardRes> = boardService.list()
 
     @GetMapping("/{boardId}/threads")
-    fun listPublic(@PathVariable boardId: UUID): List<ThreadRes?> =
-        threadService.listPublic(boardId)
+    fun listPublic(@PathVariable boardId: UUID): Page<ThreadRes> =
+        threadService.listPublic(
+            boardId,
+            pageable = org.springframework.data.domain.PageRequest.of(0, 10)
+        )
 
     @PostMapping("/{boardId}/threads")
     fun createInBoard(
