@@ -1,12 +1,19 @@
 package com.rev.app.api.common
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.RestControllerAdvice
 
-@ControllerAdvice
+@RestControllerAdvice
 class ApiExceptionHandler {
+
     @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIllegalArgument(e: IllegalArgumentException): ResponseEntity<Map<String, String>> =
-        ResponseEntity.badRequest().body(mapOf("error" to (e.message ?: "bad request")))
+    fun handleIllegalArgument(ex: IllegalArgumentException): ResponseEntity<Map<String, Any?>> {
+        val body = mapOf(
+            "error" to "bad_request",
+            "message" to ex.message
+        )
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body)
+    }
 }

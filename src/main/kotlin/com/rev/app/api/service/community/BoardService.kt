@@ -1,8 +1,8 @@
 package com.rev.app.api.service.community
-import com.rev.app.api.service.community.toRes
 import com.rev.app.api.service.community.dto.BoardRes
 import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.ThreadRes
+import com.rev.app.api.service.community.dto.toRes
 
 import com.rev.app.domain.community.repo.BoardRepository
 import org.springframework.stereotype.Service

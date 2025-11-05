@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.repo.ThreadRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-05T19:46:41.850Z" hostname="DESKTOP-2GU54QS" time="0.246">
+<testsuite name="com.rev.app.repo.ThreadRepositoryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-05T20:02:20.548Z" hostname="DESKTOP-2GU54QS" time="0.234">
   <properties/>
-  <testcase name="saveAndFind()" classname="com.rev.app.repo.ThreadRepositoryTest" time="0.246"/>
-  <system-out><![CDATA[2025-11-06T04:46:35.464+09:00  INFO 21812 --- [    Test worker] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
-2025-11-06T04:46:35.471+09:00  INFO 21812 --- [    Test worker] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
-2025-11-06T04:46:35.740+09:00  INFO 21812 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
-2025-11-06T04:46:36.042+09:00  INFO 21812 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
-2025-11-06T04:46:36.044+09:00  INFO 21812 --- [    Test worker] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
-2025-11-06T04:46:36.067+09:00  INFO 21812 --- [    Test worker] org.testcontainers.DockerClientFactory   : Connected to docker: 
+  <testcase name="saveAndFind()" classname="com.rev.app.repo.ThreadRepositoryTest" time="0.234"/>
+  <system-out><![CDATA[2025-11-06T05:02:14.042+09:00  INFO 8064 --- [    Test worker] org.testcontainers.images.PullPolicy     : Image pull policy will be performed by: DefaultPullPolicy()
+2025-11-06T05:02:14.046+09:00  INFO 8064 --- [    Test worker] o.t.utility.ImageNameSubstitutor         : Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+2025-11-06T05:02:14.335+09:00  INFO 8064 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+2025-11-06T05:02:14.650+09:00  INFO 8064 --- [    Test worker] o.t.d.DockerClientProviderStrategy       : Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+2025-11-06T05:02:14.652+09:00  INFO 8064 --- [    Test worker] org.testcontainers.DockerClientFactory   : Docker host IP address is localhost
+2025-11-06T05:02:14.675+09:00  INFO 8064 --- [    Test worker] org.testcontainers.DockerClientFactory   : Connected to docker: 
   Server Version: 28.4.0
   API Version: 1.51
   Operating System: Docker Desktop
   Total Memory: 11874 MB
-2025-11-06T04:46:36.171+09:00  INFO 21812 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Creating container for image: testcontainers/ryuk:0.7.0
-2025-11-06T04:46:36.285+09:00  INFO 21812 --- [    Test worker] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
-2025-11-06T04:46:36.433+09:00  INFO 21812 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 is starting: 3720134254cef914b646991c36a059ca260ea27438146a9ebf58018903d06035
-2025-11-06T04:46:36.793+09:00  INFO 21812 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 started in PT0.6224432S
-2025-11-06T04:46:36.800+09:00  INFO 21812 --- [    Test worker] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
-2025-11-06T04:46:36.800+09:00  INFO 21812 --- [    Test worker] org.testcontainers.DockerClientFactory   : Checking the system...
-2025-11-06T04:46:36.801+09:00  INFO 21812 --- [    Test worker] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
-2025-11-06T04:46:36.801+09:00  INFO 21812 --- [    Test worker] tc.postgres:16-alpine                    : Creating container for image: postgres:16-alpine
-2025-11-06T04:46:36.878+09:00  INFO 21812 --- [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine is starting: c90826a7a2291a7474ce000a3a7e7dac1233f7289288cf5f2672fcccc7dd542b
-2025-11-06T04:46:38.541+09:00  INFO 21812 --- [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine started in PT1.7402358S
-2025-11-06T04:46:38.542+09:00  INFO 21812 --- [    Test worker] tc.postgres:16-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:56855/test?loggerLevel=OFF)
-2025-11-06T04:46:38.547+09:00  INFO 21812 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rev.app.repo.ThreadRepositoryTest]: ThreadRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-06T04:46:38.563+09:00  INFO 21812 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadRepositoryTest
+2025-11-06T05:02:14.794+09:00  INFO 8064 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Creating container for image: testcontainers/ryuk:0.7.0
+2025-11-06T05:02:14.892+09:00  INFO 8064 --- [    Test worker] o.t.utility.RegistryAuthLocator          : Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+2025-11-06T05:02:15.021+09:00  INFO 8064 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 is starting: 458c3e31a10884ed74519acabd0f42f51531c18ea8ad14ec90cbab0ebc2ff6ac
+2025-11-06T05:02:15.423+09:00  INFO 8064 --- [    Test worker] tc.testcontainers/ryuk:0.7.0             : Container testcontainers/ryuk:0.7.0 started in PT0.6291987S
+2025-11-06T05:02:15.429+09:00  INFO 8064 --- [    Test worker] o.t.utility.RyukResourceReaper           : Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+2025-11-06T05:02:15.429+09:00  INFO 8064 --- [    Test worker] org.testcontainers.DockerClientFactory   : Checking the system...
+2025-11-06T05:02:15.430+09:00  INFO 8064 --- [    Test worker] org.testcontainers.DockerClientFactory   : ✔︎ Docker server version should be at least 1.6.0
+2025-11-06T05:02:15.430+09:00  INFO 8064 --- [    Test worker] tc.postgres:16-alpine                    : Creating container for image: postgres:16-alpine
+2025-11-06T05:02:15.503+09:00  INFO 8064 --- [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine is starting: ce28e44e30435edccb40237e5ac98486b81e8374677dd3ff3a5a410c67d2ecd2
+2025-11-06T05:02:17.304+09:00  INFO 8064 --- [    Test worker] tc.postgres:16-alpine                    : Container postgres:16-alpine started in PT1.8740912S
+2025-11-06T05:02:17.305+09:00  INFO 8064 --- [    Test worker] tc.postgres:16-alpine                    : Container is started (JDBC URL: jdbc:postgresql://localhost:61736/test?loggerLevel=OFF)
+2025-11-06T05:02:17.309+09:00  INFO 8064 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rev.app.repo.ThreadRepositoryTest]: ThreadRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-11-06T05:02:17.325+09:00  INFO 8064 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -35,18 +35,18 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2025-11-06T04:46:38.587+09:00  INFO 21812 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Starting ThreadRepositoryTest using Java 21.0.8 with PID 21812 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
-2025-11-06T04:46:38.588+09:00  INFO 21812 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
-2025-11-06T04:46:38.724+09:00  INFO 21812 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-06T04:46:38.803+09:00  INFO 21812 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 69 ms. Found 12 JPA repository interfaces.
-2025-11-06T04:46:39.005+09:00  INFO 21812 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-06T04:46:39.098+09:00  INFO 21812 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-11-06T04:46:39.145+09:00  INFO 21812 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-11-06T04:46:39.310+09:00  INFO 21812 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-06T04:46:39.350+09:00  INFO 21812 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-11-06T04:46:39.507+09:00  INFO 21812 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@eaf83af
-2025-11-06T04:46:39.508+09:00  INFO 21812 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-11-06T04:46:40.667+09:00  INFO 21812 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-06T05:02:17.351+09:00  INFO 8064 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Starting ThreadRepositoryTest using Java 21.0.8 with PID 8064 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
+2025-11-06T05:02:17.351+09:00  INFO 8064 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : No active profile set, falling back to 1 default profile: "default"
+2025-11-06T05:02:17.495+09:00  INFO 8064 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-06T05:02:17.559+09:00  INFO 8064 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 12 JPA repository interfaces.
+2025-11-06T05:02:17.760+09:00  INFO 8064 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-06T05:02:17.837+09:00  INFO 8064 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-11-06T05:02:17.878+09:00  INFO 8064 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-06T05:02:18.068+09:00  INFO 8064 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-06T05:02:18.106+09:00  INFO 8064 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-06T05:02:18.288+09:00  INFO 8064 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@585444b
+2025-11-06T05:02:18.290+09:00  INFO 8064 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-06T05:02:19.407+09:00  INFO 8064 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: create schema rev
 Hibernate: create table rev.board (id uuid not null, description varchar(255) not null, name varchar(255) not null, slug varchar(255) not null, primary key (id))
 Hibernate: create table rev.board_manager (board_id bigint not null, user_id bigint not null, primary key (board_id, user_id))
@@ -61,16 +61,16 @@ Hibernate: create table rev.thread_reaction (id bigint generated by default as i
 Hibernate: create table rev.thread_report (id bigint generated by default as identity, created_at timestamp(6) with time zone, detail text, reason varchar(255), reporter_id bigint not null, resolved_at timestamp(6) with time zone, resolved_by bigint, status varchar(255) check (status in ('OPEN','REVIEWING','RESOLVED','REJECTED')), thread_id bigint not null, primary key (id))
 Hibernate: create table rev.users (id uuid not null, email varchar(255) not null, password varchar(255) not null, username varchar(255) not null, primary key (id))
 Hibernate: alter table if exists rev.board drop constraint if exists UKjhnutdml9y6jl7acxum90oy1r
-2025-11-06T04:46:40.770+09:00  WARN 21812 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-06T04:46:40.770+09:00  WARN 21812 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "ukjhnutdml9y6jl7acxum90oy1r" of relation "board" does not exist, skipping
+2025-11-06T05:02:19.508+09:00  WARN 8064 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-11-06T05:02:19.508+09:00  WARN 8064 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "ukjhnutdml9y6jl7acxum90oy1r" of relation "board" does not exist, skipping
 Hibernate: alter table if exists rev.board add constraint UKjhnutdml9y6jl7acxum90oy1r unique (slug)
 Hibernate: alter table if exists rev.thread_bookmark drop constraint if exists UK6o6nbty958akso4r6i7iuijhi
-2025-11-06T04:46:40.774+09:00  WARN 21812 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-06T04:46:40.775+09:00  WARN 21812 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk6o6nbty958akso4r6i7iuijhi" of relation "thread_bookmark" does not exist, skipping
+2025-11-06T05:02:19.512+09:00  WARN 8064 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-11-06T05:02:19.512+09:00  WARN 8064 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk6o6nbty958akso4r6i7iuijhi" of relation "thread_bookmark" does not exist, skipping
 Hibernate: alter table if exists rev.thread_bookmark add constraint UK6o6nbty958akso4r6i7iuijhi unique (thread_id, user_id)
 Hibernate: alter table if exists rev.users drop constraint if exists UK6dotkott2kjsp8vw4d0m25fb7
-2025-11-06T04:46:40.777+09:00  WARN 21812 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-06T04:46:40.778+09:00  WARN 21812 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk6dotkott2kjsp8vw4d0m25fb7" of relation "users" does not exist, skipping
+2025-11-06T05:02:19.515+09:00  WARN 8064 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
+2025-11-06T05:02:19.515+09:00  WARN 8064 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk6dotkott2kjsp8vw4d0m25fb7" of relation "users" does not exist, skipping
 Hibernate: alter table if exists rev.users add constraint UK6dotkott2kjsp8vw4d0m25fb7 unique (email)
 Hibernate: alter table if exists rev.comment add constraint FKir20vhrx08eh4itgpbfxip0s1 foreign key (author_id) references rev.users
 Hibernate: alter table if exists rev.comment add constraint FKde3rfu96lep00br5ov0mdieyt foreign key (parent_id) references rev.comment
@@ -82,9 +82,9 @@ Hibernate: alter table if exists rev.thread_bookmark add constraint FK9dkl3jpaly
 Hibernate: alter table if exists rev.thread_bookmark add constraint FKd807aikm7wtjrehek406bh78j foreign key (user_id) references rev.users
 Hibernate: alter table if exists rev.thread_reaction add constraint FKk4ojpmmbcgxlsl6kqedm4u9ei foreign key (thread_id) references rev.thread
 Hibernate: alter table if exists rev.thread_reaction add constraint FKoi5chnr77a4rok8ke2a8tmses foreign key (user_id) references rev.users
-2025-11-06T04:46:40.825+09:00  INFO 21812 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-06T04:46:41.284+09:00  INFO 21812 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-11-06T04:46:41.847+09:00  INFO 21812 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Started ThreadRepositoryTest in 3.278 seconds (process running for 14.067)
+2025-11-06T05:02:19.561+09:00  INFO 8064 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-06T05:02:20.029+09:00  INFO 8064 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-06T05:02:20.546+09:00  INFO 8064 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Started ThreadRepositoryTest in 3.214 seconds (process running for 13.879)
 Hibernate: select ue1_0.id,ue1_0.email,ue1_0.password,ue1_0.username from rev.users ue1_0 where ue1_0.id=?
 Hibernate: select b1_0.id,b1_0.description,b1_0.name,b1_0.slug from rev.board b1_0 where b1_0.id=?
 Hibernate: insert into rev.users (email,password,username,id) values (?,?,?,?)

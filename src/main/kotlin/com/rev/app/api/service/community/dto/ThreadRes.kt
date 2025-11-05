@@ -14,5 +14,5 @@ data class ThreadRes(
     val categoryId: UUID?,
     val createdAt: Instant?,
     val updatedAt: Instant?,
-    val tags: List<String> = emptyList()
+    val tags: List<String> = emptyList() // 엔티티에 없으면 빈 리스트로 내려줌
 )

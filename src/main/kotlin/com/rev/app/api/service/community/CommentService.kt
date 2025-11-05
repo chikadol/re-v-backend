@@ -2,6 +2,7 @@ package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentRequest
+import com.rev.app.api.service.community.dto.toRes
 import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.repo.CommentRepository
 import com.rev.app.domain.community.repo.ThreadRepository
