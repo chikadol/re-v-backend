@@ -12,10 +12,24 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.jdbc.datasource.init.ScriptUtils
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.jdbc.Sql
+import org.springframework.test.context.jdbc.SqlConfig
 import java.util.UUID
 
+@Sql(
+    scripts = [
+        "/test/sql/01_fix_users_fk.sql",
+        "/test/sql/02_seed_minimal.sql"
+    ],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+)
+@Sql(
+    scripts = ["classpath:test/sql/99_cleanup.sql"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD,
+    config = SqlConfig(separator = ScriptUtils.EOF_STATEMENT_SEPARATOR)
+)
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -25,9 +39,6 @@ import java.util.UUID
         "spring.jpa.hibernate.ddl-auto=update",
         "spring.jpa.properties.hibernate.default_schema=rev"
     ]
-)@Sql(
-    scripts = ["/test/sql/01_fix_users_fk.sql"],
-    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
 )
 class ThreadRepositoryTest : PostgresTC() {
 
@@ -39,9 +50,20 @@ class ThreadRepositoryTest : PostgresTC() {
     fun saveAndFind() {
         // 1) 부모 엔티티 먼저 INSERT (+ flush)
         val user = userRepository.save(
-            UserEntity(username = "u", password = "p", email = "e@example.com")
+            UserEntity(
+                id = UUID.randomUUID(),
+                username = "u-${UUID.randomUUID()}",
+                password = "p",
+                email = "u_${UUID.randomUUID()}@example.com" // ← 매번 다른 값
+            )
         )
-        val board = boardRepository.save(Board(name="b", slug="b", description="d"))
+        val board = boardRepository.save(
+            Board(
+                name = "b",
+                slug = "b-${UUID.randomUUID()}",  // ← 유니크
+                description = "desc"
+            )
+        )
         userRepository.flush()
         boardRepository.flush()
 

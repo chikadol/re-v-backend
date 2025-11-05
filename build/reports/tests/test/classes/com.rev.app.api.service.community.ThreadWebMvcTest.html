@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.050s</div>
+<div class="counter">0.052s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,12 +79,12 @@
 </thead>
 <tr>
 <td class="success">listPublic_invalidSort_400()</td>
-<td class="success">0.032s</td>
+<td class="success">0.031s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">listPublic_ok()</td>
-<td class="success">0.018s</td>
+<td class="success">0.021s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -92,8 +92,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>04:52:55.814 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.rev.app.api.service.community.ThreadWebMvcTest]: ThreadWebMvcTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-04:52:55.955 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.api.service.community.ThreadWebMvcTest
+<pre>14:19:49.514 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.rev.app.api.service.community.ThreadWebMvcTest]: ThreadWebMvcTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:19:49.635 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.api.service.community.ThreadWebMvcTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -104,20 +104,20 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2025-11-04T04:52:56.426+09:00  INFO 7032 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Starting ThreadWebMvcTest using Java 21.0.8 with PID 7032 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
-2025-11-04T04:52:56.428+09:00  INFO 7032 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-11-04T04:52:57.806+09:00  WARN 7032 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2025-11-05T14:19:50.012+09:00  INFO 9772 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Starting ThreadWebMvcTest using Java 21.0.8 with PID 9772 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
+2025-11-05T14:19:50.014+09:00  INFO 9772 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-11-05T14:19:51.093+09:00  WARN 9772 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: a62e00ca-0848-4341-8e98-cad37763246e
+Using generated security password: 9cba3f8c-dca5-4316-a688-0b98900234eb
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-11-04T04:52:57.849+09:00  INFO 7032 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-11-04T04:52:58.011+09:00  INFO 7032 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2025-11-04T04:52:58.011+09:00  INFO 7032 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-04T04:52:58.012+09:00  INFO 7032 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2025-11-04T04:52:58.041+09:00  INFO 7032 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Started ThreadWebMvcTest in 2.01 seconds (process running for 8.178)
-2025-11-04T04:52:58.096+09:00  WARN 7032 --- [    Test worker] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+2025-11-05T14:19:51.118+09:00  INFO 9772 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-05T14:19:51.263+09:00  INFO 9772 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-05T14:19:51.264+09:00  INFO 9772 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-05T14:19:51.265+09:00  INFO 9772 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-11-05T14:19:51.292+09:00  INFO 9772 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Started ThreadWebMvcTest in 1.595 seconds (process running for 7.335)
+2025-11-05T14:19:51.346+09:00  WARN 9772 --- [    Test worker] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
@@ -132,7 +132,7 @@ This generated password is for development use only. Your security configuration
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14</a> at 2025. 11. 4. 오전 4:53:06</p>
+<a href="https://www.gradle.org">Gradle 8.14</a> at 2025. 11. 5. 오후 2:19:58</p>
 </div>
 </div>
 </body>
