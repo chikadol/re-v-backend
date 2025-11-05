@@ -10,18 +10,19 @@ import java.util.UUID
 @Table(
     name = "thread_bookmark",
     schema = "rev",
-    uniqueConstraints = [UniqueConstraint(columnNames = ["thread_id", "user_id"])]
+    uniqueConstraints = [UniqueConstraint(name = "uk_bookmark_user_thread", columnNames = ["user_id", "thread_id"])]
 )
 class ThreadBookmarkEntity(
     @Id
     @JdbcTypeCode(SqlTypes.UUID)
+    @Column(nullable = false)
     var id: UUID = UUID.randomUUID(),
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "thread_id")
-    var thread: ThreadEntity,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    var user: UserEntity,
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id")
-    var user: UserEntity
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "thread_id", nullable = false)
+    var thread: ThreadEntity
 )

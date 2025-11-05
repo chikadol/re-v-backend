@@ -3,6 +3,7 @@ package com.rev.app.api.service.community
 import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentRequest
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -14,11 +15,12 @@ class CommentController(
 ) {
     @PostMapping
     fun create(
-        @AuthenticationPrincipal principal: JwtPrincipal,
+        @AuthenticationPrincipal me: JwtPrincipal,
         @RequestBody req: CreateCommentRequest
-    ): CommentRes = commentService.create(principal.userId, req)
+    ): CommentRes =
+        commentService.create(requireNotNull(me.userId), req)
 
     @GetMapping("/threads/{threadId}")
-    fun listByThread(@PathVariable threadId: UUID): List<CommentRes> =
-        commentService.listThreadComments(threadId)
+    fun listThreadComments(@PathVariable threadId: UUID): ResponseEntity<List<CommentRes>> =
+        ResponseEntity.ok(commentService.listThreadComments(threadId))
 }

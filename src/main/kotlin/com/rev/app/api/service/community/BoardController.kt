@@ -1,10 +1,9 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.api.service.community.dto.ThreadCreateReq
-import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.BoardRes
-import org.springframework.data.domain.Page
+import com.rev.app.api.service.community.dto.CreateThreadReq
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -15,25 +14,19 @@ class BoardController(
     private val boardService: BoardService,
     private val threadService: ThreadService
 ) {
-    @GetMapping("/{id}")
-    fun get(@PathVariable id: UUID): BoardRes =
-        boardService.get(id)
-
     @GetMapping
-    fun list(): List<BoardRes> = boardService.list()
+    fun listBoards(): List<BoardRes> = boardService.list()
 
-    @GetMapping("/{boardId}/threads")
-    fun listPublic(@PathVariable boardId: UUID): Page<ThreadRes> =
-        threadService.listPublic(
-            boardId,
-            pageable = org.springframework.data.domain.PageRequest.of(0, 10)
-        )
+    @GetMapping("/{id}")
+    fun getBoard(@PathVariable id: UUID): BoardRes = boardService.get(id)
 
+    // 보드에 쓰레드 생성 (기존 ThreadCreateReq → CreateThreadReq 로 통일)
     @PostMapping("/{boardId}/threads")
-    fun createInBoard(
+    fun createThreadInBoard(
+        @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable boardId: UUID,
-        @AuthenticationPrincipal principal: JwtPrincipal,
-        @RequestBody req: ThreadCreateReq
-    ): ThreadRes? =
-        threadService.createInBoard(boardId, principal.userId, req)
+        @RequestBody req: CreateThreadReq
+    ): ResponseEntity<*> = ResponseEntity.ok(
+        threadService.createInBoard(requireNotNull(me.userId), boardId, req)
+    )
 }

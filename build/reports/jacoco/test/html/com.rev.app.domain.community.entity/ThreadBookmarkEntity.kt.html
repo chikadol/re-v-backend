@@ -10,19 +10,20 @@ import java.util.UUID
 @Table(
     name = &quot;thread_bookmark&quot;,
     schema = &quot;rev&quot;,
-    uniqueConstraints = [UniqueConstraint(columnNames = [&quot;thread_id&quot;, &quot;user_id&quot;])]
+    uniqueConstraints = [UniqueConstraint(name = &quot;uk_bookmark_user_thread&quot;, columnNames = [&quot;user_id&quot;, &quot;thread_id&quot;])]
 )
 <span class="nc" id="L15">class ThreadBookmarkEntity(</span>
 <span class="nc" id="L16">    @Id</span>
     @JdbcTypeCode(SqlTypes.UUID)
-<span class="nc" id="L18">    var id: UUID = UUID.randomUUID(),</span>
+    @Column(nullable = false)
+<span class="nc" id="L19">    var id: UUID = UUID.randomUUID(),</span>
 
-<span class="nc" id="L20">    @ManyToOne(fetch = FetchType.LAZY, optional = false)</span>
-    @JoinColumn(name = &quot;thread_id&quot;)
-<span class="nc" id="L22">    var thread: ThreadEntity,</span>
+<span class="nc" id="L21">    @ManyToOne(fetch = FetchType.LAZY)</span>
+    @JoinColumn(name = &quot;user_id&quot;, nullable = false)
+<span class="nc" id="L23">    var user: UserEntity,</span>
 
-<span class="nc" id="L24">    @ManyToOne(fetch = FetchType.LAZY, optional = false)</span>
-    @JoinColumn(name = &quot;user_id&quot;)
-<span class="nc" id="L26">    var user: UserEntity</span>
-<span class="nc" id="L27">)</span>
+<span class="nc" id="L25">    @ManyToOne(fetch = FetchType.LAZY)</span>
+    @JoinColumn(name = &quot;thread_id&quot;, nullable = false)
+<span class="nc" id="L27">    var thread: ThreadEntity</span>
+<span class="nc" id="L28">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

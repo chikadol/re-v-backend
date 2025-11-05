@@ -1,6 +1,6 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.domain.community.Board
+import com.rev.app.api.service.community.dto.BoardRes
 import java.util.UUID
 
 data class BoardDto(
@@ -10,7 +10,7 @@ data class BoardDto(
     val description: String?
 )
 
-fun Board.toDto(): BoardDto =
+fun BoardRes.toDto(): BoardDto =
     BoardDto(
         id = requireNotNull(this.id),
         name = this.name,

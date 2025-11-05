@@ -1,40 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoardController.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.api.service.community</a> &gt; <span class="el_source">BoardController.kt</span></div><h1>BoardController.kt</h1><pre class="source lang-java linenums">package com.rev.app.api.service.community
 
-import com.rev.app.api.service.community.dto.ThreadCreateReq
-import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.BoardRes
-import org.springframework.data.domain.Page
+import com.rev.app.api.service.community.dto.CreateThreadReq
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
 @RequestMapping(&quot;/api/boards&quot;)
-<span class="nc" id="L14">class BoardController(</span>
-<span class="nc" id="L15">    private val boardService: BoardService,</span>
-<span class="nc" id="L16">    private val threadService: ThreadService</span>
+<span class="nc" id="L13">class BoardController(</span>
+<span class="nc" id="L14">    private val boardService: BoardService,</span>
+<span class="nc" id="L15">    private val threadService: ThreadService</span>
 ) {
-    @GetMapping(&quot;/{id}&quot;)
-    fun get(@PathVariable id: UUID): BoardRes =
-<span class="nc" id="L20">        boardService.get(id)</span>
-
     @GetMapping
-<span class="nc" id="L23">    fun list(): List&lt;BoardRes&gt; = boardService.list()</span>
+<span class="nc" id="L18">    fun listBoards(): List&lt;BoardRes&gt; = boardService.list()</span>
 
-    @GetMapping(&quot;/{boardId}/threads&quot;)
-    fun listPublic(@PathVariable boardId: UUID): Page&lt;ThreadRes&gt; =
-<span class="nc" id="L27">        threadService.listPublic(</span>
-<span class="nc" id="L28">            boardId,</span>
-<span class="nc" id="L29">            pageable = org.springframework.data.domain.PageRequest.of(0, 10)</span>
-<span class="nc" id="L30">        )</span>
+    @GetMapping(&quot;/{id}&quot;)
+<span class="nc" id="L21">    fun getBoard(@PathVariable id: UUID): BoardRes = boardService.get(id)</span>
 
+    // 보드에 쓰레드 생성 (기존 ThreadCreateReq → CreateThreadReq 로 통일)
     @PostMapping(&quot;/{boardId}/threads&quot;)
-    fun createInBoard(
+    fun createThreadInBoard(
+        @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable boardId: UUID,
-        @AuthenticationPrincipal principal: JwtPrincipal,
-        @RequestBody req: ThreadCreateReq
-    ): ThreadRes? =
-<span class="nc" id="L38">        threadService.createInBoard(boardId, principal.userId, req)</span>
+        @RequestBody req: CreateThreadReq
+<span class="nc" id="L29">    ): ResponseEntity&lt;*&gt; = ResponseEntity.ok(</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        threadService.createInBoard(requireNotNull(me.userId), boardId, req)</span>
+<span class="nc" id="L31">    )</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

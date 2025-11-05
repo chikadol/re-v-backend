@@ -1,14 +1,15 @@
 // src/test/kotlin/com/rev/app/repo/ThreadRepositoryTest.kt
 package com.rev.app.repo
 
+import com.rev.app.api.service.community.dto.BoardRes
 import com.rev.app.auth.UserEntity
-import com.rev.app.domain.community.Board
 import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.repo.BoardRepository        // ← 메인 패키지의 리포지토리
 import com.rev.app.domain.community.repo.ThreadRepository       // ← 메인 패키지의 리포지토리
 import com.rev.app.domain.community.repo.CommentRepository      // ← 메인 패키지의 리포지토리
 import com.rev.app.auth.UserRepository                          // ← 메인 패키지의 리포지토리
+import com.rev.app.domain.community.Board
 import com.rev.app.support.pg.PostgresTC
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -61,7 +62,8 @@ class ThreadRepositoryTest : PostgresTC() {
             Board(
                 name = "b",
                 slug = uniqueSlug(),
-                description = "desc"
+                description = "desc",
+                id = UUID.randomUUID()
             )
         )
         userRepository.flush()

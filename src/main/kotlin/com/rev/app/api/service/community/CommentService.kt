@@ -9,6 +9,9 @@ import com.rev.app.auth.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
+import com.rev.app.api.service.community.toRes
+import com.rev.app.api.service.community.dto.BoardRes
+import com.rev.app.api.service.community.dto.ThreadRes
 
 @Service
 class CommentService(
@@ -18,9 +21,9 @@ class CommentService(
 ) {
     @Transactional
     fun create(userId: UUID, req: CreateCommentRequest): CommentRes {
-        val thread = threadRepository.findById(req.threadId).orElseThrow()
-        val parent = req.parentId?.let { commentRepository.findById(it).orElse(null) }
-        val author = userRepository.findById(userId).orElseThrow()
+        val thread = threadRepository.getReferenceById(req.threadId)
+        val author = userRepository.getReferenceById(userId)
+        val parent = req.parentId?.let { commentRepository.getReferenceById(it) }
 
         val saved = commentRepository.save(
             CommentEntity(
@@ -35,5 +38,5 @@ class CommentService(
 
     @Transactional(readOnly = true)
     fun listThreadComments(threadId: UUID): List<CommentRes> =
-        commentRepository.findAllByThreadId(threadId).map { it.toRes() }
+        commentRepository.findAllByThread_Id(threadId).map { it.toRes() }
 }

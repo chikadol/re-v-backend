@@ -6,7 +6,7 @@ import com.rev.app.api.service.community.dto.ThreadRes
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -16,30 +16,27 @@ import java.util.UUID
 class ThreadController(
     private val threadService: ThreadService
 ) {
-    // 허용 정렬 키 목록
-    private val allowedSort = setOf("createdAt", "updatedAt", "title")
+    private val allowedSort = setOf("createdAt", "updatedAt")
 
-    @GetMapping("/{boardId}/threads", produces = [MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("/{boardId}/threads")
     fun listPublic(
-        @PathVariable boardId: UUID,  // ✅ UUID
+        @PathVariable boardId: UUID,
         @PageableDefault(size = 10) pageable: Pageable
     ): Page<ThreadRes> {
-        // ✅ 정렬 검증: 허용 키 외엔 400
-        pageable.sort.forEach { order ->
-            val prop = order.property
-            if (!allowedSort.contains(prop)) {
-                throw IllegalArgumentException("Unsupported sort key: $prop")
-            }
-        }
+        // 간단한 sort 화이트리스트
+        val invalid = pageable.sort
+            .filter { it.property !in allowedSort }
+            .any()
+        if (invalid) throw IllegalArgumentException("Unsupported sort key")
+
         return threadService.listPublic(boardId, pageable)
     }
 
-    @PostMapping("/boards/{boardId}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping("/boards/{boardId}")
     fun createInBoard(
         @AuthenticationPrincipal me: JwtPrincipal,
-        @PathVariable boardId: UUID,  // ✅ UUID
+        @PathVariable boardId: UUID,
         @RequestBody req: CreateThreadReq
-    ): ThreadRes {
-        return threadService.createInBoard(me.userId, boardId, req)
-    }
+    ): ResponseEntity<ThreadRes> =
+        ResponseEntity.ok(threadService.createInBoard(me.userId!!, boardId, req))
 }

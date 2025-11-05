@@ -5,8 +5,8 @@ import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.repo.ThreadBookmarkRepository
 import com.rev.app.domain.community.repo.ThreadRepository
-import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
@@ -15,37 +15,23 @@ import java.util.UUID
 <span class="nc" id="L15">    private val bookmarkRepository: ThreadBookmarkRepository,</span>
 <span class="nc" id="L16">    private val userRepository: UserRepository</span>
 ) {
-
-    /**
-     * 존재하면 삭제(언북마크), 없으면 생성(북마크) -&gt; true = 북마크됨, false = 해제됨
-     */
     @Transactional
     fun toggle(me: JwtPrincipal, threadId: UUID): Boolean {
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        val userId = requireNotNull(me.userId) { &quot;userId missing&quot; }</span>
-
-        // 존재 확인
-<span class="nc" id="L27">        val exists = bookmarkRepository.existsByThread_IdAndUser_Id(threadId, userId)</span>
-<span class="nc bnc" id="L28" title="All 2 branches missed.">        if (exists) {</span>
-<span class="nc" id="L29">            bookmarkRepository.deleteByThread_IdAndUser_Id(threadId, userId)</span>
-<span class="nc" id="L30">            return false</span>
+<span class="nc" id="L20">        val uid = me.userId!!</span>
+<span class="nc" id="L21">        val exists = bookmarkRepository.existsByUser_IdAndThread_Id(uid, threadId)</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        return if (exists) {</span>
+<span class="nc" id="L23">            bookmarkRepository.deleteByUser_IdAndThread_Id(uid, threadId)</span>
+<span class="nc" id="L24">            false</span>
+        } else {
+<span class="nc" id="L26">            val thread = threadRepository.getReferenceById(threadId)</span>
+<span class="nc" id="L27">            val user = userRepository.getReferenceById(uid)</span>
+<span class="nc" id="L28">            bookmarkRepository.save(ThreadBookmarkEntity(user = user, thread = thread))</span>
+<span class="nc" id="L29">            true</span>
         }
-
-        // 프록시 로딩(엔티티 존재 보장)
-<span class="nc" id="L34">        val threadRef = threadRepository.getReferenceById(threadId)</span>
-<span class="nc" id="L35">        val userRef = userRepository.getReferenceById(userId)</span>
-
-        // 저장
-<span class="nc" id="L38">        bookmarkRepository.save(</span>
-<span class="nc" id="L39">            ThreadBookmarkEntity(</span>
-<span class="nc" id="L40">                thread = threadRef,</span>
-<span class="nc" id="L41">                user = userRef</span>
-            )
-        )
-<span class="nc" id="L44">        return true</span>
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     fun count(threadId: UUID): Long =
-<span class="nc" id="L49">        bookmarkRepository.countByThread_Id(threadId)</span>
+<span class="nc" id="L35">        bookmarkRepository.countByThread_Id(threadId)</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

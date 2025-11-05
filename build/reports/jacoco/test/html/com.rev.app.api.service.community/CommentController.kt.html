@@ -3,23 +3,25 @@
 import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentRequest
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
 @RequestMapping(&quot;/api/comments&quot;)
-<span class="nc" id="L12">class CommentController(</span>
-<span class="nc" id="L13">    private val commentService: CommentService</span>
+<span class="nc" id="L13">class CommentController(</span>
+<span class="nc" id="L14">    private val commentService: CommentService</span>
 ) {
     @PostMapping
     fun create(
-        @AuthenticationPrincipal principal: JwtPrincipal,
+        @AuthenticationPrincipal me: JwtPrincipal,
         @RequestBody req: CreateCommentRequest
-<span class="nc" id="L19">    ): CommentRes = commentService.create(principal.userId, req)</span>
+    ): CommentRes =
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        commentService.create(requireNotNull(me.userId), req)</span>
 
     @GetMapping(&quot;/threads/{threadId}&quot;)
-    fun listByThread(@PathVariable threadId: UUID): List&lt;CommentRes&gt; =
-<span class="nc" id="L23">        commentService.listThreadComments(threadId)</span>
+    fun listThreadComments(@PathVariable threadId: UUID): ResponseEntity&lt;List&lt;CommentRes&gt;&gt; =
+<span class="nc" id="L25">        ResponseEntity.ok(commentService.listThreadComments(threadId))</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
