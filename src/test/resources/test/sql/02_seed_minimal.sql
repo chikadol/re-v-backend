@@ -1,20 +1,20 @@
--- 02_seed_minimal.sql
--- Pure SQL seed; assumes tables exist. No DO $$ blocks.
-
+-- 포터블 시드 (PG/H2 둘 다 동작)
 CREATE SCHEMA IF NOT EXISTS rev;
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
--- Make sure UUID defaults exist (harmless if already set)
-ALTER TABLE rev.users ALTER COLUMN id SET DEFAULT gen_random_uuid();
-ALTER TABLE rev.board ALTER COLUMN id SET DEFAULT gen_random_uuid();
-ALTER TABLE rev.thread ALTER COLUMN id SET DEFAULT gen_random_uuid();
+-- users 테이블이 없으면 생성 (기본키/유니크 포함)
+CREATE TABLE IF NOT EXISTS rev.users (
+                                         id       UUID PRIMARY KEY,
+                                         email    VARCHAR(255) NOT NULL,
+                                         username VARCHAR(255) NOT NULL,
+                                         password VARCHAR(255) NOT NULL
+);
 
--- Seed one user
-INSERT INTO rev.users (email, username, password)
-VALUES ('e@example.com', 'u', '{noop}pw')
-ON CONFLICT (email) DO NOTHING;
+-- email 유니크 인덱스 (H2/PG 모두 동작)
+CREATE UNIQUE INDEX IF NOT EXISTS ux_users_email ON rev.users(email);
 
--- Seed one board
-INSERT INTO rev.board (id, name, slug, description)
-VALUES (gen_random_uuid(), 'General', 'general', 'default board')
-ON CONFLICT (slug) DO NOTHING;
+-- 시드: 이미 있으면 건너뜀 (ON CONFLICT 대신 WHERE NOT EXISTS)
+INSERT INTO rev.users (id, email, username, password)
+SELECT '11111111-1111-1111-1111-111111111111', 'e@example.com', 'u', '{noop}pw'
+WHERE NOT EXISTS (
+    SELECT 1 FROM rev.users WHERE email = 'e@example.com'
+);

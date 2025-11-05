@@ -1,5 +1,4 @@
-// src/main/kotlin/com/rev/app/api/service/community/dto/ThreadBookmarkDto.kt
-package com.rev.app.api.service.community.dto
+package com.rev.app.api.service.community.entity
 
 import java.time.Instant
 import java.util.UUID

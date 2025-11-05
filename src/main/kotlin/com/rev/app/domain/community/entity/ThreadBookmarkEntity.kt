@@ -1,20 +1,27 @@
 package com.rev.app.domain.community.entity
 
 import com.rev.app.auth.UserEntity
-import com.rev.app.common.jpa.BaseTime
 import jakarta.persistence.*
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
+import java.util.UUID
 
 @Entity
-@Table(name = "thread_bookmark", schema = "rev")
-open class ThreadBookmarkEntity(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+@Table(
+    name = "thread_bookmark",
+    schema = "rev",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["thread_id", "user_id"])]
+)
+class ThreadBookmarkEntity(
+    @Id
+    @JdbcTypeCode(SqlTypes.UUID)
+    var id: UUID = UUID.randomUUID(),
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "thread_id", nullable = false)
+    @JoinColumn(name = "thread_id")
     var thread: ThreadEntity,
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user", nullable = false)
-    var user: UserEntity,
-) : BaseTime()
+    @JoinColumn(name = "user_id")
+    var user: UserEntity
+)

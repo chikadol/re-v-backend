@@ -19,25 +19,24 @@ import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.jdbc.Sql
 import java.util.UUID
 
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(
+    properties = [
+        "spring.flyway.enabled=true",
+        "spring.flyway.schemas=rev",
+        "spring.jpa.hibernate.ddl-auto=validate",
+        "spring.jpa.properties.hibernate.default_schema=rev",
+        "spring.jpa.properties.hibernate.hbm2ddl.create_namespaces=true"
+    ]
+)
 @Sql(
-    scripts = ["/test/sql/05_align_thread_and_tags.sql",
-        "/test/sql/02_seed_minimal.sql"],
+    scripts = ["/test/sql/02_seed_minimal.sql"],
     executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
 )
 @Sql(
     scripts = ["/test/sql/99_cleanup.sql"],
     executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
-)
-
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestPropertySource(
-    properties = [
-        "spring.flyway.enabled=false",
-        "spring.jpa.hibernate.ddl-auto=update",
-        "spring.jpa.properties.hibernate.default_schema=rev",
-        "spring.jpa.properties.hibernate.hbm2ddl.create_namespaces=true"
-    ]
 )
 class ThreadRepositoryTest : PostgresTC() {
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-11-05T17:53:21.864Z" hostname="DESKTOP-2GU54QS" time="3.132">
+<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-11-05T18:33:26.164Z" hostname="DESKTOP-2GU54QS" time="2.988">
   <properties/>
-  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="2.607"/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.37"/>
-  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.152"/>
-  <system-out><![CDATA[02:53:23.074 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
-02:53:23.594 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-02:53:23.596 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-02:53:23.600 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 3 ms
-02:53:24.483 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-02:53:24.483 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-02:53:24.483 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-02:53:24.853 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-02:53:24.853 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-02:53:24.853 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="2.465"/>
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.381"/>
+  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.139"/>
+  <system-out><![CDATA[03:33:27.337 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+03:33:27.849 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+03:33:27.849 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+03:33:27.853 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 3 ms
+03:33:28.640 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+03:33:28.640 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+03:33:28.641 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+03:33:29.021 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+03:33:29.021 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+03:33:29.021 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
 ]]></system-out>
   <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
 WARNING: A Java agent has been loaded dynamically (C:\Users\luelue\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
