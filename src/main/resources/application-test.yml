@@ -1,7 +1,11 @@
 spring:
   flyway:
     enabled: true
-    locations: classpath:db/migration
+    # ✅ 'locations '라는 단어 빼고, 리스트/CSV로 정확히 지정
+    locations:
+      - classpath:db/migration
+      # 필요하면 테스트용 추가 경로도 가능:
+      # - classpath:test/db/migration
     schemas: rev
   jpa:
     hibernate:

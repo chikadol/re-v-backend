@@ -12,18 +12,29 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/threads")
 class ThreadController(
-    private val threadService: ThreadService
+    private val service: ThreadService
 ) {
+    private val allowSort = setOf("createdAt", "updatedAt", "title")
+
     @GetMapping("/{boardId}/threads")
     fun listPublic(
         @PathVariable boardId: UUID,
         pageable: Pageable
-    ): Page<ThreadRes> = threadService.listPublic(boardId, pageable)
+    ): Page<ThreadRes> {
+        // 허용되지 않은 정렬키면 400
+        pageable.sort.forEach {
+            require(it.property in allowSort) { "Unsupported sort: ${it.property}" }
+        }
+        return service.listPublic(boardId, pageable)
+    }
 
     @PostMapping("/boards/{boardId}")
     fun createInBoard(
-        @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable boardId: UUID,
+        @AuthenticationPrincipal me: JwtPrincipal,
         @RequestBody req: CreateThreadReq
-    ): ThreadRes = threadService.createInBoard(requireNotNull(me.userId), boardId, req)
+    ): ThreadRes {
+        val userId = requireNotNull(me.userId)
+        return service.createInBoard(userId, boardId, req)
+    }
 }

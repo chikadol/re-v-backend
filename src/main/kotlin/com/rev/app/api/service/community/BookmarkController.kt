@@ -10,13 +10,16 @@ import java.util.UUID
 class BookmarkController(
     private val bookmarkService: BookmarkService
 ) {
-    @PostMapping("/{threadId}/toggle")
+    @PostMapping("/threads/{threadId}/toggle")
     fun toggle(
         @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable threadId: UUID
-    ): Map<String, Any> {
-        val toggled = bookmarkService.toggle(requireNotNull(me.userId), threadId)
-        val count = bookmarkService.count(threadId)
-        return mapOf("bookmarked" to toggled, "count" to count)
+    ): Boolean {
+        return bookmarkService.toggle(me, threadId) // ✅ 인자 순서: (me, threadId)
+    }
+
+    @GetMapping("/threads/{threadId}/count")
+    fun count(@PathVariable threadId: UUID): Long {
+        return bookmarkService.count(threadId)
     }
 }

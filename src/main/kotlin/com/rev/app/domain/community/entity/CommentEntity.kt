@@ -29,5 +29,6 @@ class CommentEntity(
     @Column(nullable = false, columnDefinition = "text")
     var content: String,
 
-    var createdAt: Instant? = Instant.now()
+    var createdAt: Instant? = Instant.now(),
+    var updatedAt: Instant? = Instant.now()
 )

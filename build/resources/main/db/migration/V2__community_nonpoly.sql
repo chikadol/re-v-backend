@@ -1,147 +1,35 @@
--- V2__community_nonpoly.sql
-SET search_path TO rev, public;
+-- V2__community_nonpoly.sql (안전/멱등 버전)
 
-DO $$ BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'reaction_kind') THEN
-        CREATE TYPE reaction_kind AS ENUM('LIKE','DISLIKE');
-    END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'moderation_action') THEN
-        CREATE TYPE moderation_action AS ENUM('PIN','UNPIN','HIDE','DELETE','RESTORE');
-    END IF;
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'report_status') THEN
-        CREATE TYPE report_status AS ENUM('OPEN','REVIEWING','RESOLVED','REJECTED');
-    END IF;
-END $$;
+CREATE SCHEMA IF NOT EXISTS rev;
 
-CREATE TABLE IF NOT EXISTS board (
-  id BIGSERIAL PRIMARY KEY,
-  slug TEXT UNIQUE NOT NULL,
-  name TEXT NOT NULL,
-  is_anonymous_allowed BOOLEAN DEFAULT TRUE,
-  is_private BOOLEAN DEFAULT FALSE,
-  rules JSONB DEFAULT '{}'::jsonb,
-  created_at TIMESTAMPTZ DEFAULT now()
-);
+-- 1) created_at 없으면 추가 후 백필
+ALTER TABLE IF EXISTS rev.board
+    ADD COLUMN IF NOT EXISTS created_at timestamptz;
 
-CREATE TABLE IF NOT EXISTS thread (
-  id BIGSERIAL PRIMARY KEY,
-  board_id BIGINT NOT NULL REFERENCES board(id) ON DELETE CASCADE,
-  author_id BIGINT NOT NULL REFERENCES "user"(id),
-  title TEXT NOT NULL,
-  content TEXT,
-  is_anonymous BOOLEAN DEFAULT FALSE,
-  display_no BIGINT NOT NULL,
-  view_count BIGINT DEFAULT 0,
-  like_count INT DEFAULT 0,
-  dislike_count INT DEFAULT 0,
-  comment_count INT DEFAULT 0,
-  pinned_until TIMESTAMPTZ,
-  deleted_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  updated_at TIMESTAMPTZ DEFAULT now()
-);
-CREATE UNIQUE INDEX IF NOT EXISTS uq_thread_board_display ON thread(board_id, display_no);
+UPDATE rev.board
+SET created_at = COALESCE(created_at, now())
+WHERE created_at IS NULL;
 
-CREATE TABLE IF NOT EXISTS thread_attachment (
-  id BIGSERIAL PRIMARY KEY,
-  thread_id BIGINT NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
-  type TEXT NOT NULL,
-  path TEXT NOT NULL,
-  width INT,
-  height INT,
-  duration INT,
-  order_no INT DEFAULT 0,
-  metadata JSONB DEFAULT '{}'::jsonb
-);
+ALTER TABLE IF EXISTS rev.board
+    ALTER COLUMN created_at SET NOT NULL;
+ALTER TABLE IF EXISTS rev.board
+    ALTER COLUMN created_at SET DEFAULT now();
 
-CREATE TABLE IF NOT EXISTS comment (
-  id BIGSERIAL PRIMARY KEY,
-  thread_id BIGINT NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
-  parent_id BIGINT REFERENCES comment(id) ON DELETE CASCADE,
-  author_id BIGINT NOT NULL REFERENCES "user"(id),
-  content TEXT NOT NULL,
-  is_anonymous BOOLEAN DEFAULT FALSE,
-  like_count INT DEFAULT 0,
-  deleted_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT now()
-);
+-- 2) display_no 없으면 추가
+ALTER TABLE IF EXISTS rev.board
+    ADD COLUMN IF NOT EXISTS display_no integer;
 
-CREATE TABLE IF NOT EXISTS bookmark (
-  user_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-  thread_id BIGINT NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  PRIMARY KEY(user_id, thread_id)
-);
+-- 3) display_no 초기화 (created_at 있는 상태이므로 안전)
+WITH numbered AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY created_at NULLS LAST, id) AS rn
+    FROM rev.board
+)
+UPDATE rev.board b
+SET display_no = n.rn
+FROM numbered n
+WHERE b.id = n.id
+  AND b.display_no IS NULL;
 
-CREATE TABLE IF NOT EXISTS thread_reaction (
-  id BIGSERIAL PRIMARY KEY,
-  thread_id BIGINT NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
-  user_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-  kind reaction_kind NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  UNIQUE(user_id, thread_id, kind)
-);
-
-CREATE TABLE IF NOT EXISTS comment_reaction (
-  id BIGSERIAL PRIMARY KEY,
-  comment_id BIGINT NOT NULL REFERENCES comment(id) ON DELETE CASCADE,
-  user_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-  kind reaction_kind NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  UNIQUE(user_id, comment_id, kind)
-);
-
-CREATE TABLE IF NOT EXISTS thread_report (
-  id BIGSERIAL PRIMARY KEY,
-  thread_id BIGINT NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
-  reporter_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-  status report_status DEFAULT 'OPEN',
-  reason TEXT,
-  detail TEXT,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  resolved_by BIGINT REFERENCES "user"(id),
-  resolved_at TIMESTAMPTZ
-);
-
-CREATE TABLE IF NOT EXISTS comment_report (
-  id BIGSERIAL PRIMARY KEY,
-  comment_id BIGINT NOT NULL REFERENCES comment(id) ON DELETE CASCADE,
-  reporter_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-  status report_status DEFAULT 'OPEN',
-  reason TEXT,
-  detail TEXT,
-  created_at TIMESTAMPTZ DEFAULT now(),
-  resolved_by BIGINT REFERENCES "user"(id),
-  resolved_at TIMESTAMPTZ
-);
-
-CREATE TABLE IF NOT EXISTS board_manager (
-  board_id BIGINT NOT NULL REFERENCES board(id) ON DELETE CASCADE,
-  user_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-  PRIMARY KEY(board_id, user_id)
-);
-
-CREATE TABLE IF NOT EXISTS view_log_daily (
-  date DATE NOT NULL,
-  thread_id BIGINT NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
-  views BIGINT DEFAULT 0,
-  PRIMARY KEY(date, thread_id)
-);
-
-CREATE TABLE IF NOT EXISTS thread_moderation_log (
-  id BIGSERIAL PRIMARY KEY,
-  thread_id BIGINT NOT NULL REFERENCES thread(id) ON DELETE CASCADE,
-  actor_user_id BIGINT NOT NULL REFERENCES "user"(id),
-  action moderation_action NOT NULL,
-  reason TEXT,
-  created_at TIMESTAMPTZ DEFAULT now()
-);
-
-CREATE TABLE IF NOT EXISTS comment_moderation_log (
-  id BIGSERIAL PRIMARY KEY,
-  comment_id BIGINT NOT NULL REFERENCES comment(id) ON DELETE CASCADE,
-  actor_user_id BIGINT NOT NULL REFERENCES "user"(id),
-  action moderation_action NOT NULL,
-  reason TEXT,
-  created_at TIMESTAMPTZ DEFAULT now()
-);
+-- 필요하면 NOT NULL/DEFAULT 정책 추가
+-- ALTER TABLE rev.board ALTER COLUMN display_no SET NOT NULL;
+-- ALTER TABLE rev.board ALTER COLUMN display_no SET DEFAULT 0;

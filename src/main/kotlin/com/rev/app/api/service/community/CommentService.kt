@@ -4,6 +4,7 @@ import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentRequest
 import com.rev.app.api.service.community.dto.toRes
 import com.rev.app.auth.UserRepository
+import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.repo.CommentRepository
 import com.rev.app.domain.community.repo.ThreadRepository
 import org.springframework.stereotype.Service
@@ -23,7 +24,7 @@ class CommentService(
         val parent = req.parentId?.let { commentRepository.getReferenceById(it) }
 
         val saved = commentRepository.save(
-            com.rev.app.domain.community.entity.CommentEntity(
+            CommentEntity(
                 thread = thread,
                 author = author,
                 parent = parent,
@@ -35,5 +36,5 @@ class CommentService(
 
     @Transactional(readOnly = true)
     fun listThreadComments(threadId: UUID): List<CommentRes> =
-        commentRepository.findAllByThread_IdOrderByCreatedAtAsc(threadId).map { it.toRes() }
+        commentRepository.findAllByThread_Id(threadId).map { it.toRes() }
 }

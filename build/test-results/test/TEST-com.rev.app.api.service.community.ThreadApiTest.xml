@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-11-06T16:10:54.484Z" hostname="DESKTOP-2GU54QS" time="1.663">
+<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2025-11-06T18:11:02.711Z" hostname="DESKTOP-2GU54QS" time="3.274">
   <properties/>
-  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="1.278"/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.342"/>
-  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.04"/>
-  <system-out><![CDATA[2025-11-07T01:10:55.059+09:00  INFO 15120 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-11-07T01:10:55.060+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-07T01:10:55.068+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
-2025-11-07T01:10:55.774+09:00  INFO 15120 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-11-07T01:10:55.774+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-07T01:10:55.774+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-11-07T01:10:56.113+09:00  INFO 15120 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-11-07T01:10:56.113+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-07T01:10:56.114+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="2.795"/>
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.477"/>
+  <system-out><![CDATA[03:11:04.587 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+03:11:05.044 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+03:11:05.044 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+03:11:05.049 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 4 ms
+03:11:05.514 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+03:11:05.514 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+03:11:05.514 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
 ]]></system-out>
-  <system-err><![CDATA[]]></system-err>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\luelue\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
 </testsuite>

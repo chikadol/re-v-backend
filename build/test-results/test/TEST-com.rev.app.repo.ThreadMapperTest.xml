@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.repo.ThreadMapperTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-06T16:10:53.725Z" hostname="DESKTOP-2GU54QS" time="0.627">
+<testsuite name="com.rev.app.repo.ThreadMapperTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-06T18:11:13.399Z" hostname="DESKTOP-2GU54QS" time="0.231">
   <properties/>
-  <testcase name="roundTrip_ok()" classname="com.rev.app.repo.ThreadMapperTest" time="0.627"/>
-  <system-out><![CDATA[01:10:46.635 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.rev.app.repo.ThreadMapperTest]: ThreadMapperTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-01:10:46.835 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadMapperTest
+  <testcase name="roundTrip_ok()" classname="com.rev.app.repo.ThreadMapperTest" time="0.231"/>
+  <system-out><![CDATA[2025-11-07T03:11:08.290+09:00  INFO 5268 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rev.app.repo.ThreadMapperTest]: ThreadMapperTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-11-07T03:11:08.310+09:00  INFO 5268 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadMapperTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,225 +14,32 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2025-11-07T01:10:47.411+09:00  INFO 15120 --- [    Test worker] com.rev.app.repo.ThreadMapperTest        : Starting ThreadMapperTest using Java 21.0.8 with PID 15120 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
-2025-11-07T01:10:47.413+09:00  INFO 15120 --- [    Test worker] com.rev.app.repo.ThreadMapperTest        : No active profile set, falling back to 1 default profile: "default"
-2025-11-07T01:10:48.482+09:00  INFO 15120 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-07T01:10:48.566+09:00  INFO 15120 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 12 JPA repository interfaces.
-2025-11-07T01:10:49.005+09:00  INFO 15120 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-07T01:10:49.089+09:00  INFO 15120 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-11-07T01:10:49.126+09:00  INFO 15120 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-11-07T01:10:49.439+09:00  INFO 15120 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-07T01:10:49.475+09:00  INFO 15120 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-11-07T01:10:50.083+09:00  INFO 15120 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@21032dfd
-2025-11-07T01:10:50.085+09:00  INFO 15120 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-11-07T01:10:51.516+09:00  INFO 15120 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-Hibernate: 
-    create table rev.board (
-        id uuid not null,
-        created_at timestamp(6) with time zone,
-        description varchar(255),
-        name varchar(255) not null,
-        slug varchar(255) not null,
-        updated_at timestamp(6) with time zone,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.board_manager (
-        board_id bigint not null,
-        user_id bigint not null,
-        primary key (board_id, user_id)
-    )
-Hibernate: 
-    create table rev.bookmark (
-        thread_id bigint not null,
-        user_id bigint not null,
-        created_at timestamp(6) with time zone,
-        primary key (thread_id, user_id)
-    )
-Hibernate: 
-    create table rev.comment (
-        id uuid not null,
-        content text not null,
-        created_at timestamp(6) with time zone,
-        updated_at timestamp(6) with time zone,
-        author_id uuid,
-        parent_id uuid,
-        thread_id uuid,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.comment_reaction (
-        id bigint generated by default as identity,
-        comment_id bigint not null,
-        created_at timestamp(6) with time zone,
-        kind varchar(255) not null check (kind in ('LIKE','DISLIKE')),
-        user_id bigint not null,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.comment_report (
-        id bigint generated by default as identity,
-        comment_id bigint not null,
-        created_at timestamp(6) with time zone,
-        detail text,
-        reason varchar(255),
-        reporter_id bigint not null,
-        resolved_at timestamp(6) with time zone,
-        resolved_by bigint,
-        status varchar(255) check (status in ('OPEN','REVIEWING','RESOLVED','REJECTED')),
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread (
-        id uuid not null,
-        category_id uuid,
-        content text not null,
-        created_at timestamp(6) with time zone,
-        is_private boolean not null,
-        title varchar(255) not null,
-        updated_at timestamp(6) with time zone,
-        author_id uuid,
-        board_id uuid,
-        parent_id uuid,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread_attachment (
-        id bigint generated by default as identity,
-        duration integer,
-        height integer,
-        metadata jsonb,
-        order_no integer not null,
-        path varchar(255) not null,
-        thread_id bigint not null,
-        type varchar(255) not null,
-        width integer,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread_bookmark (
-        id uuid not null,
-        thread_id uuid,
-        user_id uuid,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread_reaction (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone not null,
-        updated_at timestamp(6) with time zone,
-        reaction varchar(255) not null check (reaction in ('LIKE','DISLIKE','WOW')),
-        thread_id uuid not null,
-        user_id uuid not null,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.thread_report (
-        id bigint generated by default as identity,
-        created_at timestamp(6) with time zone,
-        detail text,
-        reason varchar(255),
-        reporter_id bigint not null,
-        resolved_at timestamp(6) with time zone,
-        resolved_by bigint,
-        status varchar(255) check (status in ('OPEN','REVIEWING','RESOLVED','REJECTED')),
-        thread_id bigint not null,
-        primary key (id)
-    )
-Hibernate: 
-    create table rev.users (
-        id uuid not null,
-        email varchar(255) not null,
-        password varchar(255) not null,
-        username varchar(255) not null,
-        primary key (id)
-    )
-Hibernate: 
-    alter table if exists rev.board 
-       drop constraint if exists UKjhnutdml9y6jl7acxum90oy1r
-2025-11-07T01:10:52.022+09:00  WARN 15120 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-07T01:10:52.022+09:00  WARN 15120 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "ukjhnutdml9y6jl7acxum90oy1r" of relation "board" does not exist, skipping
-Hibernate: 
-    alter table if exists rev.board 
-       add constraint UKjhnutdml9y6jl7acxum90oy1r unique (slug)
-Hibernate: 
-    alter table if exists rev.thread_bookmark 
-       drop constraint if exists UK6o6nbty958akso4r6i7iuijhi
-2025-11-07T01:10:52.042+09:00  WARN 15120 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-07T01:10:52.042+09:00  WARN 15120 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk6o6nbty958akso4r6i7iuijhi" of relation "thread_bookmark" does not exist, skipping
-Hibernate: 
-    alter table if exists rev.thread_bookmark 
-       add constraint UK6o6nbty958akso4r6i7iuijhi unique (thread_id, user_id)
-Hibernate: 
-    alter table if exists rev.users 
-       drop constraint if exists UK6dotkott2kjsp8vw4d0m25fb7
-2025-11-07T01:10:52.062+09:00  WARN 15120 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Warning Code: 0, SQLState: 00000
-2025-11-07T01:10:52.062+09:00  WARN 15120 --- [    Test worker] o.h.engine.jdbc.spi.SqlExceptionHelper   : constraint "uk6dotkott2kjsp8vw4d0m25fb7" of relation "users" does not exist, skipping
-Hibernate: 
-    alter table if exists rev.users 
-       add constraint UK6dotkott2kjsp8vw4d0m25fb7 unique (email)
-Hibernate: 
-    create table rev.thread_entity_tags (
-        thread_entity_id uuid not null,
-        tag varchar(255) not null
-    )
+2025-11-07T03:11:08.345+09:00  INFO 5268 --- [    Test worker] com.rev.app.repo.ThreadMapperTest        : Starting ThreadMapperTest using Java 21.0.8 with PID 5268 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
+2025-11-07T03:11:08.345+09:00  INFO 5268 --- [    Test worker] com.rev.app.repo.ThreadMapperTest        : No active profile set, falling back to 1 default profile: "default"
+2025-11-07T03:11:08.553+09:00  INFO 5268 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-07T03:11:08.647+09:00  INFO 5268 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 81 ms. Found 12 JPA repository interfaces.
+2025-11-07T03:11:08.924+09:00  INFO 5268 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-07T03:11:09.057+09:00  INFO 5268 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-11-07T03:11:09.121+09:00  INFO 5268 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-07T03:11:09.349+09:00  INFO 5268 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-07T03:11:09.390+09:00  INFO 5268 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-07T03:11:10.029+09:00  INFO 5268 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@39c5f774
+2025-11-07T03:11:10.032+09:00  INFO 5268 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-07T03:11:11.581+09:00  INFO 5268 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     alter table if exists rev.comment 
-       add constraint FKir20vhrx08eh4itgpbfxip0s1 
-       foreign key (author_id) 
-       references rev.users
+       alter column content set data type text
 Hibernate: 
-    alter table if exists rev.comment 
-       add constraint FKde3rfu96lep00br5ov0mdieyt 
-       foreign key (parent_id) 
-       references rev.comment
-Hibernate: 
-    alter table if exists rev.comment 
-       add constraint FKehf7mvstlwwl8fy9ahfo515rm 
-       foreign key (thread_id) 
-       references rev.thread
+    alter table if exists rev.comment_report 
+       alter column detail set data type text
 Hibernate: 
     alter table if exists rev.thread 
-       add constraint FKsoku9fxjl3uunwb3wdwkegv43 
-       foreign key (author_id) 
-       references rev.users
+       alter column content set data type text
 Hibernate: 
-    alter table if exists rev.thread 
-       add constraint FKmhcs3jvpy4xqxnqw0f406u7gk 
-       foreign key (board_id) 
-       references rev.board
-Hibernate: 
-    alter table if exists rev.thread 
-       add constraint FKphko4l28q3sywielqnsqd3y3m 
-       foreign key (parent_id) 
-       references rev.thread
-Hibernate: 
-    alter table if exists rev.thread_bookmark 
-       add constraint FK9dkl3jpalyih1k44a4m26wodl 
-       foreign key (thread_id) 
-       references rev.thread
-Hibernate: 
-    alter table if exists rev.thread_bookmark 
-       add constraint FKd807aikm7wtjrehek406bh78j 
-       foreign key (user_id) 
-       references rev.users
-Hibernate: 
-    alter table if exists rev.thread_reaction 
-       add constraint FKk4ojpmmbcgxlsl6kqedm4u9ei 
-       foreign key (thread_id) 
-       references rev.thread
-Hibernate: 
-    alter table if exists rev.thread_reaction 
-       add constraint FKoi5chnr77a4rok8ke2a8tmses 
-       foreign key (user_id) 
-       references rev.users
-Hibernate: 
-    alter table if exists rev.thread_entity_tags 
-       add constraint FKeauhw9gmg4m41m0ovxi9ll65b 
-       foreign key (thread_entity_id) 
-       references rev.thread
-2025-11-07T01:10:52.286+09:00  INFO 15120 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-07T01:10:52.444+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    alter table if exists rev.thread_report 
+       alter column detail set data type text
+2025-11-07T03:11:12.162+09:00  INFO 5268 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-07T03:11:12.303+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -245,7 +52,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.445+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.304+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -258,7 +65,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.591+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.378+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -271,7 +78,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.629+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.412+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -284,7 +91,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.638+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.422+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -297,7 +104,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.897+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.434+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -310,7 +117,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.900+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.444+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -323,7 +130,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.954+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.535+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -336,7 +143,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.958+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.538+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -349,7 +156,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.964+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.600+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -362,7 +169,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:52.984+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.609+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -375,7 +182,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.000+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.615+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -388,7 +195,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.000+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.637+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -401,7 +208,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.008+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.647+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -414,7 +221,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.008+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.647+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -427,7 +234,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.019+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.659+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -440,7 +247,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.020+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.660+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -453,7 +260,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.031+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.668+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -466,7 +273,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.033+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.668+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -479,7 +286,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.041+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.674+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -492,7 +299,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.041+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.683+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -505,7 +312,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.045+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.694+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -518,7 +325,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.052+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.695+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -531,7 +338,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.060+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.697+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -544,7 +351,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.060+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.698+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -557,7 +364,8 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.065+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.710+09:00  INFO 5268 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-07T03:11:12.933+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -570,7 +378,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.066+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:12.934+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -583,7 +391,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.073+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.266+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -596,7 +404,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.073+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.273+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -609,7 +417,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.075+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.283+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -622,7 +430,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.075+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.289+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -635,7 +443,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.080+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.292+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -648,7 +456,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.085+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.297+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -661,7 +469,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.090+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.302+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -674,7 +482,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.097+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.314+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -687,7 +495,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.103+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.314+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -700,7 +508,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.113+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.318+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -713,7 +521,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.125+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.319+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -726,7 +534,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.125+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.320+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -739,8 +547,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.136+09:00  INFO 15120 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-11-07T01:10:53.340+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.320+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -753,7 +560,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.341+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.330+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -766,7 +573,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.615+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.331+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -779,7 +586,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.618+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.340+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -792,7 +599,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.619+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.341+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -805,7 +612,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.625+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.342+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -818,7 +625,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.627+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.342+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -831,7 +638,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.635+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.349+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -844,7 +651,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.643+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-07T03:11:13.354+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -857,7 +664,7 @@ Hibernate:
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T01:10:53.712+09:00  INFO 15120 --- [    Test worker] com.rev.app.repo.ThreadMapperTest        : Started ThreadMapperTest in 6.766 seconds (process running for 8.499)
+2025-11-07T03:11:13.397+09:00  INFO 5268 --- [    Test worker] com.rev.app.repo.ThreadMapperTest        : Started ThreadMapperTest in 5.082 seconds (process running for 13.274)
 Hibernate: 
     select
         ue1_0.id,
@@ -869,6 +676,16 @@ Hibernate:
     where
         ue1_0.id=?
 Hibernate: 
+    select
+        b1_0.id,
+        b1_0.description,
+        b1_0.name,
+        b1_0.slug 
+    from
+        rev.board b1_0 
+    where
+        b1_0.id=?
+Hibernate: 
     insert 
     into
         rev.users
@@ -879,9 +696,25 @@ Hibernate:
     insert 
     into
         rev.board
-        (created_at, description, name, slug, updated_at, id) 
+        (description, name, slug, id) 
     values
-        (?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?)
+Hibernate: 
+    select
+        te1_0.id,
+        te1_0.author_id,
+        te1_0.board_id,
+        te1_0.category_id,
+        te1_0.content,
+        te1_0.created_at,
+        te1_0.is_private,
+        te1_0.parent_id,
+        te1_0.title,
+        te1_0.updated_at 
+    from
+        rev.thread te1_0 
+    where
+        te1_0.id=?
 Hibernate: 
     insert 
     into
@@ -892,35 +725,30 @@ Hibernate:
 Hibernate: 
     insert 
     into
-        rev.thread_entity_tags
-        (thread_entity_id, tag) 
+        rev.thread_tags
+        (thread_id, tag) 
     values
         (?, ?)
 Hibernate: 
     insert 
     into
-        rev.thread_entity_tags
-        (thread_entity_id, tag) 
+        rev.thread_tags
+        (thread_id, tag) 
     values
         (?, ?)
-2025-11-07T01:10:54.349+09:00  INFO 15120 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
-    8594899 nanoseconds spent acquiring 1 JDBC connections;
+2025-11-07T03:11:13.630+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    7353600 nanoseconds spent acquiring 1 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
-    683799 nanoseconds spent preparing 6 JDBC statements;
-    63937999 nanoseconds spent executing 6 JDBC statements;
+    951600 nanoseconds spent preparing 8 JDBC statements;
+    48864200 nanoseconds spent executing 8 JDBC statements;
     0 nanoseconds spent executing 0 JDBC batches;
     0 nanoseconds spent performing 0 L2C puts;
     0 nanoseconds spent performing 0 L2C hits;
     0 nanoseconds spent performing 0 L2C misses;
-    87844001 nanoseconds spent executing 3 flushes (flushing a total of 7 entities and 1 collections);
+    74183700 nanoseconds spent executing 3 flushes (flushing a total of 7 entities and 1 collections);
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
 ]]></system-out>
-  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
-WARNING: A Java agent has been loaded dynamically (C:\Users\luelue\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
+  <system-err><![CDATA[]]></system-err>
 </testsuite>

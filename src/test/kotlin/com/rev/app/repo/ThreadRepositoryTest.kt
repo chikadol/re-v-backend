@@ -21,13 +21,26 @@ import java.util.UUID
 @TestPropertySource(
     properties = [
         "spring.flyway.enabled=true",
+        "spring.flyway.locations=classpath:db/migration",
         "spring.flyway.schemas=rev",
+        "spring.flyway.clean-disabled=false",            // ✅ clean 허용
+        "spring.flyway.clean-on-validation-error=true",  // ✅ 검증 실패 시 clean
+        "spring.flyway.out-of-order=false",              // 권장: 버전 순서 지킴
         "spring.jpa.hibernate.ddl-auto=validate",
-        "spring.jpa.properties.hibernate.default_schema=rev"
+        "spring.jpa.properties.hibernate.default_schema=rev",
+        "spring.jpa.properties.hibernate.hbm2ddl.create_namespaces=true"
     ]
 )
-@Sql(scripts = ["/test/sql/02_seed_minimal.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-@Sql(scripts = ["/test/sql/99_cleanup.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+
+
+@Sql(
+    scripts = ["classpath:test/sql/02_seed_minimal.sql"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
+)
+@Sql(
+    scripts = ["classpath:test/sql/99_cleanup.sql"],
+    executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
+)
 class ThreadRepositoryTest {
 
     @Autowired lateinit var threadRepository: ThreadRepository

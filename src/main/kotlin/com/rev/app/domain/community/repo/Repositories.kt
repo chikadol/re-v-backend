@@ -10,16 +10,13 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 // src/main/kotlin/com/rev/app/domain/community/repo/BoardRepository.kt
 
-interface BoardRepository : JpaRepository<Board, UUID> {
-    fun findBySlug(slug: String): Board?
-}
+interface BoardRepository : JpaRepository<Board, UUID>
 
 interface ThreadRepository : JpaRepository<ThreadEntity, UUID> {
     fun findByBoard_IdAndIsPrivateFalse(boardId: UUID, pageable: Pageable): Page<ThreadEntity>
-    fun findAllByBoard_IdAndIsPrivateFalseOrderByCreatedAtDesc(boardId: UUID): List<ThreadEntity>
 }
 interface CommentRepository : JpaRepository<CommentEntity, UUID> {
-    fun findAllByThread_IdOrderByCreatedAtAsc(threadId: UUID): List<CommentEntity>
+    fun findAllByThread_Id(threadId: UUID): List<CommentEntity>
 }
 
 interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {

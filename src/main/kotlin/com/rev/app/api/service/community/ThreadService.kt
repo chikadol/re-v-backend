@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
-class ThreadService(
+abstract class ThreadService(
     private val threadRepository: ThreadRepository,
     private val boardRepository: BoardRepository,
     private val userRepository: UserRepository
@@ -27,31 +27,6 @@ class ThreadService(
         }
     }
 
-    @Transactional(readOnly = true)
-    fun listPublic(boardId: UUID, pageable: Pageable): Page<ThreadRes> {
-        validateSort(pageable)
-        return threadRepository
-            .findByBoard_IdAndIsPrivateFalse(boardId, pageable)
-            .map { it.toRes() }
-    }
-
-    @Transactional
-    fun createInBoard(userId: UUID, boardId: UUID, req: CreateThreadReq): ThreadRes {
-        val board = boardRepository.getReferenceById(boardId)
-        val author = userRepository.getReferenceById(userId)
-
-        val saved = threadRepository.save(
-            ThreadEntity(
-                title = req.title.trim(),
-                content = req.content,
-                board = board,
-                parent = req.parentThreadId?.let { threadRepository.getReferenceById(it) },
-                author = author,
-                isPrivate = req.isPrivate,
-                categoryId = req.categoryId,
-                tags = req.tags
-            )
-        )
-        return saved.toRes()
-    }
+    abstract fun listPublic(boardId: UUID, pageable: Pageable): Page<ThreadRes>
+    abstract fun createInBoard(userId: UUID, boardId: UUID, req: CreateThreadReq): ThreadRes
 }

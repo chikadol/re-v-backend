@@ -25,11 +25,11 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/callback/beforeMigrate__bootstrap.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/00_fix_users_uuid.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/01_align_users_uuid.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/02_seed_minimal.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/03_fix_thread_fk.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/04_align_thread_table.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/99_cleanup.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/db/test/init.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/02_seed_minimal.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/99_cleanup.sql" dialect="PostgreSQL" />
     <file url="PROJECT" dialect="MongoDB" />
   </component>
 </project>

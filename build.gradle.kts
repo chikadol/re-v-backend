@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
+import org.gradle.api.file.DuplicatesStrategy
+import org.gradle.language.jvm.tasks.ProcessResources
 plugins {
     // Kotlin & Spring
     kotlin("jvm") version "2.0.0"
@@ -168,4 +169,22 @@ flyway {
     // url = System.getenv("SPRING_DATASOURCE_URL") ?: "jdbc:postgresql://localhost:5432/postgres"
     // user = System.getenv("SPRING_DATASOURCE_USERNAME") ?: "postgres"
     // password = System.getenv("SPRING_DATASOURCE_PASSWORD") ?: "postgres"
+}
+sourceSets {
+    test {
+        resources {
+            srcDir("src/test/resources")
+        }
+    }
+}
+
+tasks.named<ProcessResources>("processTestResources") {
+    // 테스트 리소스는 기본 동작(그대로 복사)만 하도록
+    // 불필요한 expand/필터링 금지!
+    filteringCharset = "UTF-8"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    // 혹시 이전에 filesMatching/expand 했으면 전부 삭제하거나 주석 처리
+    // filesMatching("**/*.yml") { /* expand(...) 금지 */ }
+    // filesMatching("**/*.sql") { /* 어떤 필터링도 금지 */ }
 }

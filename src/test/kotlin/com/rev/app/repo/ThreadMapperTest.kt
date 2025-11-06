@@ -19,8 +19,8 @@ import java.util.UUID
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(
     properties = [
-        "spring.flyway.enabled=false",
-        "spring.jpa.hibernate.ddl-auto=update",
+        "spring.flyway.enabled=false",                 // ✅ Flyway 끔
+        "spring.jpa.hibernate.ddl-auto=update",        // 또는 validate (스키마가 이미 있다면)
         "spring.jpa.properties.hibernate.default_schema=rev",
         "spring.jpa.properties.hibernate.hbm2ddl.create_namespaces=true"
     ]

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-06T16:10:57.698Z" hostname="DESKTOP-2GU54QS" time="0.035">
+<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-06T18:11:08.230Z" hostname="DESKTOP-2GU54QS" time="0.053">
   <properties/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.035"/>
-  <system-out><![CDATA[2025-11-07T01:10:56.161+09:00  INFO 15120 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rev.app.api.service.community.ThreadWebMvcTest]: ThreadWebMvcTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-07T01:10:56.207+09:00  INFO 15120 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.api.service.community.ThreadWebMvcTest
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.053"/>
+  <system-out><![CDATA[03:11:06.041 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.rev.app.api.service.community.ThreadWebMvcTest]: ThreadWebMvcTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+03:11:06.171 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.api.service.community.ThreadWebMvcTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,19 +14,19 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2025-11-07T01:10:56.268+09:00  INFO 15120 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Starting ThreadWebMvcTest using Java 21.0.8 with PID 15120 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
-2025-11-07T01:10:56.269+09:00  INFO 15120 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : No active profile set, falling back to 1 default profile: "default"
-2025-11-07T01:10:57.387+09:00  WARN 15120 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2025-11-07T03:11:06.621+09:00  INFO 5268 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Starting ThreadWebMvcTest using Java 21.0.8 with PID 5268 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
+2025-11-07T03:11:06.623+09:00  INFO 5268 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : No active profile set, falling back to 1 default profile: "default"
+2025-11-07T03:11:07.998+09:00  WARN 5268 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 55415363-c579-423a-beb9-2f146a54fd1c
+Using generated security password: 814f95f0-fdca-4e27-ae46-07729d4f31d6
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-11-07T01:10:57.420+09:00  INFO 15120 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-11-07T01:10:57.680+09:00  INFO 15120 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2025-11-07T01:10:57.680+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-07T01:10:57.681+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2025-11-07T01:10:57.693+09:00  INFO 15120 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Started ThreadWebMvcTest in 1.477 seconds (process running for 12.48)
+2025-11-07T03:11:08.029+09:00  INFO 5268 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-07T03:11:08.189+09:00  INFO 5268 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-07T03:11:08.190+09:00  INFO 5268 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-07T03:11:08.190+09:00  INFO 5268 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-07T03:11:08.221+09:00  INFO 5268 --- [    Test worker] c.r.a.a.s.community.ThreadWebMvcTest     : Started ThreadWebMvcTest in 1.98 seconds (process running for 8.097)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
