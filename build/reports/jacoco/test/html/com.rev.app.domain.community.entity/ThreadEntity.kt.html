@@ -26,22 +26,22 @@ import java.util.UUID
 
 <span class="pc" id="L27">    @ManyToOne(fetch = FetchType.LAZY)</span>
     @JoinColumn(name = &quot;board_id&quot;)
-<span class="nc" id="L29">    var board: Board? = null,</span>
+<span class="pc" id="L29">    var board: Board? = null,</span>
 
 <span class="pc" id="L31">    @ManyToOne(fetch = FetchType.LAZY)</span>
     @JoinColumn(name = &quot;author_id&quot;)
-<span class="nc" id="L33">    var author: UserEntity? = null,</span>
+<span class="pc" id="L33">    var author: UserEntity? = null,</span>
 
 <span class="pc" id="L35">    @ManyToOne(fetch = FetchType.LAZY)</span>
     @JoinColumn(name = &quot;parent_id&quot;)
-<span class="nc" id="L37">    var parent: ThreadEntity? = null,</span>
+<span class="pc" id="L37">    var parent: ThreadEntity? = null,</span>
 
 <span class="pc" id="L39">    @Column(name = &quot;is_private&quot;, nullable = false)</span>
 <span class="pc" id="L40">    var isPrivate: Boolean = false,</span>
 
 <span class="pc" id="L42">    @JdbcTypeCode(SqlTypes.UUID)</span>
     @Column(name = &quot;category_id&quot;)
-<span class="nc" id="L44">    var categoryId: UUID? = null,</span>
+<span class="pc" id="L44">    var categoryId: UUID? = null,</span>
 
 <span class="pc" id="L46">    @Column(name = &quot;created_at&quot;, nullable = false)</span>
 <span class="pc" id="L47">    var createdAt: Instant = Instant.now(),</span>

@@ -4,6 +4,7 @@ import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.Board
 import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.entity.ThreadEntity
+import java.util.UUID
 
 /* ===== Board ===== */
 
@@ -19,17 +20,16 @@ fun Board.toRes(): BoardRes =
 
 fun ThreadEntity.toRes(): ThreadRes =
     ThreadRes(
-        id = requireNotNull(id),
-        title = title,
-        content = content,
-        boardId = board?.id,
-        parentThreadId = parent?.id,
-        authorId = author?.id,
-        isPrivate = isPrivate,
-        categoryId = categoryId,
-        createdAt = createdAt,
-        updatedAt = updatedAt,
-        // 엔티티에 tags 필드가 없다면 빈 리스트 반환
+        id = this.id ?: UUID.randomUUID(),      // 또는 throw IllegalStateException("...") 로 교체
+        title = this.title,
+        content = this.content,
+        boardId = this.board?.id,
+        parentThreadId = this.parent?.id,
+        authorId = this.author?.id,
+        isPrivate = this.isPrivate,
+        categoryId = this.categoryId,
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt,
         tags = emptyList()
     )
 

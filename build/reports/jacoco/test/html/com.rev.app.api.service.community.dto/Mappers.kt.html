@@ -4,34 +4,34 @@ import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.Board
 import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.entity.ThreadEntity
+import java.util.UUID
 
 /* ===== Board ===== */
 
 fun Board.toRes(): BoardRes =
-<span class="nc" id="L11">    BoardRes(</span>
-<span class="nc bnc" id="L12" title="All 2 branches missed.">        id = requireNotNull(id),</span>
-<span class="nc" id="L13">        name = name,</span>
-<span class="nc" id="L14">        slug = slug,</span>
-<span class="nc" id="L15">        description = description</span>
-<span class="nc" id="L16">    )</span>
+<span class="nc" id="L12">    BoardRes(</span>
+<span class="nc bnc" id="L13" title="All 2 branches missed.">        id = requireNotNull(id),</span>
+<span class="nc" id="L14">        name = name,</span>
+<span class="nc" id="L15">        slug = slug,</span>
+<span class="nc" id="L16">        description = description</span>
+<span class="nc" id="L17">    )</span>
 
 /* ===== Thread ===== */
 
 fun ThreadEntity.toRes(): ThreadRes =
-<span class="nc" id="L21">    ThreadRes(</span>
-<span class="nc bnc" id="L22" title="All 2 branches missed.">        id = requireNotNull(id),</span>
-<span class="nc" id="L23">        title = title,</span>
-<span class="nc" id="L24">        content = content,</span>
-<span class="nc bnc" id="L25" title="All 2 branches missed.">        boardId = board?.id,</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">        parentThreadId = parent?.id,</span>
-<span class="nc bnc" id="L27" title="All 2 branches missed.">        authorId = author?.id,</span>
-<span class="nc" id="L28">        isPrivate = isPrivate,</span>
-<span class="nc" id="L29">        categoryId = categoryId,</span>
-<span class="nc" id="L30">        createdAt = createdAt,</span>
-<span class="nc" id="L31">        updatedAt = updatedAt,</span>
-        // 엔티티에 tags 필드가 없다면 빈 리스트 반환
-<span class="nc" id="L33">        tags = emptyList()</span>
-<span class="nc" id="L34">    )</span>
+<span class="fc" id="L22">    ThreadRes(</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        id = this.id ?: UUID.randomUUID(),      // 또는 throw IllegalStateException(&quot;...&quot;) 로 교체</span>
+<span class="fc" id="L24">        title = this.title,</span>
+<span class="fc" id="L25">        content = this.content,</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">        boardId = this.board?.id,</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        parentThreadId = this.parent?.id,</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        authorId = this.author?.id,</span>
+<span class="fc" id="L29">        isPrivate = this.isPrivate,</span>
+<span class="fc" id="L30">        categoryId = this.categoryId,</span>
+<span class="fc" id="L31">        createdAt = this.createdAt,</span>
+<span class="fc" id="L32">        updatedAt = this.updatedAt,</span>
+<span class="fc" id="L33">        tags = emptyList()</span>
+<span class="fc" id="L34">    )</span>
 
 <span class="nc" id="L36">fun CreateThreadReq.toEntity(</span>
     board: Board,

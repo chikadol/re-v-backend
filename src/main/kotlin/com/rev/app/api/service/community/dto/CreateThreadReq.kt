@@ -1,10 +1,20 @@
 package com.rev.app.api.service.community.dto
 
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+import java.util.*
 
+@Schema(name="CreateThreadReq", description="스레드 생성")
 data class CreateThreadReq(
-    @field:NotBlank val title: String,
-    @field:NotBlank val content: String,
-    // 엔티티에 tags 필드가 없다면 DTO에는 남겨도 매핑에서 무시하거나, 아예 뺄 수 있음.
-    val tags: List<String> = emptyList()
+    @field:NotBlank
+    @Schema(example="Hello")
+    val title: String,
+    @field:NotBlank
+    @Schema(example="World")
+    val content: String,
+    @Schema(example="[\"tag1\",\"tag2\"]")
+    val tags: List<String> = emptyList(),
+    val parentThreadId: UUID? = null
 )
+

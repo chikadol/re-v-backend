@@ -3,12 +3,16 @@ package com.rev.app.api.service.community
 import com.rev.app.api.service.community.dto.ThreadRes
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
 @RequestMapping("/api/threads")
+@Validated
 class ThreadController(
     private val threadService: ThreadService
 ) {
@@ -18,17 +22,12 @@ class ThreadController(
     @GetMapping("/{boardId}/threads")
     fun listPublic(
         @PathVariable boardId: UUID,
-        pageable: Pageable
+        @PageableDefault(sort = ["createdAt"], direction = Sort.Direction.DESC) pageable: Pageable,
+        @RequestParam(required = false, defaultValue = "createdAt,desc") sort: String
     ): Page<ThreadRes> {
-        // sort 파라미터가 온 경우만 검증
-        if (pageable.sort.isSorted) {
-            pageable.sort.forEach { order ->
-                val key = order.property
-                if (key !in ALLOWED_SORT_KEYS) {
-                    throw IllegalArgumentException("Invalid sort key: $key")
-                }
-            }
-        }
+        val allowed = setOf("createdAt", "updatedAt", "title")
+        val sortProp = sort.substringBefore(',') // "createdAt"
+        require(sortProp in allowed) { "Invalid sort key: $sortProp" }
         return threadService.listPublic(boardId, pageable)
     }
 

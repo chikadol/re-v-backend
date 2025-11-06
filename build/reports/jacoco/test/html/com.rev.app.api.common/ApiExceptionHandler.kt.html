@@ -2,19 +2,43 @@
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.BindException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.server.ResponseStatusException
 
-<span class="fc" id="L8">@RestControllerAdvice</span>
+<span class="fc" id="L11">@RestControllerAdvice</span>
 class ApiExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException::class)
-    fun handleIllegalArgument(ex: IllegalArgumentException): ResponseEntity&lt;Map&lt;String, Any?&gt;&gt; {
-<span class="fc" id="L13">        val body = mapOf(</span>
-<span class="fc" id="L14">            &quot;error&quot; to &quot;bad_request&quot;,</span>
-<span class="fc" id="L15">            &quot;message&quot; to ex.message</span>
-        )
-<span class="fc" id="L17">        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body)</span>
-    }
+    fun handleIllegalArgument(ex: IllegalArgumentException): ResponseEntity&lt;Map&lt;String, Any&gt;&gt; =
+<span class="fc" id="L16">        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(</span>
+<span class="fc" id="L17">            mapOf(</span>
+<span class="fc" id="L18">                &quot;status&quot; to HttpStatus.BAD_REQUEST.value(),</span>
+<span class="fc" id="L19">                &quot;error&quot; to HttpStatus.BAD_REQUEST.toString(),</span>
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">                &quot;message&quot; to (ex.message ?: &quot;invalid request&quot;)</span>
+            )
+<span class="fc" id="L22">        )</span>
+
+    @ExceptionHandler(MethodArgumentNotValidException::class, BindException::class)
+    fun handleValidation(ex: Exception): ResponseEntity&lt;Map&lt;String, Any&gt;&gt; =
+<span class="nc" id="L26">        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(</span>
+<span class="nc" id="L27">            mapOf(</span>
+<span class="nc" id="L28">                &quot;status&quot; to HttpStatus.BAD_REQUEST.value(),</span>
+<span class="nc" id="L29">                &quot;error&quot; to HttpStatus.BAD_REQUEST.toString(),</span>
+<span class="nc" id="L30">                &quot;message&quot; to &quot;validation failed&quot;</span>
+            )
+<span class="nc" id="L32">        )</span>
+
+    @ExceptionHandler(ResponseStatusException::class)
+    fun handleRse(ex: ResponseStatusException): ResponseEntity&lt;Map&lt;String, Any&gt;&gt; =
+<span class="nc" id="L36">        ResponseEntity.status(ex.statusCode).body(</span>
+<span class="nc" id="L37">            mapOf(</span>
+<span class="nc" id="L38">                &quot;status&quot; to ex.statusCode.value(),        // 400 같은 숫자</span>
+<span class="nc" id="L39">                &quot;error&quot; to ex.statusCode.toString(),      // &quot;400 BAD_REQUEST&quot;</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                &quot;message&quot; to (ex.reason ?: &quot;&quot;)</span>
+            )
+<span class="nc" id="L42">        )</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

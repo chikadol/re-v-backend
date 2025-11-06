@@ -3,33 +3,32 @@
 import com.rev.app.api.service.community.dto.ThreadRes
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.data.web.PageableDefault
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
 @RequestMapping(&quot;/api/threads&quot;)
-<span class="fc" id="L12">class ThreadController(</span>
-<span class="fc" id="L13">    private val threadService: ThreadService</span>
+@Validated
+<span class="fc" id="L16">class ThreadController(</span>
+<span class="fc" id="L17">    private val threadService: ThreadService</span>
 ) {
     // 허용 정렬키 (테스트에서 사용하는 createdAt 포함)
-<span class="fc" id="L16">    private val ALLOWED_SORT_KEYS = setOf(&quot;createdAt&quot;, &quot;updatedAt&quot;, &quot;title&quot;)</span>
+<span class="fc" id="L20">    private val ALLOWED_SORT_KEYS = setOf(&quot;createdAt&quot;, &quot;updatedAt&quot;, &quot;title&quot;)</span>
 
     @GetMapping(&quot;/{boardId}/threads&quot;)
     fun listPublic(
         @PathVariable boardId: UUID,
-        pageable: Pageable
+        @PageableDefault(sort = [&quot;createdAt&quot;], direction = Sort.Direction.DESC) pageable: Pageable,
+        @RequestParam(required = false, defaultValue = &quot;createdAt,desc&quot;) sort: String
     ): Page&lt;ThreadRes&gt; {
-        // sort 파라미터가 온 경우만 검증
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (pageable.sort.isSorted) {</span>
-<span class="fc" id="L25">            pageable.sort.forEach { order -&gt;</span>
-<span class="fc" id="L26">                val key = order.property</span>
-<span class="pc bpc" id="L27" title="1 of 2 branches missed.">                if (key !in ALLOWED_SORT_KEYS) {</span>
-<span class="fc" id="L28">                    throw IllegalArgumentException(&quot;Invalid sort key: $key&quot;)</span>
-                }
-<span class="nc" id="L30">            }</span>
-        }
-<span class="fc" id="L32">        return threadService.listPublic(boardId, pageable)</span>
+<span class="fc" id="L28">        val allowed = setOf(&quot;createdAt&quot;, &quot;updatedAt&quot;, &quot;title&quot;)</span>
+<span class="fc" id="L29">        val sortProp = sort.substringBefore(',') // &quot;createdAt&quot;</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        require(sortProp in allowed) { &quot;Invalid sort key: $sortProp&quot; }</span>
+<span class="fc" id="L31">        return threadService.listPublic(boardId, pageable)</span>
     }
 
     @PostMapping(&quot;/boards/{boardId}&quot;)
@@ -38,7 +37,7 @@ import java.util.UUID
         @RequestBody req: com.rev.app.api.service.community.dto.CreateThreadReq,
         @AuthenticationPrincipal principal: com.rev.app.api.security.JwtPrincipal
     ): ThreadRes {
-<span class="fc" id="L41">        return threadService.createInBoard(principal.userId!!, boardId, req)</span>
+<span class="fc" id="L40">        return threadService.createInBoard(principal.userId!!, boardId, req)</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

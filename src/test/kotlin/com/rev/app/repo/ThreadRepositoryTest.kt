@@ -1,14 +1,12 @@
-// src/test/kotlin/com/rev/app/repo/ThreadRepositoryTest.kt
 package com.rev.app.repo
 
-import com.rev.app.api.service.community.dto.BoardRes
 import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.domain.community.entity.CommentEntity
-import com.rev.app.domain.community.repo.BoardRepository        // ← 메인 패키지의 리포지토리
-import com.rev.app.domain.community.repo.ThreadRepository       // ← 메인 패키지의 리포지토리
-import com.rev.app.domain.community.repo.CommentRepository      // ← 메인 패키지의 리포지토리
-import com.rev.app.auth.UserRepository                          // ← 메인 패키지의 리포지토리
+import com.rev.app.domain.community.repo.BoardRepository
+import com.rev.app.domain.community.repo.ThreadRepository
+import com.rev.app.domain.community.repo.CommentRepository
+import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.Board
 import com.rev.app.support.pg.PostgresTC
 import org.assertj.core.api.Assertions.assertThat
@@ -16,6 +14,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.jdbc.Sql
 import java.util.UUID
@@ -49,6 +48,28 @@ class ThreadRepositoryTest : PostgresTC() {
     private fun uniqueSlug()  = "b_" + UUID.randomUUID().toString().substring(0,6)
 
     @Test
+    fun pageByBoard_andPublic_ok() {
+        // given: board/threads 픽스처가 시드에 없다면, 임의 board 생성
+        val board = boardRepository.save(
+            Board(
+                id = UUID.randomUUID(),
+                name = "board",
+                slug = uniqueSlug(),
+                description = "desc"
+            )
+        )
+
+        // when
+        val page = threadRepository.findByBoard_IdAndIsPrivateFalse(
+            board.id!!,
+            PageRequest.of(0, 10)
+        )
+
+        // then  ✅ 메서드 호출 형태로!
+        assertThat(page).isNotNull()
+    }
+
+    @Test
     fun saveAndFind() {
         val user = userRepository.save(
             UserEntity(
@@ -60,10 +81,10 @@ class ThreadRepositoryTest : PostgresTC() {
         )
         val board = boardRepository.save(
             Board(
+                id = UUID.randomUUID(),
                 name = "b",
                 slug = uniqueSlug(),
-                description = "desc",
-                id = UUID.randomUUID()
+                description = "desc"
             )
         )
         userRepository.flush()

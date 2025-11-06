@@ -1,18 +1,21 @@
 package com.rev.app.config
 
 
+import io.swagger.v3.oas.models.OpenAPI
+import io.swagger.v3.oas.models.info.Info
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 
-@Configuration(proxyBeanMethods = false)
-@Profile("!test") // ✅ 테스트 프로필에서는 아예 제외(권장)
+@Configuration
 class OpenApiConfig {
     @Bean
-    fun openAPI(): io.swagger.v3.oas.models.OpenAPI =
-        io.swagger.v3.oas.models.OpenAPI().info(
-            io.swagger.v3.oas.models.info.Info()
-                .title("re:v API")
+    fun apiInfo(): OpenAPI = OpenAPI()
+        .info(
+            Info()
+                .title("Community API")
                 .version("v1")
+                .description("Threads, Comments, Bookmarks")
         )
 }
+

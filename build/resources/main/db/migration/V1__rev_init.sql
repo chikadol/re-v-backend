@@ -1,77 +1,54 @@
--- V1__rev_init.sql
--- schema & extension ----------------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS rev;
-CREATE EXTENSION IF NOT EXISTS pgcrypto; -- gen_random_uuid()
+-- src/main/resources/db/migration/V1__init.sql
+create extension if not exists pgcrypto;
 
--- users -----------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS rev.users (
-                                         id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-                                         email      text UNIQUE NOT NULL,
-                                         username   text NOT NULL,
-                                         password   text NOT NULL,
-                                         created_at timestamptz NOT NULL DEFAULT now(),
-                                         updated_at timestamptz NOT NULL DEFAULT now()
+create schema if not exists rev;
+
+create table if not exists rev.users(
+                                        id uuid primary key default gen_random_uuid(),
+                                        email text unique not null,
+                                        password text not null,
+                                        username text not null
 );
 
--- board -----------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS rev.board (
-                                         id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-                                         name        text NOT NULL,
-                                         slug        text UNIQUE NOT NULL,
-                                         description text,
-                                         created_at  timestamptz NOT NULL DEFAULT now(),
-                                         updated_at  timestamptz NOT NULL DEFAULT now()
+create table if not exists rev.board(
+                                        id uuid primary key default gen_random_uuid(),
+                                        name text not null,
+                                        slug text unique not null,
+                                        description text
 );
 
--- thread ----------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS rev.thread (
-                                          id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-                                          board_id    uuid NOT NULL
-                                              REFERENCES rev.board(id) ON DELETE CASCADE,
-                                          author_id   uuid
-                                                           REFERENCES rev.users(id) ON DELETE SET NULL,
-                                          parent_id   uuid
-                                                           REFERENCES rev.thread(id) ON DELETE SET NULL,
-                                          title       text NOT NULL,
-                                          content     text NOT NULL,
-                                          is_private  boolean NOT NULL DEFAULT false,
-                                          category_id uuid,
-                                          created_at  timestamptz NOT NULL DEFAULT now(),
-                                          updated_at  timestamptz NOT NULL DEFAULT now()
+create table if not exists rev.thread(
+                                         id uuid primary key default gen_random_uuid(),
+                                         title text not null,
+                                         content text not null,
+                                         board_id uuid references rev.board(id) on delete cascade,
+                                         author_id uuid references rev.users(id) on delete cascade,
+                                         parent_id uuid references rev.thread(id) on delete set null,
+                                         is_private boolean not null default false,
+                                         category_id uuid,
+                                         created_at timestamptz not null default now(),
+                                         updated_at timestamptz not null default now()
 );
 
--- comment ---------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS rev.comment (
-                                           id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-                                           thread_id  uuid NOT NULL
-                                               REFERENCES rev.thread(id) ON DELETE CASCADE,
-                                           author_id  uuid
-                                                           REFERENCES rev.users(id) ON DELETE SET NULL,
-                                           parent_id  uuid
-                                                           REFERENCES rev.comment(id) ON DELETE SET NULL,
-                                           content    text NOT NULL,
-                                           created_at timestamptz NOT NULL DEFAULT now(),
-                                           updated_at timestamptz NOT NULL DEFAULT now()
+create table if not exists rev.comment(
+                                          id uuid primary key default gen_random_uuid(),
+                                          thread_id uuid references rev.thread(id) on delete cascade,
+                                          author_id uuid references rev.users(id) on delete cascade,
+                                          parent_id uuid references rev.comment(id) on delete set null,
+                                          content text not null,
+                                          created_at timestamptz not null default now()
 );
 
--- thread_tags -----------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS rev.thread_tags (
-                                               thread_id uuid NOT NULL
-                                                   REFERENCES rev.thread(id) ON DELETE CASCADE,
-                                               tag       text NOT NULL,
-                                               PRIMARY KEY (thread_id, tag)
+create table if not exists rev.thread_bookmark(
+                                                  id uuid primary key default gen_random_uuid(),
+                                                  thread_id uuid not null references rev.thread(id) on delete cascade,
+                                                  user_id uuid not null references rev.users(id) on delete cascade,
+                                                  created_at timestamptz not null default now(),
+                                                  unique(thread_id, user_id)
 );
 
--- indexes ---------------------------------------------------------------------
-CREATE INDEX IF NOT EXISTS idx_thread_board        ON rev.thread(board_id);
-CREATE INDEX IF NOT EXISTS idx_thread_created_at   ON rev.thread(created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_comment_thread      ON rev.comment(thread_id);
--- thread_bookmark -------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS rev.thread_bookmark (
-                                                   id        uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-                                                   thread_id uuid NOT NULL REFERENCES rev.thread(id) ON DELETE CASCADE,
-                                                   user_id   uuid NOT NULL REFERENCES rev.users(id) ON DELETE CASCADE
-);
-
-CREATE UNIQUE INDEX IF NOT EXISTS ux_thread_bookmark_thread_user
-    ON rev.thread_bookmark(thread_id, user_id);
+-- indices
+create index if not exists idx_thread_board_priv_created
+    on rev.thread(board_id, is_private, created_at desc);
+create index if not exists idx_comment_thread_created
+    on rev.comment(thread_id, created_at asc);
