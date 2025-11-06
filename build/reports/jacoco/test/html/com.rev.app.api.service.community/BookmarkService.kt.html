@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookmarkService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.api.service.community</a> &gt; <span class="el_source">BookmarkService.kt</span></div><h1>BookmarkService.kt</h1><pre class="source lang-java linenums">package com.rev.app.api.service.community
 
+import com.rev.app.api.service.community.dto.*
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.repo.ThreadBookmarkRepository
 import com.rev.app.domain.community.repo.ThreadRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
+import java.util.UUID
 
 @Service
-<span class="nc" id="L12">class BookmarkService(</span>
-<span class="nc" id="L13">    private val threadRepository: ThreadRepository,</span>
-<span class="nc" id="L14">    private val bookmarkRepository: ThreadBookmarkRepository,</span>
-<span class="nc" id="L15">    private val userRepository: UserRepository</span>
+<span class="nc" id="L13">class BookmarkService(</span>
+<span class="nc" id="L14">    private val threadRepository: ThreadRepository,</span>
+<span class="nc" id="L15">    private val bookmarkRepository: ThreadBookmarkRepository,</span>
+<span class="nc" id="L16">    private val userRepository: UserRepository</span>
 ) {
     @Transactional
     fun toggle(userId: UUID, threadId: UUID): Boolean {
-<span class="nc" id="L19">        val existing = bookmarkRepository.findByThread_IdAndUser_Id(threadId, userId)</span>
-<span class="nc bnc" id="L20" title="All 2 branches missed.">        return if (existing != null) {</span>
-<span class="nc" id="L21">            bookmarkRepository.delete(existing)</span>
-<span class="nc" id="L22">            false</span>
+<span class="nc" id="L20">        val thread = threadRepository.getReferenceById(threadId)</span>
+<span class="nc" id="L21">        val user = userRepository.getReferenceById(userId)</span>
+
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        return if (bookmarkRepository.existsByThread_IdAndUser_Id(thread.id!!, user.id!!)) {</span>
+<span class="nc" id="L24">            bookmarkRepository.deleteByThread_IdAndUser_Id(thread.id!!, user.id!!)</span>
+<span class="nc" id="L25">            false</span>
         } else {
-<span class="nc" id="L24">            val thread = threadRepository.getReferenceById(threadId)</span>
-<span class="nc" id="L25">            val user = userRepository.getReferenceById(userId)</span>
-<span class="nc" id="L26">            bookmarkRepository.save(ThreadBookmarkEntity(thread = thread, user = user))</span>
-<span class="nc" id="L27">            true</span>
+<span class="nc" id="L27">            bookmarkRepository.save(</span>
+<span class="nc" id="L28">                ThreadBookmarkEntity(thread = thread, user = user)</span>
+            )
+<span class="nc" id="L30">            true</span>
         }
     }
 
     @Transactional(readOnly = true)
     fun count(threadId: UUID): Long =
-<span class="nc" id="L33">        bookmarkRepository.countByThread_Id(threadId)</span>
+<span class="nc" id="L36">        bookmarkRepository.countByThread_Id(threadId)</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

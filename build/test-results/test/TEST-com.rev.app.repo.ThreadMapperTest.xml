@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.repo.ThreadMapperTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-06T08:37:45.711Z" hostname="DESKTOP-2GU54QS" time="0.057">
+<testsuite name="com.rev.app.repo.ThreadMapperTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-06T11:42:08.833Z" hostname="DESKTOP-2GU54QS" time="0.008">
   <properties/>
-  <testcase name="roundTrip_ok()" classname="com.rev.app.repo.ThreadMapperTest" time="0.057"/>
+  <testcase name="roundTrip_ok()" classname="com.rev.app.repo.ThreadMapperTest" time="0.008"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

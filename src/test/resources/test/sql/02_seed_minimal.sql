@@ -14,7 +14,6 @@ CREATE UNIQUE INDEX IF NOT EXISTS ux_users_email ON rev.users(email);
 
 -- 시드: 이미 있으면 건너뜀 (ON CONFLICT 대신 WHERE NOT EXISTS)
 INSERT INTO rev.users (id, email, username, password)
-SELECT '11111111-1111-1111-1111-111111111111', 'e@example.com', 'u', '{noop}pw'
-WHERE NOT EXISTS (
-    SELECT 1 FROM rev.users WHERE email = 'e@example.com'
-);
+VALUES (gen_random_uuid(), 'e@example.com', 'u', '{noop}pw')
+ON CONFLICT (email) DO NOTHING;
+
