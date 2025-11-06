@@ -17,11 +17,11 @@ import java.util.UUID
     fun create(
         @AuthenticationPrincipal me: JwtPrincipal,
         @RequestBody req: CreateCommentRequest
-    ): CommentRes =
-<span class="nc bnc" id="L21" title="All 2 branches missed.">        commentService.create(requireNotNull(me.userId), req)</span>
+    ): ResponseEntity&lt;CommentRes&gt; =
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        ResponseEntity.ok(commentService.create(requireNotNull(me.userId), req))</span>
 
     @GetMapping(&quot;/threads/{threadId}&quot;)
-    fun listThreadComments(@PathVariable threadId: UUID): ResponseEntity&lt;List&lt;CommentRes&gt;&gt; =
+    fun listThread(@PathVariable threadId: UUID): ResponseEntity&lt;List&lt;CommentRes&gt;&gt; =
 <span class="nc" id="L25">        ResponseEntity.ok(commentService.listThreadComments(threadId))</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

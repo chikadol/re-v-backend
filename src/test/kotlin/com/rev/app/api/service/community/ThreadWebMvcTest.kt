@@ -1,9 +1,9 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.MeArgumentResolver
+import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.auth.JwtAuthenticationFilter
 import com.rev.app.auth.jwt.JwtProvider
-import com.rev.app.api.service.community.dto.ThreadRes
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq

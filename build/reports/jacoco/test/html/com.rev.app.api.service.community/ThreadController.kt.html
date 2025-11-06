@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ThreadController.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.api.service.community</a> &gt; <span class="el_source">ThreadController.kt</span></div><h1>ThreadController.kt</h1><pre class="source lang-java linenums">package com.rev.app.api.service.community
 
+import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.api.service.community.dto.CreateThreadReq
 import com.rev.app.api.service.community.dto.ThreadRes
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
-import org.springframework.data.web.PageableDefault
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
 @RequestMapping(&quot;/api/threads&quot;)
-@Validated
-<span class="fc" id="L16">class ThreadController(</span>
-<span class="fc" id="L17">    private val threadService: ThreadService</span>
+<span class="fc" id="L15">class ThreadController(</span>
+<span class="fc" id="L16">    private val threadService: ThreadService</span>
 ) {
-    // 허용 정렬키 (테스트에서 사용하는 createdAt 포함)
-<span class="fc" id="L20">    private val ALLOWED_SORT_KEYS = setOf(&quot;createdAt&quot;, &quot;updatedAt&quot;, &quot;title&quot;)</span>
+<span class="fc" id="L18">    private val allowedSort = setOf(&quot;createdAt&quot;,&quot;updatedAt&quot;,&quot;title&quot;)</span>
 
+    private fun validateSort(pageable: Pageable) {
+<span class="fc" id="L21">        pageable.sort.forEach { order -&gt;</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">            require(allowedSort.contains(order.property)) { &quot;invalid sort key: ${order.property}&quot; }</span>
+<span class="nc" id="L23">        }</span>
+<span class="fc" id="L24">    }</span>
+
+    // GET /api/threads/{boardId}/threads?page=&amp;size=&amp;sort=createdAt,desc
     @GetMapping(&quot;/{boardId}/threads&quot;)
     fun listPublic(
         @PathVariable boardId: UUID,
-        @PageableDefault(sort = [&quot;createdAt&quot;], direction = Sort.Direction.DESC) pageable: Pageable,
-        @RequestParam(required = false, defaultValue = &quot;createdAt,desc&quot;) sort: String
-    ): Page&lt;ThreadRes&gt; {
-<span class="fc" id="L28">        val allowed = setOf(&quot;createdAt&quot;, &quot;updatedAt&quot;, &quot;title&quot;)</span>
-<span class="fc" id="L29">        val sortProp = sort.substringBefore(',') // &quot;createdAt&quot;</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        require(sortProp in allowed) { &quot;Invalid sort key: $sortProp&quot; }</span>
-<span class="fc" id="L31">        return threadService.listPublic(boardId, pageable)</span>
+        pageable: Pageable
+    ): ResponseEntity&lt;Page&lt;ThreadRes&gt;&gt; {
+<span class="fc" id="L32">        validateSort(pageable)</span>
+<span class="fc" id="L33">        return ResponseEntity.ok(threadService.listPublic(boardId, pageable))</span>
     }
 
+    // POST /api/threads/boards/{boardId}
     @PostMapping(&quot;/boards/{boardId}&quot;)
     fun createInBoard(
+        @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable boardId: UUID,
-        @RequestBody req: com.rev.app.api.service.community.dto.CreateThreadReq,
-        @AuthenticationPrincipal principal: com.rev.app.api.security.JwtPrincipal
-    ): ThreadRes {
-<span class="fc" id="L40">        return threadService.createInBoard(principal.userId!!, boardId, req)</span>
-    }
+        @RequestBody req: CreateThreadReq
+    ): ResponseEntity&lt;ThreadRes&gt; =
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        ResponseEntity.ok(threadService.createInBoard(requireNotNull(me.userId), boardId, req))</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -19,16 +19,17 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V6__create_thread.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V7__create_board.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V8__fix_thread_author_fk_to_users.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/V9__ensure_users_id_default.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/callback/afterMigrate__grants.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/callback/beforeEachMigrate__settings.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/db/migration/callback/beforeMigrate__bootstrap.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/00_fix_users_uuid.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/01_align_users_uuid.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/02_seed_minimal.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/03_fix_thread_fk.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/04_align_thread_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/src/test/resources/db/migration/99_cleanup.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/test/resources/db/test/init.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/00_fix_users_uuid.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/01_align_users_uuid.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/02_seed_minimal.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/03_fix_thread_fk.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/04_align_thread_table.sql" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/src/test/resources/test/sql/99_cleanup.sql" dialect="PostgreSQL" />
     <file url="PROJECT" dialect="MongoDB" />
   </component>
 </project>

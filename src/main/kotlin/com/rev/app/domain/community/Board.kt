@@ -1,26 +1,28 @@
 package com.rev.app.domain.community
 
 import jakarta.persistence.*
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.annotations.UuidGenerator
-import org.hibernate.type.SqlTypes
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
+import java.time.Instant
 import java.util.UUID
 
 @Entity
-@Table(name = "board", schema = "rev", uniqueConstraints = [UniqueConstraint(columnNames = ["slug"])])
+@Table(name = "board", schema = "rev")
 class Board(
-    @Id
-    @GeneratedValue
-    @UuidGenerator
-    @JdbcTypeCode(SqlTypes.UUID)
+    @Id @GeneratedValue
     var id: UUID? = null,
 
     @Column(nullable = false)
     var name: String,
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     var slug: String,
 
-    @Column(nullable = false)
-    var description: String
+    var description: String? = null,
+
+    @CreationTimestamp
+    var createdAt: Instant? = null,
+
+    @UpdateTimestamp
+    var updatedAt: Instant? = null
 )

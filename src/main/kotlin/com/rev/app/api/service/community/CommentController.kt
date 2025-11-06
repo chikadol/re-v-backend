@@ -17,10 +17,10 @@ class CommentController(
     fun create(
         @AuthenticationPrincipal me: JwtPrincipal,
         @RequestBody req: CreateCommentRequest
-    ): CommentRes =
-        commentService.create(requireNotNull(me.userId), req)
+    ): ResponseEntity<CommentRes> =
+        ResponseEntity.ok(commentService.create(requireNotNull(me.userId), req))
 
     @GetMapping("/threads/{threadId}")
-    fun listThreadComments(@PathVariable threadId: UUID): ResponseEntity<List<CommentRes>> =
+    fun listThread(@PathVariable threadId: UUID): ResponseEntity<List<CommentRes>> =
         ResponseEntity.ok(commentService.listThreadComments(threadId))
 }

@@ -3,8 +3,9 @@ package com.rev.app.domain.community.entity
 import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.Board
 import jakarta.persistence.*
+import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.annotations.UuidGenerator
+import org.hibernate.annotations.UpdateTimestamp
 import org.hibernate.type.SqlTypes
 import java.time.Instant
 import java.util.UUID
@@ -12,10 +13,7 @@ import java.util.UUID
 @Entity
 @Table(name = "thread", schema = "rev")
 class ThreadEntity(
-    @Id
-    @GeneratedValue
-    @UuidGenerator
-    @JdbcTypeCode(SqlTypes.UUID)
+    @Id @GeneratedValue
     var id: UUID? = null,
 
     @Column(nullable = false)
@@ -39,13 +37,16 @@ class ThreadEntity(
     @Column(name = "is_private", nullable = false)
     var isPrivate: Boolean = false,
 
-    @JdbcTypeCode(SqlTypes.UUID)
-    @Column(name = "category_id")
+    @Column
     var categoryId: UUID? = null,
 
-    @Column(name = "created_at", nullable = false)
-    var createdAt: Instant = Instant.now(),
+    @CreationTimestamp
+    var createdAt: Instant? = null,
 
-    @Column(name = "updated_at", nullable = false)
-    var updatedAt: Instant = Instant.now()
+    @UpdateTimestamp
+    var updatedAt: Instant? = null,
+
+    @ElementCollection
+    @Column(name = "tag", nullable = false)
+    var tags: List<String> = emptyList()
 )

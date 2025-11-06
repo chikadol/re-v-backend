@@ -1,54 +1,55 @@
--- src/main/resources/db/migration/V1__init.sql
-create extension if not exists pgcrypto;
+-- 스키마 & 확장
+CREATE SCHEMA IF NOT EXISTS rev;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-create schema if not exists rev;
-
-create table if not exists rev.users(
-                                        id uuid primary key default gen_random_uuid(),
-                                        email text unique not null,
-                                        password text not null,
-                                        username text not null
+-- users (기존 UserEntity와 필드 맞추세요)
+CREATE TABLE IF NOT EXISTS rev.users (
+                                         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                                         email TEXT UNIQUE NOT NULL,
+                                         password TEXT NOT NULL,
+                                         username TEXT NOT NULL
 );
 
-create table if not exists rev.board(
-                                        id uuid primary key default gen_random_uuid(),
-                                        name text not null,
-                                        slug text unique not null,
-                                        description text
+-- board
+CREATE TABLE IF NOT EXISTS rev.board (
+                                         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                                         name TEXT NOT NULL,
+                                         slug TEXT UNIQUE NOT NULL,
+                                         description TEXT,
+                                         created_at TIMESTAMPTZ DEFAULT now(),
+                                         updated_at TIMESTAMPTZ DEFAULT now()
 );
 
-create table if not exists rev.thread(
-                                         id uuid primary key default gen_random_uuid(),
-                                         title text not null,
-                                         content text not null,
-                                         board_id uuid references rev.board(id) on delete cascade,
-                                         author_id uuid references rev.users(id) on delete cascade,
-                                         parent_id uuid references rev.thread(id) on delete set null,
-                                         is_private boolean not null default false,
-                                         category_id uuid,
-                                         created_at timestamptz not null default now(),
-                                         updated_at timestamptz not null default now()
+-- thread
+CREATE TABLE IF NOT EXISTS rev.thread (
+                                          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                                          title TEXT NOT NULL,
+                                          content TEXT NOT NULL,
+                                          board_id UUID REFERENCES rev.board(id) ON DELETE CASCADE,
+                                          author_id UUID REFERENCES rev.users(id) ON DELETE SET NULL,
+                                          parent_id UUID REFERENCES rev.thread(id) ON DELETE SET NULL,
+                                          is_private BOOLEAN NOT NULL DEFAULT FALSE,
+                                          category_id UUID,
+                                          created_at TIMESTAMPTZ DEFAULT now(),
+                                          updated_at TIMESTAMPTZ DEFAULT now(),
+                                          tags TEXT[] DEFAULT '{}'
 );
 
-create table if not exists rev.comment(
-                                          id uuid primary key default gen_random_uuid(),
-                                          thread_id uuid references rev.thread(id) on delete cascade,
-                                          author_id uuid references rev.users(id) on delete cascade,
-                                          parent_id uuid references rev.comment(id) on delete set null,
-                                          content text not null,
-                                          created_at timestamptz not null default now()
+-- comment
+CREATE TABLE IF NOT EXISTS rev.comment (
+                                           id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                                           thread_id UUID REFERENCES rev.thread(id) ON DELETE CASCADE,
+                                           author_id UUID REFERENCES rev.users(id) ON DELETE SET NULL,
+                                           parent_id UUID REFERENCES rev.comment(id) ON DELETE SET NULL,
+                                           content TEXT NOT NULL,
+                                           created_at TIMESTAMPTZ DEFAULT now(),
+                                           updated_at TIMESTAMPTZ DEFAULT now()
 );
 
-create table if not exists rev.thread_bookmark(
-                                                  id uuid primary key default gen_random_uuid(),
-                                                  thread_id uuid not null references rev.thread(id) on delete cascade,
-                                                  user_id uuid not null references rev.users(id) on delete cascade,
-                                                  created_at timestamptz not null default now(),
-                                                  unique(thread_id, user_id)
+-- thread_bookmark
+CREATE TABLE IF NOT EXISTS rev.thread_bookmark (
+                                                   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                                                   thread_id UUID REFERENCES rev.thread(id) ON DELETE CASCADE,
+                                                   user_id UUID REFERENCES rev.users(id) ON DELETE CASCADE,
+                                                   UNIQUE (thread_id, user_id)
 );
-
--- indices
-create index if not exists idx_thread_board_priv_created
-    on rev.thread(board_id, is_private, created_at desc);
-create index if not exists idx_comment_thread_created
-    on rev.comment(thread_id, created_at asc);

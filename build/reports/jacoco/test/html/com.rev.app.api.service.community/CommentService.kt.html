@@ -4,9 +4,9 @@ import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentRequest
 import com.rev.app.api.service.community.dto.toRes
 import com.rev.app.domain.community.entity.CommentEntity
+import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.repo.CommentRepository
 import com.rev.app.domain.community.repo.ThreadRepository
-import com.rev.app.auth.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -28,7 +28,7 @@ import java.util.UUID
 <span class="nc" id="L28">                thread = thread,</span>
 <span class="nc" id="L29">                author = author,</span>
 <span class="nc" id="L30">                parent = parent,</span>
-<span class="nc" id="L31">                content = req.content</span>
+<span class="nc" id="L31">                content = req.content.trim()</span>
             )
         )
 <span class="nc" id="L34">        return saved.toRes()</span>

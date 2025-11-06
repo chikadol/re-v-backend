@@ -1,13 +1,12 @@
 package com.rev.app.repo
 
+import com.rev.app.api.service.community.dto.toRes
 import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.entity.ThreadEntity
-import com.rev.app.domain.community.entity.CommentEntity
-import com.rev.app.domain.community.repo.BoardRepository
-import com.rev.app.domain.community.repo.ThreadRepository
-import com.rev.app.domain.community.repo.CommentRepository
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.Board
+import com.rev.app.domain.community.repo.BoardRepository
+import com.rev.app.domain.community.repo.ThreadRepository
 import com.rev.app.support.pg.PostgresTC
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -31,11 +30,11 @@ import java.util.UUID
     ]
 )
 @Sql(
-    scripts = ["/test/sql/02_seed_minimal.sql"],
+    scripts = ["/db/migration/02_seed_minimal.sql"],
     executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
 )
 @Sql(
-    scripts = ["/test/sql/99_cleanup.sql"],
+    scripts = ["/db/migration/99_cleanup.sql"],
     executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
 )
 class ThreadRepositoryTest : PostgresTC() {
@@ -71,36 +70,33 @@ class ThreadRepositoryTest : PostgresTC() {
 
     @Test
     fun saveAndFind() {
-        val user = userRepository.save(
-            UserEntity(
-                id = UUID.randomUUID(),
-                username = "u-${UUID.randomUUID()}",
-                password = "p",
-                email = uniqueEmail()
-            )
-        )
-        val board = boardRepository.save(
-            Board(
-                id = UUID.randomUUID(),
-                name = "b",
-                slug = uniqueSlug(),
-                description = "desc"
-            )
-        )
+        val user = userRepository.save(UserEntity(
+            id = UUID.randomUUID(), // 또는 저장 시 null -> DB default 로 생성
+            email = "u@test.com",
+            username = "u",
+            password = "p"
+        ))
+        val board = boardRepository.save(Board(
+            name = "b",
+            slug = "b-${UUID.randomUUID()}",
+            description = "d"
+        ))
         userRepository.flush()
         boardRepository.flush()
 
         val saved = threadRepository.save(
             ThreadEntity(
-                title = "t",
-                content = "c",
-                author = user,
-                board = board,
-                categoryId = UUID.randomUUID(),
-                parent = null
+                title="t", content="c",
+                author=user, board=board,
+                isPrivate=false, categoryId=null, parent=null,
+                tags=listOf("x")
             )
         )
         threadRepository.flush()
+
+// 이제 toRes() 같은 매핑 호출
+        val dto = saved.toRes() // requireNotNull(id) 안전
+
 
         val found = threadRepository.findById(requireNotNull(saved.id)).orElseThrow()
         assertThat(found.author?.id).isEqualTo(user.id)

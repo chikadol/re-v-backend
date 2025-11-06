@@ -1,6 +1,6 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.api.service.community.dto.*
+import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.repo.ThreadBookmarkRepository
@@ -16,22 +16,14 @@ class BookmarkService(
     private val userRepository: UserRepository
 ) {
     @Transactional
-    fun toggle(userId: UUID, threadId: UUID): Boolean {
+    fun toggle(me: JwtPrincipal, threadId: UUID): Boolean {
+        val user = userRepository.getReferenceById(requireNotNull(me.userId))
         val thread = threadRepository.getReferenceById(threadId)
-        val user = userRepository.getReferenceById(userId)
-
-        return if (bookmarkRepository.existsByThread_IdAndUser_Id(thread.id!!, user.id!!)) {
-            bookmarkRepository.deleteByThread_IdAndUser_Id(thread.id!!, user.id!!)
-            false
-        } else {
-            bookmarkRepository.save(
-                ThreadBookmarkEntity(thread = thread, user = user)
-            )
-            true
-        }
+        val existing = bookmarkRepository.findByThread_IdAndUser_Id(threadId, user.id!!)
+        return if (existing != null) { bookmarkRepository.delete(existing); false }
+        else { bookmarkRepository.save(ThreadBookmarkEntity(thread = thread, user = user)); true }
     }
 
     @Transactional(readOnly = true)
-    fun count(threadId: UUID): Long =
-        bookmarkRepository.countByThread_Id(threadId)
+    fun count(threadId: UUID): Long = bookmarkRepository.countByThread_Id(threadId)
 }

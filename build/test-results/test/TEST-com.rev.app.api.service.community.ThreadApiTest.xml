@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-11-06T11:42:05.522Z" hostname="DESKTOP-2GU54QS" time="1.617">
+<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-11-06T16:10:54.484Z" hostname="DESKTOP-2GU54QS" time="1.663">
   <properties/>
-  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="1.228"/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.34"/>
-  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.045"/>
-  <system-out><![CDATA[2025-11-06T20:42:06.088+09:00  INFO 22080 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-11-06T20:42:06.088+09:00  INFO 22080 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-06T20:42:06.099+09:00  INFO 22080 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 7 ms
-2025-11-06T20:42:06.761+09:00  INFO 22080 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-11-06T20:42:06.762+09:00  INFO 22080 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-06T20:42:06.762+09:00  INFO 22080 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-11-06T20:42:07.101+09:00  INFO 22080 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-11-06T20:42:07.102+09:00  INFO 22080 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-06T20:42:07.102+09:00  INFO 22080 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+  <testcase name="createInBoard_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="1.278"/>
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.342"/>
+  <testcase name="listPublic_invalidSortKey_400()" classname="com.rev.app.api.service.community.ThreadApiTest" time="0.04"/>
+  <system-out><![CDATA[2025-11-07T01:10:55.059+09:00  INFO 15120 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-07T01:10:55.060+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-07T01:10:55.068+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+2025-11-07T01:10:55.774+09:00  INFO 15120 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-07T01:10:55.774+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-07T01:10:55.774+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-07T01:10:56.113+09:00  INFO 15120 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-07T01:10:56.113+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-07T01:10:56.114+09:00  INFO 15120 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

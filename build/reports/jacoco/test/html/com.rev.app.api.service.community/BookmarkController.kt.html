@@ -7,22 +7,19 @@ import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
-@RequestMapping(&quot;/api/threads&quot;)
+@RequestMapping(&quot;/api/bookmarks&quot;)
 <span class="nc" id="L11">class BookmarkController(</span>
 <span class="nc" id="L12">    private val bookmarkService: BookmarkService</span>
 ) {
-    @PostMapping(&quot;/{threadId}/bookmarks/toggle&quot;)
+    @PostMapping(&quot;/threads/{threadId}/toggle&quot;)
     fun toggle(
         @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable threadId: UUID
-    ): ResponseEntity&lt;Map&lt;String, Any&gt;&gt; {
-<span class="nc bnc" id="L19" title="All 2 branches missed.">        val userId = requireNotNull(me.userId) { &quot;userId required&quot; }</span>
-<span class="nc" id="L20">        val bookmarked = bookmarkService.toggle(userId, threadId)</span>
-<span class="nc" id="L21">        return ResponseEntity.ok(mapOf(&quot;bookmarked&quot; to bookmarked))</span>
-    }
+    ): ResponseEntity&lt;Boolean&gt; =
+<span class="nc" id="L19">        ResponseEntity.ok(bookmarkService.toggle(me, threadId))</span>
 
-    @GetMapping(&quot;/{threadId}/bookmarks/count&quot;)
-    fun count(@PathVariable threadId: UUID): Map&lt;String, Long&gt; =
-<span class="nc" id="L26">        mapOf(&quot;count&quot; to bookmarkService.count(threadId))</span>
+    @GetMapping(&quot;/threads/{threadId}/count&quot;)
+    fun count(@PathVariable threadId: UUID): ResponseEntity&lt;Long&gt; =
+<span class="nc" id="L23">        ResponseEntity.ok(bookmarkService.count(threadId))</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

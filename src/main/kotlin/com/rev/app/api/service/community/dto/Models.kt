@@ -3,6 +3,13 @@ package com.rev.app.api.service.community.dto
 import java.time.Instant
 import java.util.UUID
 
+data class BoardRes(
+    val id: UUID,
+    val name: String,
+    val slug: String,
+    val description: String?
+)
+
 data class ThreadRes(
     val id: UUID,
     val title: String,
@@ -14,5 +21,15 @@ data class ThreadRes(
     val categoryId: UUID?,
     val createdAt: Instant?,
     val updatedAt: Instant?,
-    val tags: List<String> = emptyList() // 엔티티에 없으면 빈 리스트로 내려줌
+    val tags: List<String> = emptyList()
+)
+
+data class CommentRes(
+    val id: UUID,
+    val threadId: UUID,
+    val parentId: UUID?,
+    val authorId: UUID?,
+    val content: String,
+    val createdAt: Instant?,
+    val updatedAt: Instant?
 )

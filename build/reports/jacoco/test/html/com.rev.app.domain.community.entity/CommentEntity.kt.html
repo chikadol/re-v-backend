@@ -2,40 +2,36 @@
 
 import com.rev.app.auth.UserEntity
 import jakarta.persistence.*
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.annotations.UuidGenerator
-import org.hibernate.type.SqlTypes
+import org.hibernate.annotations.CreationTimestamp
+import org.hibernate.annotations.UpdateTimestamp
 import java.time.Instant
 import java.util.UUID
 
 @Entity
 @Table(name = &quot;comment&quot;, schema = &quot;rev&quot;)
-<span class="nc" id="L13">class CommentEntity(</span>
-<span class="nc" id="L14">    @Id</span>
-    @GeneratedValue
-    @UuidGenerator
-    @JdbcTypeCode(SqlTypes.UUID)
-<span class="nc" id="L18">    var id: UUID? = null,</span>
+<span class="nc" id="L12">class CommentEntity(</span>
+<span class="nc" id="L13">    @Id @GeneratedValue</span>
+<span class="nc" id="L14">    var id: UUID? = null,</span>
+
+<span class="nc" id="L16">    @ManyToOne(fetch = FetchType.LAZY)</span>
+    @JoinColumn(name = &quot;thread_id&quot;)
+<span class="nc" id="L18">    var thread: ThreadEntity? = null,</span>
 
 <span class="nc" id="L20">    @ManyToOne(fetch = FetchType.LAZY)</span>
-    @JoinColumn(name = &quot;thread_id&quot;)
-<span class="nc" id="L22">    var thread: ThreadEntity? = null,</span>
+    @JoinColumn(name = &quot;author_id&quot;)
+<span class="nc" id="L22">    var author: UserEntity? = null,</span>
 
 <span class="nc" id="L24">    @ManyToOne(fetch = FetchType.LAZY)</span>
-    @JoinColumn(name = &quot;author_id&quot;)
-<span class="nc" id="L26">    var author: UserEntity? = null,</span>
+    @JoinColumn(name = &quot;parent_id&quot;)
+<span class="nc" id="L26">    var parent: CommentEntity? = null,</span>
 
 <span class="nc" id="L28">    @Column(nullable = false, columnDefinition = &quot;text&quot;)</span>
 <span class="nc" id="L29">    var content: String,</span>
 
-<span class="nc" id="L31">    @ManyToOne(fetch = FetchType.LAZY)</span>
-    @JoinColumn(name = &quot;parent_id&quot;)
-<span class="nc" id="L33">    var parent: CommentEntity? = null,</span>
+<span class="nc" id="L31">    @CreationTimestamp</span>
+<span class="nc" id="L32">    var createdAt: Instant? = null,</span>
 
-<span class="nc" id="L35">    @Column(name = &quot;created_at&quot;, nullable = false)</span>
-<span class="nc" id="L36">    var createdAt: Instant = Instant.now(),</span>
-
-<span class="nc" id="L38">    @Column(name = &quot;updated_at&quot;, nullable = false)</span>
-<span class="nc" id="L39">    var updatedAt: Instant = Instant.now()</span>
-<span class="nc" id="L40">)</span>
+<span class="nc" id="L34">    @UpdateTimestamp</span>
+<span class="nc" id="L35">    var updatedAt: Instant? = null</span>
+<span class="nc" id="L36">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
