@@ -1,6 +1,5 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.repo.ThreadBookmarkRepository
@@ -16,12 +15,16 @@ class BookmarkService(
     private val userRepository: UserRepository
 ) {
     @Transactional
-    fun toggle(me: JwtPrincipal, threadId: UUID): Boolean {
-        val user = userRepository.getReferenceById(requireNotNull(me.userId))
+    fun toggle(userId: UUID, threadId: UUID): Boolean {
+        val exists = bookmarkRepository.existsByThread_IdAndUser_Id(threadId, userId)
+        if (exists) {
+            bookmarkRepository.deleteByThread_IdAndUser_Id(threadId, userId)
+            return false
+        }
         val thread = threadRepository.getReferenceById(threadId)
-        val existing = bookmarkRepository.findByThread_IdAndUser_Id(threadId, user.id!!)
-        return if (existing != null) { bookmarkRepository.delete(existing); false }
-        else { bookmarkRepository.save(ThreadBookmarkEntity(thread = thread, user = user)); true }
+        val user = userRepository.getReferenceById(userId)
+        bookmarkRepository.save(ThreadBookmarkEntity(thread = thread, user = user))
+        return true
     }
 
     @Transactional(readOnly = true)

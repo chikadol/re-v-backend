@@ -1,7 +1,6 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.JwtPrincipal
-import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -11,14 +10,13 @@ import java.util.UUID
 class BookmarkController(
     private val bookmarkService: BookmarkService
 ) {
-    @PostMapping("/threads/{threadId}/toggle")
+    @PostMapping("/{threadId}/toggle")
     fun toggle(
         @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable threadId: UUID
-    ): ResponseEntity<Boolean> =
-        ResponseEntity.ok(bookmarkService.toggle(me, threadId))
-
-    @GetMapping("/threads/{threadId}/count")
-    fun count(@PathVariable threadId: UUID): ResponseEntity<Long> =
-        ResponseEntity.ok(bookmarkService.count(threadId))
+    ): Map<String, Any> {
+        val toggled = bookmarkService.toggle(requireNotNull(me.userId), threadId)
+        val count = bookmarkService.count(threadId)
+        return mapOf("bookmarked" to toggled, "count" to count)
+    }
 }

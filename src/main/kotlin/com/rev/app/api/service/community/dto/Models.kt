@@ -24,12 +24,26 @@ data class ThreadRes(
     val tags: List<String> = emptyList()
 )
 
+data class CreateThreadReq(
+    val title: String,
+    val content: String,
+    val parentThreadId: UUID? = null,
+    val tags: List<String> = emptyList(),
+    val isPrivate: Boolean = false,
+    val categoryId: UUID? = null
+)
+
 data class CommentRes(
     val id: UUID,
     val threadId: UUID,
+    val authorId: UUID,
     val parentId: UUID?,
-    val authorId: UUID?,
     val content: String,
-    val createdAt: Instant?,
-    val updatedAt: Instant?
+    val createdAt: Instant?
+)
+
+data class CreateCommentRequest(
+    val threadId: UUID,
+    val parentId: UUID? = null,
+    val content: String
 )

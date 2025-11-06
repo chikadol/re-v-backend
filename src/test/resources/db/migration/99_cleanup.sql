@@ -1,10 +1,9 @@
-TRUNCATE TABLE
+-- src/test/resources/test/sql/99_cleanup.sql
+truncate table
     rev.thread_bookmark,
     rev.comment,
-    rev.thread
-    RESTART IDENTITY CASCADE;
-
-TRUNCATE TABLE
+    rev.thread_tags,
+    rev.thread,
     rev.board,
     rev.users
-    RESTART IDENTITY CASCADE;
+    restart identity cascade;

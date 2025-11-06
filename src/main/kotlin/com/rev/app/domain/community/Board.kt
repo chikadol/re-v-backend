@@ -1,16 +1,16 @@
 package com.rev.app.domain.community
 
 import jakarta.persistence.*
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
-import java.time.Instant
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import java.util.UUID
 
 @Entity
 @Table(name = "board", schema = "rev")
 class Board(
-    @Id @GeneratedValue
-    var id: UUID? = null,
+    @Id
+    @JdbcTypeCode(SqlTypes.UUID)
+    var id: UUID? = UUID.randomUUID(),
 
     @Column(nullable = false)
     var name: String,
@@ -18,11 +18,5 @@ class Board(
     @Column(nullable = false, unique = true)
     var slug: String,
 
-    var description: String? = null,
-
-    @CreationTimestamp
-    var createdAt: Instant? = null,
-
-    @UpdateTimestamp
-    var updatedAt: Instant? = null
+    var description: String? = null
 )

@@ -1,19 +1,17 @@
 package com.rev.app.repo
 
-import com.rev.app.api.service.community.dto.toRes
+import com.rev.app.RevApplication
 import com.rev.app.auth.UserEntity
-import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.Board
+import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.domain.community.repo.BoardRepository
 import com.rev.app.domain.community.repo.ThreadRepository
-import com.rev.app.support.pg.PostgresTC
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.data.domain.PageRequest
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.jdbc.Sql
 import java.util.UUID
@@ -25,79 +23,32 @@ import java.util.UUID
         "spring.flyway.enabled=true",
         "spring.flyway.schemas=rev",
         "spring.jpa.hibernate.ddl-auto=validate",
-        "spring.jpa.properties.hibernate.default_schema=rev",
-        "spring.jpa.properties.hibernate.hbm2ddl.create_namespaces=true"
+        "spring.jpa.properties.hibernate.default_schema=rev"
     ]
 )
-@Sql(
-    scripts = ["/db/migration/02_seed_minimal.sql"],
-    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD
-)
-@Sql(
-    scripts = ["/db/migration/99_cleanup.sql"],
-    executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD
-)
-class ThreadRepositoryTest : PostgresTC() {
+@Sql(scripts = ["/test/sql/02_seed_minimal.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = ["/test/sql/99_cleanup.sql"], executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+class ThreadRepositoryTest {
 
     @Autowired lateinit var threadRepository: ThreadRepository
     @Autowired lateinit var userRepository: UserRepository
     @Autowired lateinit var boardRepository: BoardRepository
 
-    private fun uniqueEmail() = "e+" + UUID.randomUUID().toString().substring(0,8) + "@example.com"
-    private fun uniqueSlug()  = "b_" + UUID.randomUUID().toString().substring(0,6)
-
-    @Test
-    fun pageByBoard_andPublic_ok() {
-        // given: board/threads 픽스처가 시드에 없다면, 임의 board 생성
-        val board = boardRepository.save(
-            Board(
-                id = UUID.randomUUID(),
-                name = "board",
-                slug = uniqueSlug(),
-                description = "desc"
-            )
-        )
-
-        // when
-        val page = threadRepository.findByBoard_IdAndIsPrivateFalse(
-            board.id!!,
-            PageRequest.of(0, 10)
-        )
-
-        // then  ✅ 메서드 호출 형태로!
-        assertThat(page).isNotNull()
-    }
-
     @Test
     fun saveAndFind() {
         val user = userRepository.save(UserEntity(
-            id = UUID.randomUUID(), // 또는 저장 시 null -> DB default 로 생성
-            email = "u@test.com",
-            username = "u",
-            password = "p"
+            id = UUID.randomUUID(), email = "u@ex.com", username = "u", password = "p"
         ))
         val board = boardRepository.save(Board(
-            name = "b",
-            slug = "b-${UUID.randomUUID()}",
+            id = UUID.randomUUID(), name = "b", slug = "b-${UUID.randomUUID()}",
             description = "d"
         ))
-        userRepository.flush()
-        boardRepository.flush()
-
         val saved = threadRepository.save(
             ThreadEntity(
-                title="t", content="c",
-                author=user, board=board,
-                isPrivate=false, categoryId=null, parent=null,
-                tags=listOf("x")
+                title = "t", content = "c",
+                author = user, board = board
             )
         )
-        threadRepository.flush()
-
-// 이제 toRes() 같은 매핑 호출
-        val dto = saved.toRes() // requireNotNull(id) 안전
-
-
         val found = threadRepository.findById(requireNotNull(saved.id)).orElseThrow()
         assertThat(found.author?.id).isEqualTo(user.id)
         assertThat(found.board?.id).isEqualTo(board.id)

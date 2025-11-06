@@ -2,24 +2,25 @@ package com.rev.app.domain.community.entity
 
 import com.rev.app.auth.UserEntity
 import jakarta.persistence.*
-import org.hibernate.annotations.CreationTimestamp
-import org.hibernate.annotations.UpdateTimestamp
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import java.time.Instant
 import java.util.UUID
 
 @Entity
 @Table(name = "comment", schema = "rev")
 class CommentEntity(
-    @Id @GeneratedValue
-    var id: UUID? = null,
+    @Id
+    @JdbcTypeCode(SqlTypes.UUID)
+    var id: UUID? = UUID.randomUUID(),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "thread_id")
-    var thread: ThreadEntity? = null,
+    var thread: ThreadEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
-    var author: UserEntity? = null,
+    var author: UserEntity,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -28,9 +29,5 @@ class CommentEntity(
     @Column(nullable = false, columnDefinition = "text")
     var content: String,
 
-    @CreationTimestamp
-    var createdAt: Instant? = null,
-
-    @UpdateTimestamp
-    var updatedAt: Instant? = null
+    var createdAt: Instant? = Instant.now()
 )

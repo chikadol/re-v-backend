@@ -1,8 +1,9 @@
--- 최소 시드: users, board
-INSERT INTO rev.users (id, email, username, password)
-VALUES (gen_random_uuid(), 'e@example.com', 'u', '{noop}pw')
-ON CONFLICT (email) DO NOTHING;
+-- src/test/resources/test/sql/02_seed_minimal.sql
+insert into rev.users (id, email, username, password)
+values (gen_random_uuid(), 'e@example.com', 'u', '{noop}pw')
+on conflict (email) do nothing;
 
-INSERT INTO rev.board (id, name, slug, description)
-VALUES (gen_random_uuid(), 'General', 'general', 'Default board')
-ON CONFLICT (slug) DO NOTHING;
+-- (필요하면 보드 한 개)
+insert into rev.board (id, name, slug, description)
+values (gen_random_uuid(), 'General', 'general', 'General board')
+on conflict (slug) do nothing;
