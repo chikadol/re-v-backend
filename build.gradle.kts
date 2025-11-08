@@ -161,15 +161,12 @@ if (maybeExisting is JacocoCoverageVerification) {
 // Flyway Gradle 플러그인 설정 (실행 시에만 사용; 일반 애플리케이션 런타임은 Spring Boot가 관리)
 // 환경변수 없으면 굳이 url/user/password를 지정하지 않아도 됨. 지정하려면 주석 해제해서 사용.
 flyway {
-    // schemas와 locations만 기본 지정
-    schemas = arrayOf("rev")
     locations = arrayOf("classpath:db/migration")
-
-    // 필요 시 Gradle에서 직접 flywayMigrate 쓸 때만 아래 설정 사용
-    // url = System.getenv("SPRING_DATASOURCE_URL") ?: "jdbc:postgresql://localhost:5432/postgres"
-    // user = System.getenv("SPRING_DATASOURCE_USERNAME") ?: "postgres"
-    // password = System.getenv("SPRING_DATASOURCE_PASSWORD") ?: "postgres"
+    // url = ...
+    // user = ...
+    // password = ...
 }
+
 sourceSets {
     test {
         resources {

@@ -1,6 +1,8 @@
 package com.rev.app.api.service.community
 
-import com.rev.app.api.service.community.dto.*
+import com.rev.app.api.service.community.dto.CreateThreadReq
+import com.rev.app.api.service.community.dto.ThreadRes
+import com.rev.app.api.service.community.dto.toRes
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.repo.BoardRepository
 import com.rev.app.domain.community.repo.ThreadRepository
@@ -12,21 +14,41 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
-abstract class ThreadService(
+class ThreadService(
     private val threadRepository: ThreadRepository,
     private val boardRepository: BoardRepository,
     private val userRepository: UserRepository
 ) {
-    private val allowedSort = setOf("createdAt","updatedAt","title","id")
 
-    private fun validateSort(pageable: Pageable) {
-        pageable.sort.forEach {
-            if (it.property !in allowedSort) {
-                throw IllegalArgumentException("Unsupported sort key: ${it.property}")
-            }
-        }
+    /**
+     * 공개 스레드 목록 조회
+     */
+    @Transactional(readOnly = true)
+    fun listPublic(boardId: UUID, pageable: Pageable): Page<ThreadRes> {
+        val page = threadRepository.findByBoard_IdAndIsPrivateFalse(boardId, pageable)
+        return page.map { it.toRes() }
     }
 
-    abstract fun listPublic(boardId: UUID, pageable: Pageable): Page<ThreadRes>
-    abstract fun createInBoard(userId: UUID, boardId: UUID, req: CreateThreadReq): ThreadRes
+    /**
+     * 특정 보드에 새 스레드 생성
+     */
+    @Transactional
+    fun createInBoard(userId: UUID, boardId: UUID, req: CreateThreadReq): ThreadRes {
+        val author = userRepository.getReferenceById(userId)
+        val board = boardRepository.getReferenceById(boardId)
+
+        val entity = ThreadEntity(
+            title = req.title,
+            content = req.content,
+            board = board,
+            author = author,
+            parent = null,
+            isPrivate = false,
+            categoryId = null,
+            tags = req.tags
+        )
+
+        val saved = threadRepository.save(entity)
+        return saved.toRes()
+    }
 }

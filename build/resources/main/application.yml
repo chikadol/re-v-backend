@@ -8,10 +8,10 @@ spring:
       maximum-pool-size: 5
   jackson:
     property-naming-strategy: SNAKE_CASE
-  flyway:
-    schemas: rev
-    default-schema: rev
-    locations: locations classpath:db/migration,classpath:db/migration/{vendor}
+    flyway:
+      locations:
+        - classpath:db/migration
+        - classpath:db/other
   jpa:
     properties:
       hibernate:
