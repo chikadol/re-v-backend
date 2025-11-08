@@ -11,10 +11,10 @@ import java.util.UUID
 
 @RestController
 @RequestMapping(&quot;/api/threads&quot;)
-<span class="nc" id="L14">class ThreadController(</span>
-<span class="nc" id="L15">    private val service: ThreadService</span>
+<span class="fc" id="L14">class ThreadController(</span>
+<span class="fc" id="L15">    private val service: ThreadService</span>
 ) {
-<span class="nc" id="L17">    private val allowSort = setOf(&quot;createdAt&quot;, &quot;updatedAt&quot;, &quot;title&quot;)</span>
+<span class="fc" id="L17">    private val allowSort = setOf(&quot;createdAt&quot;, &quot;updatedAt&quot;, &quot;title&quot;)</span>
 
     @GetMapping(&quot;/{boardId}/threads&quot;)
     fun listPublic(
@@ -22,10 +22,10 @@ import java.util.UUID
         pageable: Pageable
     ): Page&lt;ThreadRes&gt; {
         // 허용되지 않은 정렬키면 400
-<span class="nc" id="L25">        pageable.sort.forEach {</span>
-<span class="nc bnc" id="L26" title="All 2 branches missed.">            require(it.property in allowSort) { &quot;Unsupported sort: ${it.property}&quot; }</span>
+<span class="fc" id="L25">        pageable.sort.forEach {</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">            require(it.property in allowSort) { &quot;Unsupported sort: ${it.property}&quot; }</span>
 <span class="nc" id="L27">        }</span>
-<span class="nc" id="L28">        return service.listPublic(boardId, pageable)</span>
+<span class="fc" id="L28">        return service.listPublic(boardId, pageable)</span>
     }
 
     @PostMapping(&quot;/boards/{boardId}&quot;)
@@ -34,8 +34,8 @@ import java.util.UUID
         @AuthenticationPrincipal me: JwtPrincipal,
         @RequestBody req: CreateThreadReq
     ): ThreadRes {
-<span class="nc bnc" id="L37" title="All 2 branches missed.">        val userId = requireNotNull(me.userId)</span>
-<span class="nc" id="L38">        return service.createInBoard(userId, boardId, req)</span>
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        val userId = requireNotNull(me.userId)</span>
+<span class="fc" id="L38">        return service.createInBoard(userId, boardId, req)</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

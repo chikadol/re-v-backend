@@ -5,18 +5,18 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
-<span class="nc" id="L8">@RestControllerAdvice</span>
+<span class="fc" id="L8">@RestControllerAdvice</span>
 class ApiExceptionHandler {
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgument(e: IllegalArgumentException): ResponseEntity&lt;Map&lt;String, Any?&gt;&gt; =
         ResponseEntity
-<span class="nc" id="L13">            .status(HttpStatus.BAD_REQUEST)</span>
-<span class="nc" id="L14">            .body(</span>
-<span class="nc" id="L15">                mapOf(</span>
-<span class="nc" id="L16">                    &quot;status&quot; to HttpStatus.BAD_REQUEST.value(),</span>
-<span class="nc" id="L17">                    &quot;error&quot; to HttpStatus.BAD_REQUEST.reasonPhrase,</span>
-<span class="nc bnc" id="L18" title="All 2 branches missed.">                    &quot;message&quot; to (e.message ?: &quot;Bad request&quot;)</span>
+<span class="fc" id="L13">            .status(HttpStatus.BAD_REQUEST)</span>
+<span class="fc" id="L14">            .body(</span>
+<span class="fc" id="L15">                mapOf(</span>
+<span class="fc" id="L16">                    &quot;status&quot; to HttpStatus.BAD_REQUEST.value(),</span>
+<span class="fc" id="L17">                    &quot;error&quot; to HttpStatus.BAD_REQUEST.reasonPhrase,</span>
+<span class="pc bpc" id="L18" title="1 of 2 branches missed.">                    &quot;message&quot; to (e.message ?: &quot;Bad request&quot;)</span>
                 )
-<span class="nc" id="L20">            )</span>
+<span class="fc" id="L20">            )</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

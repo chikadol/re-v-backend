@@ -6,11 +6,11 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-<span class="nc" id="L9">class WebMvcConfig(</span>
-<span class="nc" id="L10">    private val meArgumentResolver: MeArgumentResolver</span>
+<span class="fc" id="L9">class WebMvcConfig(</span>
+<span class="fc" id="L10">    private val meArgumentResolver: MeArgumentResolver</span>
 ) : WebMvcConfigurer {
     override fun addArgumentResolvers(resolvers: MutableList&lt;HandlerMethodArgumentResolver&gt;) {
-<span class="nc" id="L13">        resolvers.add(meArgumentResolver)</span>
-<span class="nc" id="L14">    }</span>
+<span class="fc" id="L13">        resolvers.add(meArgumentResolver)</span>
+<span class="fc" id="L14">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
