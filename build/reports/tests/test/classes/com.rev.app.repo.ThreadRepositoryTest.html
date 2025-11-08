@@ -29,7 +29,7 @@
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">1</div>
+<div class="counter">0</div>
 <p>failures</p>
 </div>
 </td>
@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.091s</div>
+<div class="counter">0.631s</div>
 <p>duration</p>
 </div>
 </td>
@@ -50,8 +50,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox failures" id="successRate">
-<div class="percent">0%</div>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
 <p>successful</p>
 </div>
 </td>
@@ -61,123 +61,15 @@
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
-<a href="#">Failed tests</a>
-</li>
-<li>
 <a href="#">Tests</a>
 </li>
 <li>
 <a href="#">Standard output</a>
 </li>
+<li>
+<a href="#">Standard error</a>
+</li>
 </ul>
-<div class="tab">
-<h2>Failed tests</h2>
-<div class="test">
-<a name="saveAndFind()"></a>
-<h3 class="failures">saveAndFind()</h3>
-<span class="code">
-<pre>org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #2 of class path resource [test/sql/99_cleanup.sql]: DO $do$ BEGIN IF to_regclass('rev.thread_reaction') IS NOT NULL THEN EXECUTE 'TRUNCATE TABLE rev.thread_reaction RESTART IDENTITY CASCADE'
-	at app//org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:282)
-	at app//org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.populate(ResourceDatabasePopulator.java:254)
-	at app//org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:54)
-	at app//org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.execute(ResourceDatabasePopulator.java:269)
-	at app//org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.lambda$executeSqlScripts$9(SqlScriptsTestExecutionListener.java:361)
-	at app//org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68)
-	at app//org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140)
-	at app//org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67)
-	at app//org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:361)
-	at app//org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.lambda$executeSqlScripts$4(SqlScriptsTestExecutionListener.java:274)
-	at java.base@21.0.8/java.lang.Iterable.forEach(Iterable.java:75)
-	at app//org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:274)
-	at app//org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:221)
-	at app//org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.afterTestMethod(SqlScriptsTestExecutionListener.java:173)
-	at app//org.springframework.test.context.TestContextManager.afterTestMethod(TestContextManager.java:487)
-	at app//org.springframework.test.context.junit.jupiter.SpringExtension.afterEach(SpringExtension.java:278)
-	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAfterEachCallbacks$12(TestMethodTestDescriptor.java:261)
-	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$13(TestMethodTestDescriptor.java:277)
-	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$14(TestMethodTestDescriptor.java:277)
-	at app//org.junit.platform.commons.util.CollectionUtils.forEachInReverseOrder(CollectionUtils.java:217)
-	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAllAfterMethodsOrCallbacks(TestMethodTestDescriptor.java:276)
-	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAfterEachCallbacks(TestMethodTestDescriptor.java:260)
-	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:145)
-	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
-	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
-	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
-	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
-	at java.base@21.0.8/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
-	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
-	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
-	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
-	at java.base@21.0.8/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
-	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
-	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
-	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
-	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
-	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
-	at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
-	at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
-	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
-	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
-	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
-	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
-	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
-	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
-	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
-	at app//org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124)
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99)
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94)
-	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63)
-	at java.base@21.0.8/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base@21.0.8/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
-	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
-	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92)
-	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
-	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
-	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
-	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
-	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
-	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
-Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started at position 3 in SQL DO $do$ BEGIN IF to_regclass('rev.thread_reaction') IS NOT NULL THEN EXECUTE 'TRUNCATE TABLE rev.thread_reaction RESTART IDENTITY CASCADE'. Expected terminating $$
-	at app//org.postgresql.core.Parser.checkParsePosition(Parser.java:1435)
-	at app//org.postgresql.core.Parser.parseSql(Parser.java:1334)
-	at app//org.postgresql.core.Parser.replaceProcessing(Parser.java:1286)
-	at app//org.postgresql.core.CachedQueryCreateAction.create(CachedQueryCreateAction.java:43)
-	at app//org.postgresql.core.QueryExecutorBase.createQueryByKey(QueryExecutorBase.java:370)
-	at app//org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:333)
-	at app//org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317)
-	at app//org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312)
-	at app//com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
-	at app//com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
-	at app//org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:261)
-	... 83 more
-</pre>
-</span>
-</div>
-</div>
 <div class="tab">
 <h2>Tests</h2>
 <table>
@@ -189,17 +81,17 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
 </tr>
 </thead>
 <tr>
-<td class="failures">saveAndFind()</td>
-<td class="failures">0.091s</td>
-<td class="failures">failed</td>
+<td class="success">saveAndFind()</td>
+<td class="success">0.631s</td>
+<td class="success">passed</td>
 </tr>
 </table>
 </div>
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2025-11-07T03:11:13.634+09:00  INFO 5268 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.rev.app.repo.ThreadRepositoryTest]: ThreadRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-07T03:11:13.641+09:00  INFO 5268 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadRepositoryTest
+<pre>21:52:24.070 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.rev.app.repo.ThreadRepositoryTest]: ThreadRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:52:24.280 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadRepositoryTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -210,31 +102,32 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
 
  :: Spring Boot ::                (v3.3.3)
 
-2025-11-07T03:11:13.661+09:00  INFO 5268 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Starting ThreadRepositoryTest using Java 21.0.8 with PID 5268 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
-2025-11-07T03:11:13.661+09:00  INFO 5268 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-11-07T03:11:13.765+09:00  INFO 5268 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-07T03:11:13.787+09:00  INFO 5268 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 12 JPA repository interfaces.
-2025-11-07T03:11:14.002+09:00  INFO 5268 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
-2025-11-07T03:11:14.061+09:00  INFO 5268 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@39715642
-2025-11-07T03:11:14.061+09:00  INFO 5268 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
-2025-11-07T03:11:14.073+09:00  INFO 5268 --- [    Test worker] o.f.c.i.resource.ResourceNameValidator   : 4 SQL migrations were detected but not run because they did not follow the filename convention.
-2025-11-07T03:11:14.073+09:00  INFO 5268 --- [    Test worker] o.f.c.i.resource.ResourceNameValidator   : Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
-2025-11-07T03:11:14.089+09:00  INFO 5268 --- [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres (PostgreSQL 17.6)
-2025-11-07T03:11:14.131+09:00  WARN 5268 --- [    Test worker] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: PostgreSQL 17.6 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 16.
-2025-11-07T03:11:14.206+09:00  INFO 5268 --- [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 20 migrations (execution time 00:00.057s)
-2025-11-07T03:11:14.344+09:00  INFO 5268 --- [    Test worker] o.f.c.i.c.SqlScriptCallbackFactory       : Executing SQL callback: beforeMigrate - bootstrap
-2025-11-07T03:11:14.356+09:00  WARN 5268 --- [    Test worker] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: schema &quot;rev&quot; already exists, skipping (SQL State: 42P06 - Error Code: 0)
-2025-11-07T03:11:14.372+09:00  WARN 5268 --- [    Test worker] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: extension &quot;uuid-ossp&quot; already exists, skipping (SQL State: 42710 - Error Code: 0)
-2025-11-07T03:11:14.378+09:00  WARN 5268 --- [    Test worker] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: extension &quot;pgcrypto&quot; already exists, skipping (SQL State: 42710 - Error Code: 0)
-2025-11-07T03:11:14.440+09:00  INFO 5268 --- [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema &quot;rev&quot;: 28
-2025-11-07T03:11:14.448+09:00  INFO 5268 --- [    Test worker] o.f.core.internal.command.DbMigrate      : Schema &quot;rev&quot; is up to date. No migration necessary.
-2025-11-07T03:11:14.482+09:00  INFO 5268 --- [    Test worker] o.f.c.i.c.SqlScriptCallbackFactory       : Executing SQL callback: afterMigrate - grants
-2025-11-07T03:11:14.561+09:00  INFO 5268 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-07T03:11:14.564+09:00  INFO 5268 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-11-07T03:11:14.571+09:00  INFO 5268 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-07T03:11:14.774+09:00  INFO 5268 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-11-07T03:11:14.846+09:00  INFO 5268 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-07T03:11:14.861+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:24.911+09:00  INFO 16016 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Starting ThreadRepositoryTest using Java 21.0.8 with PID 16016 (started by luelue in C:\Users\luelue\Documents\GitHub\re-v-backend)
+2025-11-08T21:52:24.912+09:00  INFO 16016 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-11-08T21:52:26.041+09:00  INFO 16016 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-08T21:52:26.130+09:00  INFO 16016 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 77 ms. Found 12 JPA repository interfaces.
+2025-11-08T21:52:26.650+09:00  INFO 16016 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-08T21:52:27.091+09:00  INFO 16016 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@40a43556
+2025-11-08T21:52:27.093+09:00  INFO 16016 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-08T21:52:27.142+09:00  INFO 16016 --- [    Test worker] o.f.c.i.resource.ResourceNameValidator   : 4 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-11-08T21:52:27.142+09:00  INFO 16016 --- [    Test worker] o.f.c.i.resource.ResourceNameValidator   : Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-11-08T21:52:27.163+09:00  INFO 16016 --- [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres (PostgreSQL 17.6)
+2025-11-08T21:52:27.218+09:00  WARN 16016 --- [    Test worker] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: PostgreSQL 17.6 is newer than this version of Flyway and support has not been tested. The latest supported version of PostgreSQL is 16.
+2025-11-08T21:52:27.315+09:00  INFO 16016 --- [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 20 migrations (execution time 00:00.068s)
+2025-11-08T21:52:27.417+09:00  INFO 16016 --- [    Test worker] o.f.c.i.c.SqlScriptCallbackFactory       : Executing SQL callback: beforeMigrate - bootstrap
+2025-11-08T21:52:27.439+09:00  WARN 16016 --- [    Test worker] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: schema &quot;rev&quot; already exists, skipping (SQL State: 42P06 - Error Code: 0)
+2025-11-08T21:52:27.459+09:00  WARN 16016 --- [    Test worker] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: extension &quot;uuid-ossp&quot; already exists, skipping (SQL State: 42710 - Error Code: 0)
+2025-11-08T21:52:27.466+09:00  WARN 16016 --- [    Test worker] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: extension &quot;pgcrypto&quot; already exists, skipping (SQL State: 42710 - Error Code: 0)
+2025-11-08T21:52:27.532+09:00  INFO 16016 --- [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema &quot;rev&quot;: 28
+2025-11-08T21:52:27.541+09:00  INFO 16016 --- [    Test worker] o.f.core.internal.command.DbMigrate      : Schema &quot;rev&quot; is up to date. No migration necessary.
+2025-11-08T21:52:27.577+09:00  INFO 16016 --- [    Test worker] o.f.c.i.c.SqlScriptCallbackFactory       : Executing SQL callback: afterMigrate - grants
+2025-11-08T21:52:27.741+09:00  INFO 16016 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-08T21:52:27.817+09:00  INFO 16016 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-11-08T21:52:27.856+09:00  INFO 16016 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-08T21:52:28.218+09:00  INFO 16016 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-08T21:52:29.712+09:00  INFO 16016 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-08T21:52:29.833+09:00  INFO 16016 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-08T21:52:29.996+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -247,7 +140,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.863+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:29.998+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -260,7 +153,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.866+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.118+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -273,7 +166,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.871+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.409+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -286,7 +179,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.874+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.413+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -299,7 +192,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.876+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.459+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -312,7 +205,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.878+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.460+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -325,7 +218,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.879+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.467+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -338,7 +231,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.882+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.473+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -351,7 +244,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.883+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.478+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -364,7 +257,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.884+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.508+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -377,7 +270,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.884+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.523+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -390,7 +283,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.886+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.524+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -403,7 +296,8 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.886+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.546+09:00  INFO 16016 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-08T21:52:30.762+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -416,7 +310,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.889+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:30.764+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -429,7 +323,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.892+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.045+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -442,7 +336,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.893+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.047+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -455,7 +349,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.894+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.048+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -468,7 +362,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.896+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.056+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -481,7 +375,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.898+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.065+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -494,7 +388,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.900+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.070+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -507,7 +401,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.900+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.072+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -520,7 +414,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.902+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.079+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -533,7 +427,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.902+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.086+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -546,7 +440,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.905+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.097+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -559,7 +453,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.905+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.098+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -572,7 +466,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.909+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.105+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -585,7 +479,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.911+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.114+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -598,7 +492,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.914+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.119+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -611,7 +505,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.915+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.126+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -624,7 +518,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.918+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.135+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -637,7 +531,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.919+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.136+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -650,7 +544,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.919+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.142+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -663,7 +557,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.920+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.149+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -676,7 +570,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.921+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.155+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -689,7 +583,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.922+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.159+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -702,7 +596,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.922+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.171+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -715,7 +609,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.924+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.172+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -728,7 +622,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.926+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.173+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -741,7 +635,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.928+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.174+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -754,7 +648,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.931+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.176+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -767,7 +661,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.932+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.176+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -780,7 +674,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.933+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.185+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -793,7 +687,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.936+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.185+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -806,7 +700,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.938+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.192+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -819,7 +713,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.940+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.192+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -832,7 +726,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.940+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+2025-11-08T21:52:31.204+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
     0 nanoseconds spent acquiring 0 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
     0 nanoseconds spent preparing 0 JDBC statements;
@@ -845,7 +739,20 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
     0 nanoseconds spent executing 0 pre-partial-flushes;
     0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
 }
-2025-11-07T03:11:14.952+09:00  INFO 5268 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Started ThreadRepositoryTest in 1.308 seconds (process running for 14.829)
+2025-11-08T21:52:31.204+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    0 nanoseconds spent acquiring 0 JDBC connections;
+    0 nanoseconds spent releasing 0 JDBC connections;
+    0 nanoseconds spent preparing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC statements;
+    0 nanoseconds spent executing 0 JDBC batches;
+    0 nanoseconds spent performing 0 L2C puts;
+    0 nanoseconds spent performing 0 L2C hits;
+    0 nanoseconds spent performing 0 L2C misses;
+    0 nanoseconds spent executing 0 flushes (flushing a total of 0 entities and 0 collections);
+    0 nanoseconds spent executing 0 pre-partial-flushes;
+    0 nanoseconds spent executing 0 partial-flushes (flushing a total of 0 entities and 0 collections)
+}
+2025-11-08T21:52:31.256+09:00  INFO 16016 --- [    Test worker] com.rev.app.repo.ThreadRepositoryTest    : Started ThreadRepositoryTest in 6.853 seconds (process running for 8.537)
 Hibernate: 
     select
         ue1_0.id,
@@ -882,112 +789,11 @@ Hibernate:
         rev.thread te1_0 
     where
         te1_0.id=?
-2025-11-07T03:11:15.030+09:00  WARN 5268 --- [    Test worker] o.s.test.context.TestContextManager      : Caught exception while invoking 'afterTestMethod' callback on TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener] for test method [public void com.rev.app.repo.ThreadRepositoryTest.saveAndFind()] and test instance [com.rev.app.repo.ThreadRepositoryTest@3452b14]
-
-org.springframework.jdbc.datasource.init.ScriptStatementFailedException: Failed to execute SQL script statement #2 of class path resource [test/sql/99_cleanup.sql]: DO $do$ BEGIN IF to_regclass('rev.thread_reaction') IS NOT NULL THEN EXECUTE 'TRUNCATE TABLE rev.thread_reaction RESTART IDENTITY CASCADE'
-	at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:282) ~[spring-jdbc-6.1.12.jar:6.1.12]
-	at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.populate(ResourceDatabasePopulator.java:254) ~[spring-jdbc-6.1.12.jar:6.1.12]
-	at org.springframework.jdbc.datasource.init.DatabasePopulatorUtils.execute(DatabasePopulatorUtils.java:54) ~[spring-jdbc-6.1.12.jar:6.1.12]
-	at org.springframework.jdbc.datasource.init.ResourceDatabasePopulator.execute(ResourceDatabasePopulator.java:269) ~[spring-jdbc-6.1.12.jar:6.1.12]
-	at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.lambda$executeSqlScripts$9(SqlScriptsTestExecutionListener.java:361) ~[spring-test-6.1.12.jar:6.1.12]
-	at org.springframework.transaction.support.TransactionOperations.lambda$executeWithoutResult$0(TransactionOperations.java:68) ~[spring-tx-6.1.12.jar:6.1.12]
-	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:140) ~[spring-tx-6.1.12.jar:6.1.12]
-	at org.springframework.transaction.support.TransactionOperations.executeWithoutResult(TransactionOperations.java:67) ~[spring-tx-6.1.12.jar:6.1.12]
-	at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:361) ~[spring-test-6.1.12.jar:6.1.12]
-	at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.lambda$executeSqlScripts$4(SqlScriptsTestExecutionListener.java:274) ~[spring-test-6.1.12.jar:6.1.12]
-	at java.base/java.lang.Iterable.forEach(Iterable.java:75) ~[na:na]
-	at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:274) ~[spring-test-6.1.12.jar:6.1.12]
-	at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.executeSqlScripts(SqlScriptsTestExecutionListener.java:221) ~[spring-test-6.1.12.jar:6.1.12]
-	at org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener.afterTestMethod(SqlScriptsTestExecutionListener.java:173) ~[spring-test-6.1.12.jar:6.1.12]
-	at org.springframework.test.context.TestContextManager.afterTestMethod(TestContextManager.java:487) ~[spring-test-6.1.12.jar:6.1.12]
-	at org.springframework.test.context.junit.jupiter.SpringExtension.afterEach(SpringExtension.java:278) ~[spring-test-6.1.12.jar:6.1.12]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAfterEachCallbacks$12(TestMethodTestDescriptor.java:261) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$13(TestMethodTestDescriptor.java:277) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$14(TestMethodTestDescriptor.java:277) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
-	at org.junit.platform.commons.util.CollectionUtils.forEachInReverseOrder(CollectionUtils.java:217) ~[junit-platform-commons-1.10.3.jar:1.10.3]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAllAfterMethodsOrCallbacks(TestMethodTestDescriptor.java:276) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAfterEachCallbacks(TestMethodTestDescriptor.java:260) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:145) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
-	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.3.jar:5.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.3.jar:1.10.3]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86) ~[junit-platform-launcher-1.8.2.jar:1.8.2]
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:124) ~[na:na]
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:99) ~[na:na]
-	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:94) ~[na:na]
-	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:63) ~[na:na]
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36) ~[na:na]
-	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24) ~[na:na]
-	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33) ~[na:na]
-	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:92) ~[na:na]
-	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source) ~[na:na]
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:200) ~[na:na]
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:132) ~[na:na]
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103) ~[na:na]
-	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63) ~[na:na]
-	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56) ~[na:na]
-	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122) ~[na:na]
-	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72) ~[na:na]
-	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69) ~[gradle-worker.jar:na]
-	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74) ~[gradle-worker.jar:na]
-Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started at position 3 in SQL DO $do$ BEGIN IF to_regclass('rev.thread_reaction') IS NOT NULL THEN EXECUTE 'TRUNCATE TABLE rev.thread_reaction RESTART IDENTITY CASCADE'. Expected terminating $$
-	at org.postgresql.core.Parser.checkParsePosition(Parser.java:1435) ~[postgresql-42.7.4.jar:42.7.4]
-	at org.postgresql.core.Parser.parseSql(Parser.java:1334) ~[postgresql-42.7.4.jar:42.7.4]
-	at org.postgresql.core.Parser.replaceProcessing(Parser.java:1286) ~[postgresql-42.7.4.jar:42.7.4]
-	at org.postgresql.core.CachedQueryCreateAction.create(CachedQueryCreateAction.java:43) ~[postgresql-42.7.4.jar:42.7.4]
-	at org.postgresql.core.QueryExecutorBase.createQueryByKey(QueryExecutorBase.java:370) ~[postgresql-42.7.4.jar:42.7.4]
-	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:333) ~[postgresql-42.7.4.jar:42.7.4]
-	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317) ~[postgresql-42.7.4.jar:42.7.4]
-	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312) ~[postgresql-42.7.4.jar:42.7.4]
-	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar:na]
-	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar:na]
-	at org.springframework.jdbc.datasource.init.ScriptUtils.executeSqlScript(ScriptUtils.java:261) ~[spring-jdbc-6.1.12.jar:6.1.12]
-	... 83 common frames omitted
-
-2025-11-07T03:11:15.043+09:00  INFO 5268 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
-    20300 nanoseconds spent acquiring 1 JDBC connections;
+2025-11-08T21:52:31.899+09:00  INFO 16016 --- [    Test worker] i.StatisticalLoggingSessionEventListener : Session Metrics {
+    6850300 nanoseconds spent acquiring 1 JDBC connections;
     0 nanoseconds spent releasing 0 JDBC connections;
-    282800 nanoseconds spent preparing 3 JDBC statements;
-    16785300 nanoseconds spent executing 3 JDBC statements;
+    509100 nanoseconds spent preparing 3 JDBC statements;
+    20247800 nanoseconds spent executing 3 JDBC statements;
     0 nanoseconds spent executing 0 JDBC batches;
     0 nanoseconds spent performing 0 L2C puts;
     0 nanoseconds spent performing 0 L2C hits;
@@ -999,6 +805,17 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
 </pre>
 </span>
 </div>
+<div class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\luelue\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+</pre>
+</span>
+</div>
 </div>
 <div id="footer">
 <p>
@@ -1007,7 +824,7 @@ Caused by: org.postgresql.util.PSQLException: Unterminated dollar quote started 
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14</a> at 2025. 11. 7. 오전 3:11:15</p>
+<a href="https://www.gradle.org">Gradle 8.14</a> at 2025. 11. 8. 오후 9:52:32</p>
 </div>
 </div>
 </body>

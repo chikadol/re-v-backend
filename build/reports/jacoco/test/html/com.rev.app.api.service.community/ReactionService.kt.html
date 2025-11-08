@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ko"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReactionService.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">re-v-backend</a> &gt; <a href="index.source.html" class="el_package">com.rev.app.api.service.community</a> &gt; <span class="el_source">ReactionService.kt</span></div><h1>ReactionService.kt</h1><pre class="source lang-java linenums">// src/main/kotlin/com/rev/app/api/service/community/ReactionService.kt
+package com.rev.app.api.service.community
+
+import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.auth.UserRepository                 // ✅ 추가
+import com.rev.app.domain.community.entity.ThreadReaction
+import com.rev.app.domain.community.repo.ThreadReactionRepository
+import com.rev.app.domain.community.repo.ThreadRepository
+import jakarta.transaction.Transactional
+import org.springframework.stereotype.Service
+import java.util.UUID
+
+
+@Service
+<span class="nc" id="L15">class ReactionService(</span>
+<span class="nc" id="L16">    private val threadRepository: ThreadRepository,</span>
+<span class="nc" id="L17">    private val threadReactionRepository: ThreadReactionRepository,</span>
+<span class="nc" id="L18">    private val userRepository: UserRepository          // ✅ 추가 주입</span>
+) {
+    @Transactional
+    fun toggleThreadReaction(me: JwtPrincipal, threadId: UUID, type: ReactionType): Boolean {
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        val uid = requireNotNull(me.userId)</span>
+
+        // 있으면 제거하고 false 반환
+<span class="nc" id="L25">        val removed = threadReactionRepository.deleteByThread_IdAndUser_IdAndReaction(threadId, uid, type)</span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        if (removed &gt; 0) return false</span>
+
+        // 없으면 추가하고 true 반환
+<span class="nc" id="L29">        val thread = threadRepository.getReferenceById(threadId)</span>
+<span class="nc" id="L30">        val user = userRepository.getReferenceById(uid)     // ✅ UserEntity 프록시</span>
+<span class="nc" id="L31">        threadReactionRepository.save(</span>
+<span class="nc" id="L32">            ThreadReaction(</span>
+<span class="nc" id="L33">                thread = thread,</span>
+<span class="nc" id="L34">                user = user,                                 // ✅ user 로 전달</span>
+<span class="nc" id="L35">                reaction = type</span>
+            )
+        )
+<span class="nc" id="L38">        return true</span>
+    }
+
+    @Transactional
+    fun countThreadReaction(threadId: Long, type: ReactionType): Long =
+<span class="nc" id="L43">        threadReactionRepository.countByThreadAndReaction(threadId, type)</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
