@@ -1,33 +1,32 @@
-import com.rev.app.api.service.community.ReactionType
+package com.rev.app.domain.community.model
+
 import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.entity.ThreadEntity
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.FetchType
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.Table
+import jakarta.persistence.*
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.annotations.UuidGenerator
+import org.hibernate.type.SqlTypes
+import java.time.Instant
+import java.util.UUID
 
 @Entity
-@Table(name = "thread_reaction", schema = "rev")
-open class ThreadReaction(
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+@Table(
+    name = "thread_reaction", schema = "rev",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["thread_id","user_id","type"])]
+)
+class ThreadReactionEntity(
+    @Id @GeneratedValue @UuidGenerator @JdbcTypeCode(SqlTypes.UUID)
+    var id: UUID? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "thread_id", nullable = false)
-    val thread: ThreadEntity,
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "thread_id")
+    var thread: ThreadEntity,
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    val user: UserEntity,
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id")
+    var user: UserEntity,
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "reaction", nullable = false)
-    var reaction: ReactionType
+    @Column(nullable = false, length = 20)
+    var type: String, // "LIKE", "LOVE"...
+
+    @Column(name = "created_at", nullable = false)
+    var createdAt: Instant = Instant.now()
 )

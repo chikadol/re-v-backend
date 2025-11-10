@@ -1,6 +1,8 @@
-package com.rev.app.api.service.community
+package com.rev.app.api.controller
 
 import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.api.service.community.ReactionService
+import com.rev.app.api.service.community.dto.ToggleReactionRes
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -14,16 +16,9 @@ class ReactionController(
     fun toggle(
         @AuthenticationPrincipal me: JwtPrincipal,
         @PathVariable threadId: UUID,
-        @PathVariable type: ReactionType
-    ): Map<String, Any> {
-        val added = reactionService.toggleThreadReaction(me, threadId, type)
-        return mapOf("added" to added)
+        @PathVariable type: String
+    ): ToggleReactionRes {
+        val uid = requireNotNull(me.userId)
+        return reactionService.toggle(uid, threadId, type)
     }
-
-    @GetMapping("/{type}/count")
-    fun count(
-        @PathVariable threadId: Long,
-        @PathVariable type: ReactionType
-    ): Map<String, Long> =
-        mapOf("count" to reactionService.countThreadReaction(threadId, type))
 }

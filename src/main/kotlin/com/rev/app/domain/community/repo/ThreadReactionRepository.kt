@@ -1,29 +1,11 @@
 package com.rev.app.domain.community.repo
 
-
-import com.rev.app.api.service.community.ReactionType
-import com.rev.app.domain.community.entity.ThreadReaction
+import com.rev.app.domain.community.model.ThreadReactionEntity   // ✅ model 패키지로 통일
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.query.Param
 import java.util.UUID
 
-interface ThreadReactionRepository : JpaRepository<ThreadReaction, Long> {
-
-    fun findByThread_IdAndUser_Id(threadId: UUID, userId: UUID): List<ThreadReaction>
-
-    fun deleteByThread_IdAndUser_IdAndReaction(threadId: UUID, userId: UUID, reaction: ReactionType): Long
-
-    @Query(
-        """
-        select count(tr) 
-        from ThreadReaction tr
-        where tr.thread.id = :threadId
-          and tr.reaction = :reaction
-        """
-    )
-    fun countByThreadAndReaction(
-        @Param("threadId") threadId: Long,
-        @Param("reaction") reaction: ReactionType
-    ): Long
+interface ThreadReactionRepository : JpaRepository<ThreadReactionEntity, UUID> {
+    fun findByThread_IdAndUser_IdAndType(threadId: UUID, userId: UUID, type: String): ThreadReactionEntity?
+    fun countByThread_IdAndType(threadId: UUID, type: String): Long
+    fun findAllByThread_Id(threadId: UUID): List<ThreadReactionEntity>
 }

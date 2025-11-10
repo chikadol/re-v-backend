@@ -1,12 +1,9 @@
 spring:
   flyway:
     enabled: true
-    # ✅ 'locations '라는 단어 빼고, 리스트/CSV로 정확히 지정
-    locations:
-      - classpath:db/migration
-      # 필요하면 테스트용 추가 경로도 가능:
-      # - classpath:test/db/migration
     schemas: rev
+    baseline-on-migrate: true      # ✅ 핵심
+    clean-disabled: false        # (선택) clean을 쓸 거면 주석 해제
   jpa:
     hibernate:
       ddl-auto: validate
@@ -14,9 +11,3 @@ spring:
       hibernate:
         default_schema: rev
         hbm2ddl.create_namespaces: true
-
-logging:
-  level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
-

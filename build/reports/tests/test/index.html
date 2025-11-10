@@ -20,13 +20,13 @@
 <tr>
 <td>
 <div class="infoBox" id="tests">
-<div class="counter">6</div>
+<div class="counter">16</div>
 <p>tests</p>
 </div>
 </td>
 <td>
 <div class="infoBox" id="failures">
-<div class="counter">0</div>
+<div class="counter">3</div>
 <p>failures</p>
 </div>
 </td>
@@ -38,7 +38,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">3.240s</div>
+<div class="counter">1.254s</div>
 <p>duration</p>
 </div>
 </td>
@@ -47,8 +47,8 @@
 </div>
 </td>
 <td>
-<div class="infoBox success" id="successRate">
-<div class="percent">100%</div>
+<div class="infoBox failures" id="successRate">
+<div class="percent">81%</div>
 <p>successful</p>
 </div>
 </td>
@@ -58,12 +58,32 @@
 <div class="tab-container">
 <ul class="tabLinks">
 <li>
+<a href="#">Failed tests</a>
+</li>
+<li>
 <a href="#">Packages</a>
 </li>
 <li>
 <a href="#">Classes</a>
 </li>
 </ul>
+<div class="tab">
+<h2>Failed tests</h2>
+<ul class="linkList">
+<li>
+<a href="classes/com.rev.app.api.controller.NotificationControllerWebMvcTest.html">NotificationControllerWebMvcTest</a>.
+<a href="classes/com.rev.app.api.controller.NotificationControllerWebMvcTest.html#listMine_ok()">listMine_ok()</a>
+</li>
+<li>
+<a href="classes/com.rev.app.api.controller.NotificationControllerWebMvcTest.html">NotificationControllerWebMvcTest</a>.
+<a href="classes/com.rev.app.api.controller.NotificationControllerWebMvcTest.html#markRead_ok()">markRead_ok()</a>
+</li>
+<li>
+<a href="classes/com.rev.app.api.controller.ThreadControllerTagWebMvcTest.html">ThreadControllerTagWebMvcTest</a>.
+<a href="classes/com.rev.app.api.controller.ThreadControllerTagWebMvcTest.html#list_with_tags_ok()">list_with_tags_ok()</a>
+</li>
+</ul>
+</div>
 <div class="tab">
 <h2>Packages</h2>
 <table>
@@ -80,22 +100,72 @@
 <tbody>
 <tr>
 <td class="success">
+<a href="packages/default-package.html">default-package</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1.044s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="packages/com.rev.app.api.controller.html">com.rev.app.api.controller</a>
+</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0.020s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.rev.app.api.service.html">com.rev.app.api.service</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.005s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
 <a href="packages/com.rev.app.api.service.community.html">com.rev.app.api.service.community</a>
 </td>
 <td>3</td>
 <td>0</td>
 <td>0</td>
-<td>2.855s</td>
+<td>0.027s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.rev.app.api.service.community.dto.html">com.rev.app.api.service.community.dto</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="packages/com.rev.app.api.service.notification.html">com.rev.app.api.service.notification</a>
+</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0.007s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
 <a href="packages/com.rev.app.repo.html">com.rev.app.repo</a>
 </td>
-<td>3</td>
+<td>2</td>
 <td>0</td>
 <td>0</td>
-<td>0.385s</td>
+<td>0.150s</td>
 <td class="success">100%</td>
 </tr>
 </tbody>
@@ -117,12 +187,62 @@
 <tbody>
 <tr>
 <td class="success">
-<a href="classes/com.rev.app.api.service.community.ThreadApiTest.html">com.rev.app.api.service.community.ThreadApiTest</a>
+<a href="classes/ReactionControllerWebMvcTest.html">ReactionControllerWebMvcTest</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1.044s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="classes/com.rev.app.api.controller.NotificationControllerWebMvcTest.html">com.rev.app.api.controller.NotificationControllerWebMvcTest</a>
 </td>
 <td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0.020s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="classes/com.rev.app.api.controller.ThreadControllerTagWebMvcTest.html">com.rev.app.api.controller.ThreadControllerTagWebMvcTest</a>
+</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.rev.app.api.service.ThreadServiceTagTest.html">com.rev.app.api.service.ThreadServiceTagTest</a>
+</td>
+<td>1</td>
 <td>0</td>
 <td>0</td>
-<td>2.806s</td>
+<td>0.005s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.rev.app.api.service.community.ReactionServiceTest.html">com.rev.app.api.service.community.ReactionServiceTest</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.008s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.rev.app.api.service.community.ThreadApiTest.html">com.rev.app.api.service.community.ThreadApiTest</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.013s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -132,17 +252,27 @@
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0.049s</td>
+<td>0.006s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
 <td class="success">
-<a href="classes/com.rev.app.repo.ThreadMapperTest.html">com.rev.app.repo.ThreadMapperTest</a>
+<a href="classes/com.rev.app.api.service.community.dto.ThreadMapperTest.html">com.rev.app.api.service.community.dto.ThreadMapperTest</a>
 </td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0.224s</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="classes/com.rev.app.api.service.notification.NotificationServiceTest.html">com.rev.app.api.service.notification.NotificationServiceTest</a>
+</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0.007s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -152,7 +282,7 @@
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0.141s</td>
+<td>0.140s</td>
 <td class="success">100%</td>
 </tr>
 <tr>
@@ -162,7 +292,7 @@
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>0.020s</td>
+<td>0.010s</td>
 <td class="success">100%</td>
 </tr>
 </tbody>
@@ -176,7 +306,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.14</a> at 2025. 11. 8. 오후 10:39:33</p>
+<a href="https://www.gradle.org">Gradle 8.14</a> at 2025. 11. 10. 오후 10:32:46</p>
 </div>
 </div>
 </body>

@@ -11,7 +11,6 @@ fun Board.toRes(): BoardRes = BoardRes(
     slug = slug,
     description = description
 )
-
 fun ThreadEntity.toRes(): ThreadRes = ThreadRes(
     id = requireNotNull(id),
     title = title,
@@ -23,8 +22,11 @@ fun ThreadEntity.toRes(): ThreadRes = ThreadRes(
     categoryId = categoryId,
     createdAt = createdAt,
     updatedAt = updatedAt,
-    tags = tags ?: emptyList()
+    tags = emptyList()            // ✅ 기본값 유지
 )
+
+fun ThreadEntity.toResWithTags(tags: List<String>): ThreadRes =
+    this.toRes().copy(tags = tags)
 
 fun CommentEntity.toRes(): CommentRes = CommentRes(
     id = requireNotNull(id),

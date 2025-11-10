@@ -7,6 +7,8 @@ import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.repo.CommentRepository
 import com.rev.app.domain.community.repo.ThreadRepository
+import com.rev.app.domain.notification.NotificationEntity
+import com.rev.app.domain.notification.NotificationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -15,7 +17,8 @@ import java.util.UUID
 class CommentService(
     private val commentRepository: CommentRepository,
     private val threadRepository: ThreadRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val notificationRepository: NotificationRepository   // ✅ 추가
 ) {
     @Transactional
     fun create(userId: UUID, req: CreateCommentRequest): CommentRes {
@@ -31,6 +34,32 @@ class CommentService(
                 content = req.content
             )
         )
+
+        // ✅ 알림 생성 대상 계산
+        val recipients = mutableSetOf<UUID>()
+        thread.author?.id?.let { if (it != userId) recipients.add(it) }       // 쓰레드 작성자
+        parent?.author?.id?.let { if (it != userId) recipients.add(it) }      // 부모 댓글 작성자
+
+        // ✅ 알림 저장
+        if (recipients.isNotEmpty()) {
+            val message = buildString {
+                append("새 댓글: ")
+                append(req.content.take(50))
+            }
+            recipients.forEach { uid ->
+                val uref = userRepository.getReferenceById(uid)
+                notificationRepository.save(
+                    NotificationEntity(
+                        user = uref,
+                        type = "COMMENT",
+                        thread = thread,
+                        comment = saved,
+                        message = message
+                    )
+                )
+            }
+        }
+
         return saved.toRes()
     }
 

@@ -2,8 +2,8 @@ package com.rev.app.repo
 
 import com.rev.app.RevApplication
 import com.rev.app.api.security.MeArgumentResolver
-import com.rev.app.api.service.community.ThreadController
 import com.rev.app.api.service.community.ThreadService
+import com.rev.app.api.controller.ThreadController
 import com.rev.app.auth.JwtAuthenticationFilter
 import com.rev.app.auth.jwt.JwtProvider
 import org.junit.jupiter.api.Test

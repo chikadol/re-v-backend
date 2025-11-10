@@ -2,6 +2,7 @@ package com.rev.app.domain.community.entity
 
 import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.Board
+import com.rev.app.domain.community.model.ThreadTagEntity
 import jakarta.persistence.*
 import org.hibernate.annotations.JdbcTypeCode
 import org.hibernate.type.SqlTypes
@@ -45,5 +46,8 @@ class ThreadEntity(
     @ElementCollection
     @CollectionTable(name = "thread_tags", schema = "rev", joinColumns = [JoinColumn(name = "thread_id")])
     @Column(name = "tag")
-    var tags: List<String>? = emptyList()
+    var tags: List<String>? = emptyList(),
+
+    @OneToMany(mappedBy = "thread")
+var tagLinks: MutableSet<ThreadTagEntity> = mutableSetOf()
 )

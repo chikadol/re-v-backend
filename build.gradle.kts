@@ -1,7 +1,10 @@
+//import jdk.tools.jlink.resources.plugins
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.language.jvm.tasks.ProcessResources
+
+
 plugins {
     // Kotlin & Spring
     kotlin("jvm") version "2.0.0"
@@ -96,14 +99,20 @@ dependencies {
     // H2 (원하면 in-memory 테스트 대체용)
     testRuntimeOnly("com.h2database:h2:2.3.232")
 
-    testImplementation("org.mockito:mockito-core:5.14.2")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.14.2")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.13.0")
+    testImplementation(kotlin("test"))
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 tasks.test {
     useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
+//    finalizedBy(tasks.jacocoTestReport)
 }
 
 jacoco {
@@ -175,13 +184,7 @@ sourceSets {
     }
 }
 
-tasks.named<ProcessResources>("processTestResources") {
-    // 테스트 리소스는 기본 동작(그대로 복사)만 하도록
-    // 불필요한 expand/필터링 금지!
-    filteringCharset = "UTF-8"
+tasks.named<org.gradle.language.jvm.tasks.ProcessResources>("processTestResources") {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-    // 혹시 이전에 filesMatching/expand 했으면 전부 삭제하거나 주석 처리
-    // filesMatching("**/*.yml") { /* expand(...) 금지 */ }
-    // filesMatching("**/*.sql") { /* 어떤 필터링도 금지 */ }
 }
+
