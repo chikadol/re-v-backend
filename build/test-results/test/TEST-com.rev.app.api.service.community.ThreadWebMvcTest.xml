@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-10T13:32:42.279Z" hostname="ileuleuui-MacBookPro.local" time="0.006">
+<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-10T15:00:11.630Z" hostname="ileuleuui-MacBookPro.local" time="0.008">
   <properties/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.006"/>
-  <system-out><![CDATA[22:32:42.283 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-22:32:42.283 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-22:32:42.284 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.008"/>
+  <system-out><![CDATA[00:00:11.634 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+00:00:11.635 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+00:00:11.635 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

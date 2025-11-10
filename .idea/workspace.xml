@@ -4,133 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="auth">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/controller/NotificationController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/dto/ToggleReactionRes.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/notification/NotificationService.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/notification/dto/NotificationDto.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/notification/dto/NotificationMappers.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/model/TagEntity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/model/ThreadTagEntity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/TagRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/ThreadTagRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/notification/NotificationEntity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/notification/NotificationRepository.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V30__create_thread_tag.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V31__create_reaction.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V32__create_notification.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V33__add_thread_views.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V34__create_trending_snapshot.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V35__create_report_block.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/NotificationControllerWebMvcTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/ReactionControllerWebMvcTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/ThreadControllerTagWebMvcTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/service/ThreadServiceTagTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/service/community/ReactionServiceTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/service/notification/NotificationServiceTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
+    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="Thread 태그(Tag) 기능 및 Reaction(좋아요) 기능 빌드 완료 + 댓글 알림(Notification) 빌드 중">
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/META-INF/re-v-backend.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/META-INF/re-v-backend.kotlin_module" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/ThreadReaction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/CommentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ReactionController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ReactionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ReactionService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ThreadController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ThreadService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/ThreadService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/MappersKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/dto/MappersKt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/entity/ThreadEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/entity/ThreadEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/ThreadBookmarkRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/ThreadBookmarkRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/ThreadReactionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/ThreadReactionRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/ThreadRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/domain/community/repo/ThreadRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/api/service/community/ThreadApiTest$FakeAuthResolver.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/api/service/community/ThreadApiTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/api/service/community/ThreadApiTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/api/service/community/ThreadWebMvcTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/api/service/community/ThreadWebMvcTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/repo/ThreadMapperTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/repo/ThreadRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/repo/ThreadRepositoryTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/repo/ThreadSecurityIntTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/test/com/rev/app/repo/ThreadSecurityIntTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/jacoco/test.exec" beforeDir="false" afterPath="$PROJECT_DIR$/build/jacoco/test.exec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/package-parts.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.len" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/counters.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len" afterDir="false" />
@@ -141,11 +27,7 @@
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileKotlin/local-state/build-history.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileKotlin/local-state/build-history.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.len" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" afterDir="false" />
@@ -171,11 +53,8 @@
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.len" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab_i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" afterDir="false" />
@@ -185,11 +64,7 @@
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/counters.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/counters.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.len" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/file-to-id.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" afterDir="false" />
@@ -207,265 +82,24 @@
       <change beforePath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/local-state/build-history.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/kotlin/compileTestKotlin/local-state/build-history.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/re-v-backend-plain.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/re-v-backend-plain.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/re-v-backend.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/re-v-backend.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.common/ApiExceptionHandler.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.common/ApiExceptionHandler.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.common/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.common/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.health/HealthController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.health/HealthController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.health/HealthRes.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.health/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.health/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/JwtPrincipal.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/JwtPrincipal.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/MeArgumentResolver.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/MeArgumentResolver.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/MeDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/MeDto.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.security/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/BoardDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/BoardDto.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/BoardRes.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/CommentRes.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/CreateCommentRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/CreateCommentRequest.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/CreateThreadReq.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/CreateThreadReq.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/Mappers.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/MappersKt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/Models.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/ThreadDetailDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/ThreadDetailDto.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/ThreadDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/ThreadDto.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/ThreadRes.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/ToggleResultDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/ToggleResultDto.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.dto/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.entity/ThreadBookmarkDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.entity/ThreadBookmarkDto.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.entity/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community.entity/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BoardController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BoardController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BoardDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BoardMappers.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BoardMappersKt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BoardService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BoardService.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BookmarkController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BookmarkController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BookmarkService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/BookmarkService.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/CommentController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/CommentController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/CommentDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/CommentMappers.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/CommentMappersKt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/CommentService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/CommentService.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ReactionController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ReactionController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ReactionReq.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ReactionService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ReactionService.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ReactionType.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ReactionType.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadBookmarkDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadBookmarkMappers.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadBookmarkMappersKt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadReactionReq.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/ThreadService.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service.community/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service/CommentReactionReq.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service/CommentReactionReq.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api.service/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api/PageCursorResp.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api/PageCursorResp.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.api/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.dto/AuthDtos.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.dto/LoginRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.dto/MeResponse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.dto/SignUpRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.dto/TokenResponse.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.dto/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.dto/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.jwt/JwtProperties.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.jwt/JwtProvider.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.jwt/JwtProvider.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.jwt/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth.jwt/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/AuthController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/AuthController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/AuthService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/AuthService.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/CustomUserDetails.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/CustomUserDetails.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/CustomUserDetailsService.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/CustomUserDetailsService.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/CustomUserPrincipal.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/CustomUserPrincipal.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/JwtAuthenticationFilter.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/JwtAuthenticationFilter.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/LegacyUserDetailsHelper.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/LegacyUserDetailsHelper.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/MeController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/MeController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/MeProfileDto.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/RefreshRequest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/TokenPair.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/UserEntity.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/UserEntity.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.auth/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.jpa/BaseTime.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.jpa/BaseTime.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.jpa/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.jpa/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.web/ApiError.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.web/GlobalExceptionHandler.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.web/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common.web/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/ApiError.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/ApiError.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/AuthChecks.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/AuthChecksKt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/PageRes.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/PageRes.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/PageResKt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.common/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/FlywayRepairOnce.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/FlywayRepairOnce.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/OpenApiConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/OpenApiConfig.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/SecurityConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/SecurityConfig.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/SwaggerConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/SwaggerConfig.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/WebMvcConfig.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/WebMvcConfig.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.config/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/CommentEntity.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/CommentEntity.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/ThreadBookmarkEntity.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/ThreadBookmarkEntity.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/ThreadEntity.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/ThreadEntity.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/ThreadReaction.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community.entity/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/Board.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/Board.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/BoardManager.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/BoardManager.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/BoardManagerId.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/Bookmark.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/Bookmark.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/BookmarkId.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/CommentReaction.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/CommentReaction.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/CommentReport.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/CommentReport.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/Enums.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/ModerationAction.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/ReactionKind.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/ReportStatus.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/ThreadAttachment.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/ThreadAttachment.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/ThreadReport.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/ThreadReport.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.domain.community/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.util/Cursor.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.util/CursorUtil.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.util/CursorUtil.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.util/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app.util/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app/RevApplication.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app/RevApplication.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app/RevApplicationKt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app/RootController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app/RootController.kt.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/com.rev.app/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/default/AdminController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/default/DemoController.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/default/JwtEntryPoint.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/default/RefreshTokenEntity.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/default/ThreadReaction.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/default/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/default/index.source.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/branchfc.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/branchnc.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/branchpc.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/bundle.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/class.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/down.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/greenbar.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/group.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/method.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/package.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/prettify.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/prettify.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/redbar.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/report.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/report.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/session.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/sort.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/sort.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/source.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-resources/up.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/html/jacoco-sessions.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/jacoco/test/jacocoTestReport.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.api.service.community.ThreadApiTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.api.service.community.ThreadApiTest.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.api.service.community.ThreadWebMvcTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.api.service.community.ThreadWebMvcTest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.repo.ThreadMapperTest.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.repo.ThreadRepositoryTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.repo.ThreadRepositoryTest.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.repo.ThreadSecurityIntTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/com.rev.app.repo.ThreadSecurityIntTest.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/com.rev.app.api.service.community.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/com.rev.app.api.service.community.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/com.rev.app.repo.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/com.rev.app.repo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application-test.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.api.service.community.ThreadApiTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.api.service.community.ThreadApiTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.api.service.community.ThreadWebMvcTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.api.service.community.ThreadWebMvcTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.repo.ThreadMapperTest.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.repo.ThreadRepositoryTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.repo.ThreadRepositoryTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.repo.ThreadSecurityIntTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.rev.app.repo.ThreadSecurityIntTest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/.cache/expanded/zip_ff7bf8f04f99dc306508d1c81e47a68b/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/.cache/expanded/zip_ff7bf8f04f99dc306508d1c81e47a68b/META-INF/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/bootJar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/bootJar/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/CommentService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/CommentService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ReactionController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ReactionController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ReactionService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ReactionService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/controller/ThreadController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadReactionEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadReactionEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/ThreadService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/dto/Mappers.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/service/community/dto/Mappers.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/entity/ThreadEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/entity/ThreadEntity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/Repositories.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/Repositories.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/ThreadReactionRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/domain/community/repo/ThreadReactionRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-test.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/service/community/ThreadApiTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/service/community/ThreadApiTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/service/community/ThreadWebMvcTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/service/community/ThreadWebMvcTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/repo/ThreadMapperTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/repo/ThreadMapperTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/repo/ThreadRepositoryTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/repo/ThreadRepositoryTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/repo/ThreadSecurityIntTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/repo/ThreadSecurityIntTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/controller/ThreadController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/api/controller/ThreadController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/NotificationControllerWebMvcTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/NotificationControllerWebMvcTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/ReactionControllerWebMvcTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/ReactionControllerWebMvcTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/ThreadControllerTagWebMvcTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/com/rev/app/api/controller/ThreadControllerTagWebMvcTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -697,7 +331,7 @@
       <workItem from="1762642477882" duration="121000" />
       <workItem from="1762642606701" duration="929000" />
       <workItem from="1762643542076" duration="14646000" />
-      <workItem from="1762773539049" duration="6788000" />
+      <workItem from="1762773539049" duration="11927000" />
     </task>
     <task id="LOCAL-00001" summary="auth">
       <option name="closed" value="true" />
@@ -715,7 +349,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761668529877</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Thread 태그(Tag) 기능 및 Reaction(좋아요) 기능 빌드 완료 + 댓글 알림(Notification) 빌드 중">
+      <option name="closed" value="true" />
+      <created>1762781656876</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762781656876</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -723,7 +365,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="auth" />
-    <option name="LAST_COMMIT_MESSAGE" value="auth" />
+    <MESSAGE value="Thread 태그(Tag) 기능 및 Reaction(좋아요) 기능 빌드 완료 + 댓글 알림(Notification) 빌드 중" />
+    <option name="LAST_COMMIT_MESSAGE" value="Thread 태그(Tag) 기능 및 Reaction(좋아요) 기능 빌드 완료 + 댓글 알림(Notification) 빌드 중" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

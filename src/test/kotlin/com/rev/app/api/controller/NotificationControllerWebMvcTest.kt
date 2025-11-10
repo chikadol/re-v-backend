@@ -2,13 +2,12 @@ package com.rev.app.api.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.rev.app.api.service.notification.NotificationService
 import com.rev.app.api.service.notification.dto.NotificationRes
 import org.junit.jupiter.api.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver
@@ -17,6 +16,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -24,57 +24,50 @@ import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 import java.time.Instant
-import java.util.*
+import java.util.UUID
 
 class NotificationControllerWebMvcTest {
 
-    private val service: NotificationService = mock()
+    private val service: NotificationService = Mockito.mock(NotificationService::class.java)
 
     companion object {
         private val FIXED_UID: UUID =
             UUID.fromString("11111111-1111-1111-1111-111111111111")
     }
 
-    /** @AuthenticationPrincipal 주입용 가짜 리졸버 */
-    private class LenientAuthPrincipalResolver(
+    /** JwtPrincipal 생성자 모양과 무관하게 Jackson으로 변환해 주입 */
+    private class JacksonAuthPrincipalResolver(
         private val fixedUserId: UUID
     ) : HandlerMethodArgumentResolver {
-        override fun supportsParameter(param: org.springframework.core.MethodParameter): Boolean =
-            param.hasParameterAnnotation(AuthenticationPrincipal::class.java)
+        private val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
+
+        override fun supportsParameter(p: org.springframework.core.MethodParameter) =
+            p.hasParameterAnnotation(AuthenticationPrincipal::class.java)
 
         override fun resolveArgument(
-            param: org.springframework.core.MethodParameter,
+            p: org.springframework.core.MethodParameter,
             mav: ModelAndViewContainer?,
             req: NativeWebRequest,
             binderFactory: WebDataBinderFactory?
         ): Any {
-            val t = param.parameterType
-            // (UUID, String, Collection) 생성자 우선
-            return runCatching {
-                val ctor = t.getDeclaredConstructor(UUID::class.java, String::class.java, Collection::class.java)
-                ctor.isAccessible = true
-                ctor.newInstance(fixedUserId, "mock@test.com", listOf("USER"))
-            }.getOrElse {
-                // no-arg + 필드 주입
-                val inst = t.getDeclaredConstructor().newInstance()
-                runCatching { t.getDeclaredField("userId").apply { isAccessible = true }.set(inst, fixedUserId) }
-                runCatching { t.getDeclaredField("email").apply { isAccessible = true }.set(inst, "mock@test.com") }
-                runCatching { t.getDeclaredField("roles").apply { isAccessible = true }.set(inst, listOf("USER")) }
-                inst
-            }
+            val payload = mapOf(
+                "userId" to fixedUserId,
+                "email" to "mock@test.com",
+                "roles" to listOf("USER")
+            )
+            return mapper.convertValue(payload, p.parameterType)
         }
     }
 
     private fun mockMvcFor(controller: Any): MockMvc {
-        val mapper = ObjectMapper().registerModule(JavaTimeModule())
-        val builder: org.springframework.test.web.servlet.setup.StandaloneMockMvcBuilder =
-            MockMvcBuilders.standaloneSetup(controller)
-        builder.setCustomArgumentResolvers(
-            PageableHandlerMethodArgumentResolver(),
-            LenientAuthPrincipalResolver(FIXED_UID)
-        )
-        builder.setMessageConverters(MappingJackson2HttpMessageConverter(mapper))
-        return builder.build()
+        val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
+        return MockMvcBuilders.standaloneSetup(controller)
+            .setCustomArgumentResolvers(
+                PageableHandlerMethodArgumentResolver(),
+                JacksonAuthPrincipalResolver(FIXED_UID)
+            )
+            .setMessageConverters(MappingJackson2HttpMessageConverter(mapper))
+            .build()
     }
 
     @Test
@@ -92,14 +85,17 @@ class NotificationControllerWebMvcTest {
             createdAt = Instant.now()
         )
 
-        // ✅ UUID는 eq(FIXED_UID), Pageable은 Mockito.any(Pageable::class.java)
-        whenever(service.listMine(eq(FIXED_UID), Mockito.any(Pageable::class.java)))
-            .thenReturn(PageImpl(listOf(notif)))
+        Mockito.`when`(
+            service.listMine(
+                ArgumentMatchers.eq(FIXED_UID),
+                ArgumentMatchers.any(Pageable::class.java)
+            )
+        ).thenReturn(PageImpl(listOf(notif)))
 
         mockMvc.perform(
             MockMvcRequestBuilders.get("/api/notifications")
                 .accept(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk)
+        ).andDo(print()).andExpect(status().isOk)
     }
 
     @Test
@@ -117,13 +113,16 @@ class NotificationControllerWebMvcTest {
             createdAt = Instant.now()
         )
 
-        // ✅ markRead(userId, id) 모두 eq로 고정
-        whenever(service.markRead(eq(FIXED_UID), eq(notif.id)))
-            .thenReturn(notif)
+        Mockito.`when`(
+            service.markRead(
+                ArgumentMatchers.eq(FIXED_UID),
+                ArgumentMatchers.eq(notif.id)
+            )
+        ).thenReturn(notif)
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/notifications/${notif.id}/read")
                 .accept(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk)
+        ).andDo(print()).andExpect(status().isOk)
     }
 }
