@@ -108,6 +108,9 @@ dependencies {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    testImplementation("org.mockito:mockito-core:5.12.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0") // ✅ final class / final method 모킹용
+
 }
 
 tasks.test {

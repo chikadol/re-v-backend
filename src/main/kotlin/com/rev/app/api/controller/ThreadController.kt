@@ -19,11 +19,9 @@ class ThreadController(
     private val allowedSort = setOf("createdAt")
 
     @GetMapping("/{boardId}/threads")
-    fun listPublic(
-        @PathVariable boardId: UUID,
-        @RequestParam(name = "tags", required = false) tags: List<String>?,
-        pageable: Pageable
-    ): Page<ThreadRes> {
+    fun listPublic(boardId: UUID,
+                   @RequestParam(name="tags", required=false) tags: List<String>?,
+                   pageable: Pageable): Page<ThreadRes> {
         // 정렬 키 검증: createdAt만 허용
         if (pageable.sort.isSorted && pageable.sort.any { it.property !in allowedSort }) {
             throw IllegalArgumentException("Invalid sort key")

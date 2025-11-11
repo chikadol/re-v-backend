@@ -19,10 +19,10 @@ class ThreadReactionEntity(
     var id: UUID? = null,
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "thread_id")
-    var thread: ThreadEntity,
+    var thread: ThreadEntity?,
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id")
-    var user: UserEntity,
+    var user: UserEntity?,
 
     @Column(nullable = false, length = 20)
     var type: String, // "LIKE", "LOVE"...

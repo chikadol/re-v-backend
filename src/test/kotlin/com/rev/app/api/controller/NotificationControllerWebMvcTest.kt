@@ -15,7 +15,8 @@ import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -29,100 +30,82 @@ import java.util.UUID
 class NotificationControllerWebMvcTest {
 
     private val service: NotificationService = Mockito.mock(NotificationService::class.java)
+    private val FIXED_UID = UUID.fromString("11111111-1111-1111-1111-111111111111")
 
-    companion object {
-        private val FIXED_UID: UUID =
-            UUID.fromString("11111111-1111-1111-1111-111111111111")
-    }
-
-    /** JwtPrincipal 생성자 모양과 무관하게 Jackson으로 변환해 주입 */
-    private class JacksonAuthPrincipalResolver(
-        private val fixedUserId: UUID
+    private class PermissivePrincipalResolver(
+        private val uid: UUID
     ) : HandlerMethodArgumentResolver {
         private val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
-
-        override fun supportsParameter(p: org.springframework.core.MethodParameter) =
-            p.hasParameterAnnotation(AuthenticationPrincipal::class.java)
-
+        override fun supportsParameter(p: org.springframework.core.MethodParameter): Boolean {
+            if (p.hasParameterAnnotation(AuthenticationPrincipal::class.java)) return true
+            val n = p.parameterType.simpleName.lowercase()
+            return n.contains("jwt") && n.contains("principal")
+        }
         override fun resolveArgument(
             p: org.springframework.core.MethodParameter,
-            mav: ModelAndViewContainer?,
-            req: NativeWebRequest,
-            binderFactory: WebDataBinderFactory?
-        ): Any {
-            val payload = mapOf(
-                "userId" to fixedUserId,
-                "email" to "mock@test.com",
-                "roles" to listOf("USER")
-            )
-            return mapper.convertValue(payload, p.parameterType)
-        }
+            mav: ModelAndViewContainer?, req: NativeWebRequest, bf: WebDataBinderFactory?
+        ): Any = mapper.convertValue(
+            mapOf("userId" to uid, "email" to "mock@test.com", "roles" to listOf("USER")),
+            p.parameterType
+        )
     }
 
-    private fun mockMvcFor(controller: Any): MockMvc {
-        val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
+    private fun mvc(controller: Any): MockMvc {
+        val om = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
         return MockMvcBuilders.standaloneSetup(controller)
-            .setCustomArgumentResolvers(
-                PageableHandlerMethodArgumentResolver(),
-                JacksonAuthPrincipalResolver(FIXED_UID)
-            )
-            .setMessageConverters(MappingJackson2HttpMessageConverter(mapper))
+            .setCustomArgumentResolvers(PageableHandlerMethodArgumentResolver(), PermissivePrincipalResolver(FIXED_UID))
+            .setMessageConverters(MappingJackson2HttpMessageConverter(om))
             .build()
     }
 
     @Test
     fun listMine_ok() {
         val controller = NotificationController(service)
-        val mockMvc = mockMvcFor(controller)
+        val mockMvc = mvc(controller)
 
         val notif = NotificationRes(
             id = UUID.randomUUID(),
             type = "COMMENT",
             threadId = UUID.randomUUID(),
             commentId = UUID.randomUUID(),
-            message = "새 댓글: 테스트",
+            message = "새 댓글",
             isRead = false,
             createdAt = Instant.now()
         )
 
-        Mockito.`when`(
-            service.listMine(
-                ArgumentMatchers.eq(FIXED_UID),
-                ArgumentMatchers.any(Pageable::class.java)
-            )
-        ).thenReturn(PageImpl(listOf(notif)))
+        Mockito.doReturn(PageImpl(listOf(notif))).`when`(service).listMine(
+            ArgumentMatchers.eq(FIXED_UID),
+            ArgumentMatchers.any(Pageable::class.java)
+        )
 
-        mockMvc.perform(
-            MockMvcRequestBuilders.get("/api/notifications")
-                .accept(MediaType.APPLICATION_JSON)
-        ).andDo(print()).andExpect(status().isOk)
+        mockMvc.perform(get("/api/notifications").accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk)
     }
 
     @Test
     fun markRead_ok() {
         val controller = NotificationController(service)
-        val mockMvc = mockMvcFor(controller)
+        val mockMvc = mvc(controller)
 
-        val notif = NotificationRes(
-            id = UUID.randomUUID(),
+        val notifId = UUID.randomUUID()
+        val updated = NotificationRes(
+            id = notifId,
             type = "COMMENT",
             threadId = UUID.randomUUID(),
             commentId = UUID.randomUUID(),
-            message = "테스트",
+            message = "읽음",
             isRead = true,
             createdAt = Instant.now()
         )
 
-        Mockito.`when`(
-            service.markRead(
-                ArgumentMatchers.eq(FIXED_UID),
-                ArgumentMatchers.eq(notif.id)
-            )
-        ).thenReturn(notif)
+        Mockito.doReturn(updated).`when`(service).markRead(
+            ArgumentMatchers.eq(FIXED_UID),
+            ArgumentMatchers.eq(notifId)
+        )
 
-        mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/notifications/${notif.id}/read")
-                .accept(MediaType.APPLICATION_JSON)
-        ).andDo(print()).andExpect(status().isOk)
+        mockMvc.perform(post("/api/notifications/$notifId/read").accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk)
     }
 }

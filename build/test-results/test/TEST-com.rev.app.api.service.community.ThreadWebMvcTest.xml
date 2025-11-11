@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-10T15:00:11.630Z" hostname="ileuleuui-MacBookPro.local" time="0.008">
+<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-11-11T12:09:33.173Z" hostname="ileuleuui-MacBookPro.local" time="0.001">
   <properties/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.008"/>
-  <system-out><![CDATA[00:00:11.634 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-00:00:11.635 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-00:00:11.635 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-]]></system-out>
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.001">
+    <failure message="java.lang.NullPointerException: eq(...) must not be null" type="java.lang.NullPointerException">java.lang.NullPointerException: eq(...) must not be null
+	at com.rev.app.api.service.community.ThreadWebMvcTest.listPublic_ok(ThreadWebMvcTest.kt:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

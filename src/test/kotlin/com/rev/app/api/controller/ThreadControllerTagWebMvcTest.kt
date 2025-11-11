@@ -15,7 +15,7 @@ import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -26,54 +26,39 @@ class ThreadControllerTagWebMvcTest {
 
     private val service: ThreadService = Mockito.mock(ThreadService::class.java)
 
-    private fun mockMvcFor(controller: Any): MockMvc {
-        val mapper = ObjectMapper().registerModule(JavaTimeModule())
+    private fun mvc(controller: Any): MockMvc {
+        val om = ObjectMapper().registerModule(JavaTimeModule())
         return MockMvcBuilders.standaloneSetup(controller)
             .setCustomArgumentResolvers(PageableHandlerMethodArgumentResolver())
-            .setMessageConverters(MappingJackson2HttpMessageConverter(mapper))
+            .setMessageConverters(MappingJackson2HttpMessageConverter(om))
             .build()
     }
 
     @Test
     fun list_with_tags_ok() {
-        val controller = ThreadController(service) // ← 패키지 임포트 확인
-        val mockMvc = mockMvcFor(controller)
+        val controller = ThreadController(service)
+        val mockMvc = mvc(controller)
 
         val boardId = UUID.randomUUID()
         val pageable: Pageable = PageRequest.of(0, 10)
-        val tags = listOf("kotlin", "spring")
 
         val now = Instant.now()
         val sample = ThreadRes(
-            id = UUID.randomUUID(),
-            title = "title",
-            content = "content",
-            boardId = boardId,
-            parentThreadId = null,
-            authorId = UUID.randomUUID(),
-            isPrivate = false,
-            categoryId = null,
-            createdAt = now,
-            updatedAt = now,
-            tags = tags
+            id = UUID.randomUUID(), title = "t", content = "c",
+            boardId = boardId, parentThreadId = null, authorId = UUID.randomUUID(),
+            isPrivate = false, categoryId = null, createdAt = now, updatedAt = now, tags = emptyList()
         )
         val page: Page<ThreadRes> = PageImpl(listOf(sample), pageable, 1)
 
-        Mockito.`when`(
-            service.listPublic(
-                ArgumentMatchers.eq(boardId),
-                ArgumentMatchers.any(Pageable::class.java),
-                ArgumentMatchers.eq(tags)
-            )
-        ).thenReturn(page)
+        // 2-인자 버전만 스텁 (tags 파라미터는 안 보냄)
+        Mockito.doReturn(page).`when`(service).listPublic(
+            ArgumentMatchers.eq(boardId),
+            ArgumentMatchers.any(Pageable::class.java)
+        )
 
         mockMvc.perform(
-            // 컨트롤러 매핑: GET /api/threads/{boardId}/threads
-            MockMvcRequestBuilders.get("/api/threads/$boardId/threads")
-                .param("page", "0")
-                .param("size", "10")
-                .param("tags", "kotlin")
-                .param("tags", "spring")
+            get("/api/threads/$boardId/threads")
+                .param("page", "0").param("size", "10")
                 .accept(MediaType.APPLICATION_JSON)
         ).andDo(print()).andExpect(status().isOk)
     }

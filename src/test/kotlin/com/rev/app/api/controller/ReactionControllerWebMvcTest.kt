@@ -13,7 +13,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -26,67 +26,48 @@ import java.util.UUID
 class ReactionControllerWebMvcTest {
 
     private val service: ReactionService = Mockito.mock(ReactionService::class.java)
+    private val FIXED_UID = UUID.fromString("11111111-1111-1111-1111-111111111111")
 
-    companion object {
-        private val FIXED_UID: UUID =
-            UUID.fromString("11111111-1111-1111-1111-111111111111")
-    }
-
-    /** @AuthenticationPrincipal(JwtPrincipal) 를 Jackson으로 생성해 주입 */
-    private class JacksonAuthPrincipalResolver(
-        private val fixedUserId: UUID
+    private class PermissivePrincipalResolver(
+        private val uid: UUID
     ) : HandlerMethodArgumentResolver {
         private val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
-
         override fun supportsParameter(p: org.springframework.core.MethodParameter) =
-            p.hasParameterAnnotation(AuthenticationPrincipal::class.java)
-
+            p.hasParameterAnnotation(AuthenticationPrincipal::class.java) ||
+                    (p.parameterType.simpleName.lowercase().contains("jwt") && p.parameterType.simpleName.lowercase().contains("principal"))
         override fun resolveArgument(
             p: org.springframework.core.MethodParameter,
-            mav: ModelAndViewContainer?,
-            req: NativeWebRequest,
-            binderFactory: WebDataBinderFactory?
-        ): Any {
-            val payload = mapOf(
-                "userId" to fixedUserId,
-                "email" to "mock@test.com",
-                "roles" to listOf("USER")
-            )
-            return mapper.convertValue(payload, p.parameterType)
-        }
+            mav: ModelAndViewContainer?, req: NativeWebRequest, bf: WebDataBinderFactory?
+        ): Any = mapper.convertValue(
+            mapOf("userId" to uid, "email" to "mock@test.com", "roles" to listOf("USER")),
+            p.parameterType
+        )
     }
 
-    private fun mockMvcFor(controller: Any): MockMvc {
-        val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
+    private fun mvc(controller: Any): MockMvc {
+        val om = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
         return MockMvcBuilders.standaloneSetup(controller)
-            .setCustomArgumentResolvers(
-                PageableHandlerMethodArgumentResolver(),
-                JacksonAuthPrincipalResolver(FIXED_UID)
-            )
-            .setMessageConverters(MappingJackson2HttpMessageConverter(mapper))
+            .setCustomArgumentResolvers(PageableHandlerMethodArgumentResolver(), PermissivePrincipalResolver(FIXED_UID))
+            .setMessageConverters(MappingJackson2HttpMessageConverter(om))
             .build()
     }
 
     @Test
     fun toggle_ok() {
-        val controller = ReactionController(service) // ← 실제 패키지 import 확인
-        val mockMvc = mockMvcFor(controller)
+        val controller = ReactionController(service)
+        val mockMvc = mvc(controller)
 
         val threadId = UUID.randomUUID()
-        val type = "LIKE"
 
-        // 서비스 스텁: toggle(userId, threadId, type)
-        Mockito.`when`(
-            service.toggle(
+        Mockito.doReturn(ToggleReactionRes(true, mapOf("LIKE" to 1L, "LOVE" to 0L)))
+            .`when`(service).toggle(
                 ArgumentMatchers.eq(FIXED_UID),
                 ArgumentMatchers.eq(threadId),
-                ArgumentMatchers.eq(type)
+                ArgumentMatchers.eq("LIKE")
             )
-        ).thenReturn(ToggleReactionRes(toggled = true, counts = mapOf("LIKE" to 1L, "LOVE" to 0L)))
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/threads/$threadId/reactions/$type")
-                .accept(MediaType.APPLICATION_JSON)
+            post("/api/threads/$threadId/reactions/LIKE").accept(MediaType.APPLICATION_JSON)
         ).andDo(print()).andExpect(status().isOk)
     }
 }
