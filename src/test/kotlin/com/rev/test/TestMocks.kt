@@ -5,6 +5,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -16,18 +19,15 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 import java.util.*
 
-/** ---- Mockito matchers (Kotlin 안전 버전) ---- */
 @Suppress("UNCHECKED_CAST")
 fun <T> anyK(clazz: Class<T>): T = ArgumentMatchers.any(clazz)
-
 fun <T> eqK(value: T): T = ArgumentMatchers.eq(value)
-
 fun <T> anyListK(): MutableList<T> = ArgumentMatchers.anyList<T>() as MutableList<T>
 
-/** lenient + doReturn().when() 헬퍼 */
 fun <T> lenientReturn(value: T) = Mockito.lenient().doReturn(value)
 
-/** ---- @AuthenticationPrincipal 관대한 리졸버 ---- */
+fun <T> emptyPage(): Page<T> = PageImpl(emptyList(), PageRequest.of(0, 10), 0)
+
 class PermissivePrincipalResolver(private val uid: UUID) : HandlerMethodArgumentResolver {
     private val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
     override fun supportsParameter(p: org.springframework.core.MethodParameter): Boolean {
@@ -44,7 +44,6 @@ class PermissivePrincipalResolver(private val uid: UUID) : HandlerMethodArgument
     )
 }
 
-/** ---- Standalone MockMvc 빌더 ---- */
 fun standaloneMvc(controller: Any, principalUid: UUID? = null): MockMvc {
     val om = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
     val builder = MockMvcBuilders.standaloneSetup(controller)

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import java.util.UUID
-
+import com.rev.test.*
 class ThreadServiceTagTest {
 
     private val threadRepository = Mockito.mock(ThreadRepository::class.java)
@@ -29,9 +29,9 @@ class ThreadServiceTagTest {
         val bid = UUID.randomUUID()
 
         Mockito.doReturn(UserEntity(uid, "e@x.com", "u", "p"))
-            .`when`(userRepository).getReferenceById(ArgumentMatchers.eq(uid))
+            .`when`(userRepository).getReferenceById(eqK(uid))
         Mockito.doReturn(Board(bid, "b", "b-slug", "d"))
-            .`when`(boardRepository).getReferenceById(ArgumentMatchers.eq(bid))
+            .`when`(boardRepository).getReferenceById(eqK(bid))
 
         val badTags = listOf("", " spring  ", "#bad!", "a".repeat(101))
         val req = CreateThreadReq(title = "t", content = "c", tags = badTags)

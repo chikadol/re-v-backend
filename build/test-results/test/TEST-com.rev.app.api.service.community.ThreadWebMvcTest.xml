@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-11-11T13:45:35.460Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
+<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2025-11-11T16:18:43.778Z" hostname="ileuleuui-MacBookPro.local" time="0.001">
   <properties/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.0">
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.001">
     <failure message="java.lang.NullPointerException: eqK(...) must not be null" type="java.lang.NullPointerException">java.lang.NullPointerException: eqK(...) must not be null
-	at com.rev.app.api.service.community.ThreadWebMvcTest.listPublic_ok(ThreadWebMvcTest.kt:53)
+	at com.rev.app.api.service.community.ThreadWebMvcTest.listPublic_ok(ThreadWebMvcTest.kt:35)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)

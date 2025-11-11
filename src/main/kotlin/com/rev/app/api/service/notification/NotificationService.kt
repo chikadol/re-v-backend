@@ -14,7 +14,7 @@ class NotificationService(
     private val notificationRepository: NotificationRepository
 ) {
     @Transactional(readOnly = true)
-    fun listMine(userId: UUID, pageable: Pageable): Page<NotificationRes> =
+    fun listMine(userId: UUID, pageable: Pageable, bool: Boolean): Page<NotificationRes> =
         notificationRepository.findAllByUser_IdOrderByCreatedAtDesc(userId, pageable).map { it.toRes() }
 
     @Transactional
