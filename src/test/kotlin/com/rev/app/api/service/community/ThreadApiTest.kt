@@ -23,6 +23,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import java.util.UUID
 
 class ThreadApiTest {
+    // --- Mockito matcher helpers (Kotlin null/제네릭 안전) ---
+    private fun <T> eqK(v: T): T = org.mockito.ArgumentMatchers.eq(v)
+    private fun <T> anyK(clazz: Class<T>): T = org.mockito.ArgumentMatchers.any(clazz)
 
     private val service: ThreadService = Mockito.mock(ThreadService::class.java)
 
@@ -37,12 +40,28 @@ class ThreadApiTest {
     @Test
     fun listPublic_ok() {
         val boardId = UUID.randomUUID()
-        val page: Page<ThreadRes> = PageImpl(emptyList(), PageRequest.of(0, 10), 0)
+        val page: org.springframework.data.domain.Page<com.rev.app.api.service.community.dto.ThreadRes> =
+            org.springframework.data.domain.PageImpl(
+                emptyList(),
+                org.springframework.data.domain.PageRequest.of(0, 10),
+                0
+            )
 
-        Mockito.doReturn(page).`when`(service).listPublic(
-            ArgumentMatchers.eq(boardId),
-            ArgumentMatchers.any(Pageable::class.java)
-        )
+// 2-인자
+        org.mockito.Mockito.lenient().doReturn(page)
+            .`when`(service).listPublic(
+                eqK(boardId),
+                anyK(org.springframework.data.domain.Pageable::class.java)
+            )
+
+// 3-인자
+        org.mockito.Mockito.lenient().doReturn(page)
+            .`when`(service).listPublic(
+                eqK(boardId),
+                anyK(org.springframework.data.domain.Pageable::class.java),
+                org.mockito.ArgumentMatchers.anyList()
+            )
+
 
         mvc().perform(
             get("/api/threads/$boardId/threads")

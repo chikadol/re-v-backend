@@ -1,5 +1,5 @@
 package com.rev.app.api.service.community
-
+import com.rev.test.*
 import com.rev.app.auth.UserEntity
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadEntity
@@ -18,24 +18,37 @@ class ReactionServiceTest {
     private val threadRepo = Mockito.mock(ThreadRepository::class.java)
     private val userRepo = Mockito.mock(UserRepository::class.java)
     private val service = ReactionService(reactionRepo, threadRepo, userRepo)
+    // --- Mockito matcher helpers (Kotlin null/제네릭 안전) ---
+    private fun <T> eqK(v: T): T = org.mockito.ArgumentMatchers.eq(v)
+    private fun <T> anyK(clazz: Class<T>): T = org.mockito.ArgumentMatchers.any(clazz)
 
     @Test
     fun toggle_insert_then_counts() {
         val uid = UUID.randomUUID()
         val tid = UUID.randomUUID()
 
-        Mockito.doReturn(null).`when`(reactionRepo)
+        org.mockito.Mockito.lenient().doReturn(null)
+            .`when`(reactionRepo)
             .findByThread_IdAndUser_IdAndType(tid, uid, "LIKE")
-        Mockito.doReturn(ThreadEntity(title = "t", content = "c"))
-            .`when`(threadRepo).getReferenceById(ArgumentMatchers.eq(tid))
-        Mockito.doReturn(UserEntity(uid, "e@x.com", "u", "p"))
-            .`when`(userRepo).getReferenceById(ArgumentMatchers.eq(uid))
 
-        Mockito.doReturn(ThreadReactionEntity(thread = null, user = null, type = "LIKE"))
-            .`when`(reactionRepo).save(ArgumentMatchers.any(ThreadReactionEntity::class.java))
+        org.mockito.Mockito.lenient().doReturn(
+            com.rev.app.domain.community.entity.ThreadEntity(title = "t", content = "c")
+        ).`when`(threadRepo).getReferenceById(eqK(tid))
 
-        Mockito.doReturn(1L).`when`(reactionRepo).countByThread_IdAndType(tid, "LIKE")
-        Mockito.doReturn(0L).`when`(reactionRepo).countByThread_IdAndType(tid, "LOVE")
+        org.mockito.Mockito.lenient().doReturn(
+            com.rev.app.auth.UserEntity(uid, "e@x.com", "u", "p")
+        ).`when`(userRepo).getReferenceById(eqK(uid))
+
+        org.mockito.Mockito.lenient().doReturn(
+            com.rev.app.domain.community.model.ThreadReactionEntity(thread = null, user = null, type = "LIKE")
+        ).`when`(reactionRepo).save(
+            anyK(com.rev.app.domain.community.model.ThreadReactionEntity::class.java)
+        )
+
+        org.mockito.Mockito.lenient().doReturn(1L)
+            .`when`(reactionRepo).countByThread_IdAndType(tid, "LIKE")
+        org.mockito.Mockito.lenient().doReturn(0L)
+            .`when`(reactionRepo).countByThread_IdAndType(tid, "LOVE")
 
         val res = service.toggle(uid, tid, "LIKE")
         assertTrue(res.toggled)

@@ -1,5 +1,5 @@
 package com.rev.app.api.controller
-
+import com.rev.test.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -24,6 +24,9 @@ import org.springframework.web.method.support.ModelAndViewContainer
 import java.util.UUID
 
 class ReactionControllerWebMvcTest {
+    // --- Mockito matcher helpers (Kotlin null/제네릭 안전) ---
+    private fun <T> eqK(v: T): T = org.mockito.ArgumentMatchers.eq(v)
+    private fun <T> anyK(clazz: Class<T>): T = org.mockito.ArgumentMatchers.any(clazz)
 
     private val service: ReactionService = Mockito.mock(ReactionService::class.java)
     private val FIXED_UID = UUID.fromString("11111111-1111-1111-1111-111111111111")
@@ -59,12 +62,15 @@ class ReactionControllerWebMvcTest {
 
         val threadId = UUID.randomUUID()
 
-        Mockito.doReturn(ToggleReactionRes(true, mapOf("LIKE" to 1L, "LOVE" to 0L)))
-            .`when`(service).toggle(
-                ArgumentMatchers.eq(FIXED_UID),
-                ArgumentMatchers.eq(threadId),
-                ArgumentMatchers.eq("LIKE")
+        org.mockito.Mockito.lenient().doReturn(
+            com.rev.app.api.service.community.dto.ToggleReactionRes(
+                true, mapOf("LIKE" to 1L, "LOVE" to 0L)
             )
+        ).`when`(service).toggle(
+            eqK(FIXED_UID),
+            eqK(threadId),
+            eqK("LIKE")
+        )
 
         mockMvc.perform(
             post("/api/threads/$threadId/reactions/LIKE").accept(MediaType.APPLICATION_JSON)

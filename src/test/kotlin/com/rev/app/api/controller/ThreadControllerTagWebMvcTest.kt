@@ -1,5 +1,5 @@
 package com.rev.app.api.controller
-
+import com.rev.test.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.rev.app.api.service.community.ThreadService
@@ -23,6 +23,9 @@ import java.time.Instant
 import java.util.UUID
 
 class ThreadControllerTagWebMvcTest {
+    // --- Mockito matcher helpers (Kotlin null/제네릭 안전) ---
+    private fun <T> eqK(v: T): T = org.mockito.ArgumentMatchers.eq(v)
+    private fun <T> anyK(clazz: Class<T>): T = org.mockito.ArgumentMatchers.any(clazz)
 
     private val service: ThreadService = Mockito.mock(ThreadService::class.java)
 
@@ -48,13 +51,27 @@ class ThreadControllerTagWebMvcTest {
             boardId = boardId, parentThreadId = null, authorId = UUID.randomUUID(),
             isPrivate = false, categoryId = null, createdAt = now, updatedAt = now, tags = emptyList()
         )
-        val page: Page<ThreadRes> = PageImpl(listOf(sample), pageable, 1)
+        val page: org.springframework.data.domain.Page<com.rev.app.api.service.community.dto.ThreadRes> =
+            org.springframework.data.domain.PageImpl(
+                emptyList(),
+                org.springframework.data.domain.PageRequest.of(0, 10),
+                0
+            )
 
-        // 2-인자 버전만 스텁 (tags 파라미터는 안 보냄)
-        Mockito.doReturn(page).`when`(service).listPublic(
-            ArgumentMatchers.eq(boardId),
-            ArgumentMatchers.any(Pageable::class.java)
-        )
+// 2-인자
+        org.mockito.Mockito.lenient().doReturn(page)
+            .`when`(service).listPublic(
+                eqK(boardId),
+                anyK(org.springframework.data.domain.Pageable::class.java)
+            )
+
+// 3-인자
+        org.mockito.Mockito.lenient().doReturn(page)
+            .`when`(service).listPublic(
+                eqK(boardId),
+                anyK(org.springframework.data.domain.Pageable::class.java),
+                org.mockito.ArgumentMatchers.anyList()
+            )
 
         mockMvc.perform(
             get("/api/threads/$boardId/threads")

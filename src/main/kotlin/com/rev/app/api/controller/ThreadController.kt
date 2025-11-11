@@ -19,14 +19,10 @@ class ThreadController(
     private val allowedSort = setOf("createdAt")
 
     @GetMapping("/{boardId}/threads")
-    fun listPublic(boardId: UUID,
+    fun listPublic(@PathVariable boardId: UUID,
                    @RequestParam(name="tags", required=false) tags: List<String>?,
-                   pageable: Pageable): Page<ThreadRes> {
-        // 정렬 키 검증: createdAt만 허용
-        if (pageable.sort.isSorted && pageable.sort.any { it.property !in allowedSort }) {
-            throw IllegalArgumentException("Invalid sort key")
-        }
-        // 서비스 호출 (포지셔널 인자)
-        return threadService.listPublic(boardId, pageable, tags)
-    }
+                   pageable: Pageable): org.springframework.data.domain.Page<ThreadRes> =
+        if (tags.isNullOrEmpty()) threadService.listPublic(boardId, pageable)
+        else threadService.listPublic(boardId, pageable, tags)
+
 }

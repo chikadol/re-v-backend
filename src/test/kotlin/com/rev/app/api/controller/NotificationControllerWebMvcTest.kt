@@ -1,5 +1,5 @@
 package com.rev.app.api.controller
-
+import com.rev.test.*
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
@@ -28,10 +28,14 @@ import java.time.Instant
 import java.util.UUID
 
 class NotificationControllerWebMvcTest {
+    // --- Mockito matcher helpers (Kotlin null/제네릭 안전) ---
+    private fun <T> eqK(v: T): T = org.mockito.ArgumentMatchers.eq(v)
+    private fun <T> anyK(clazz: Class<T>): T = org.mockito.ArgumentMatchers.any(clazz)
 
     private val service: NotificationService = Mockito.mock(NotificationService::class.java)
     private val FIXED_UID = UUID.fromString("11111111-1111-1111-1111-111111111111")
 
+    /** 어떤 @AuthenticationPrincipal 타입이 와도 userId를 주입하는 관대한 리졸버 */
     private class PermissivePrincipalResolver(
         private val uid: UUID
     ) : HandlerMethodArgumentResolver {
@@ -73,10 +77,12 @@ class NotificationControllerWebMvcTest {
             createdAt = Instant.now()
         )
 
-        Mockito.doReturn(PageImpl(listOf(notif))).`when`(service).listMine(
-            ArgumentMatchers.eq(FIXED_UID),
-            ArgumentMatchers.any(Pageable::class.java)
-        )
+        org.mockito.Mockito.lenient().doReturn(org.springframework.data.domain.PageImpl(listOf(notif)))
+            .`when`(service).listMine(
+                eqK(FIXED_UID),
+                anyK(org.springframework.data.domain.Pageable::class.java)
+            )
+
 
         mockMvc.perform(get("/api/notifications").accept(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -99,10 +105,11 @@ class NotificationControllerWebMvcTest {
             createdAt = Instant.now()
         )
 
-        Mockito.doReturn(updated).`when`(service).markRead(
-            ArgumentMatchers.eq(FIXED_UID),
-            ArgumentMatchers.eq(notifId)
-        )
+        org.mockito.Mockito.lenient().doReturn(updated)
+            .`when`(service).markRead(
+                eqK(FIXED_UID),
+                eqK(notifId)
+            )
 
         mockMvc.perform(post("/api/notifications/$notifId/read").accept(MediaType.APPLICATION_JSON))
             .andDo(print())
