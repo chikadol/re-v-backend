@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.controller.ReactionControllerWebMvcTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2025-11-27T12:37:44.368Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
+<testsuite name="com.rev.app.api.controller.ReactionControllerWebMvcTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2025-11-27T12:52:25.520Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
   <properties/>
   <testcase name="toggle_ok()" classname="com.rev.app.api.controller.ReactionControllerWebMvcTest" time="0.0">
     <skipped/>

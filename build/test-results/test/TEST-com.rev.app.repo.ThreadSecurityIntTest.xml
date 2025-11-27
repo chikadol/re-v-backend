@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.repo.ThreadSecurityIntTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-27T12:37:47.619Z" hostname="ileuleuui-MacBookPro.local" time="0.014">
+<testsuite name="com.rev.app.repo.ThreadSecurityIntTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-27T12:52:28.673Z" hostname="ileuleuui-MacBookPro.local" time="0.015">
   <properties/>
-  <testcase name="rejectWithoutAuth_401()" classname="com.rev.app.repo.ThreadSecurityIntTest" time="0.014"/>
-  <system-out><![CDATA[21:37:46.687 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.rev.app.repo.ThreadSecurityIntTest]: ThreadSecurityIntTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-21:37:46.752 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadSecurityIntTest
+  <testcase name="rejectWithoutAuth_401()" classname="com.rev.app.repo.ThreadSecurityIntTest" time="0.015"/>
+  <system-out><![CDATA[21:52:27.760 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.rev.app.repo.ThreadSecurityIntTest]: ThreadSecurityIntTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:52:27.825 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.rev.app.RevApplication for test class com.rev.app.repo.ThreadSecurityIntTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,19 +14,19 @@
 
  :: Spring Boot ::                (v3.3.3)
 
-2025-11-27T21:37:46.959+09:00  INFO 78222 --- [    Test worker] com.rev.app.repo.ThreadSecurityIntTest   : Starting ThreadSecurityIntTest using Java 21.0.5 with PID 78222 (started by ileuleu in /Users/ileuleu/IdeaProjects/re-v-backend)
-2025-11-27T21:37:46.960+09:00  INFO 78222 --- [    Test worker] com.rev.app.repo.ThreadSecurityIntTest   : No active profile set, falling back to 1 default profile: "default"
-2025-11-27T21:37:47.515+09:00  WARN 78222 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2025-11-27T21:52:28.026+09:00  INFO 78997 --- [    Test worker] com.rev.app.repo.ThreadSecurityIntTest   : Starting ThreadSecurityIntTest using Java 21.0.5 with PID 78997 (started by ileuleu in /Users/ileuleu/IdeaProjects/re-v-backend)
+2025-11-27T21:52:28.026+09:00  INFO 78997 --- [    Test worker] com.rev.app.repo.ThreadSecurityIntTest   : No active profile set, falling back to 1 default profile: "default"
+2025-11-27T21:52:28.571+09:00  WARN 78997 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: 0462bbd9-11d2-4234-b2c9-266e3d165212
+Using generated security password: b90d4973-34c0-4e0e-810b-e01232939dbc
 
 This generated password is for development use only. Your security configuration must be updated before running your application in production.
 
-2025-11-27T21:37:47.534+09:00  INFO 78222 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
-2025-11-27T21:37:47.601+09:00  INFO 78222 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2025-11-27T21:37:47.602+09:00  INFO 78222 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-11-27T21:37:47.602+09:00  INFO 78222 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-11-27T21:37:47.615+09:00  INFO 78222 --- [    Test worker] com.rev.app.repo.ThreadSecurityIntTest   : Started ThreadSecurityIntTest in 0.825 seconds (process running for 3.736)
+2025-11-27T21:52:28.585+09:00  INFO 78997 --- [    Test worker] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-11-27T21:52:28.653+09:00  INFO 78997 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-27T21:52:28.653+09:00  INFO 78997 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-27T21:52:28.654+09:00  INFO 78997 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-11-27T21:52:28.667+09:00  INFO 78997 --- [    Test worker] com.rev.app.repo.ThreadSecurityIntTest   : Started ThreadSecurityIntTest in 0.805 seconds (process running for 3.65)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -45,6 +45,8 @@ interface ThreadRepository : JpaRepository<ThreadEntity, UUID> {
         authorId: UUID,
         pageable: Pageable
     ): Page<ThreadEntity>
+
+    fun countByAuthor_Id(authorId: UUID): Long
 }
 
 interface CommentRepository : JpaRepository<CommentEntity, UUID> {
@@ -57,7 +59,7 @@ interface CommentRepository : JpaRepository<CommentEntity, UUID> {
     ): Page<CommentEntity>
 
     fun countByThread_Id(threadId: UUID): Long
-
+    fun countByAuthor_Id(authorId: UUID): Long
 }
 
 interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {
@@ -84,5 +86,6 @@ interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {
     ): Page<ThreadBookmarkEntity>
 
     fun findAllByThread_Id(threadId: UUID): List<CommentEntity>
+    fun countByUser_Id(userId: UUID): Long
 }
 
