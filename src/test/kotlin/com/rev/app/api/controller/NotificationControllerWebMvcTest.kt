@@ -27,7 +27,10 @@ class NotificationControllerWebMvcTest {
 
     @Test
     fun listMine_ok() {
-        val controller = NotificationController(service)
+        val controller = NotificationController(
+            service,
+            notificationService = service
+        )
 
         // ✅ Resolver 2개 모두 설정 (NPE 방지)
         val mockMvc = MockMvcBuilders.standaloneSetup(controller)
@@ -61,7 +64,10 @@ class NotificationControllerWebMvcTest {
 
     @Test
     fun markRead_ok() {
-        val controller = NotificationController(service)
+        val controller = NotificationController(
+            service,
+            notificationService = service
+        )
         val mockMvc = MockMvcBuilders.standaloneSetup(controller)
             .setCustomArgumentResolvers(
                 PageableHandlerMethodArgumentResolver(),

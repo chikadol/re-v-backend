@@ -8,4 +8,5 @@ import java.util.UUID
 interface NotificationRepository : JpaRepository<NotificationEntity, UUID> {
     fun findAllByUser_IdOrderByCreatedAtDesc(userId: UUID, pageable: Pageable): Page<NotificationEntity>
     fun countByUser_IdAndIsReadFalse(userId: UUID): Long
+    fun countByReceiver_IdAndIsReadFalse(receiverId: UUID): Long
 }

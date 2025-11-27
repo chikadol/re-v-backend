@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.controller.ThreadControllerTagWebMvcTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2025-11-27T12:11:15.004Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
+<testsuite name="com.rev.app.api.controller.ThreadControllerTagWebMvcTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2025-11-27T12:37:44.369Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
   <properties/>
   <testcase name="list_with_tags_ok()" classname="com.rev.app.api.controller.ThreadControllerTagWebMvcTest" time="0.0">
     <skipped/>
