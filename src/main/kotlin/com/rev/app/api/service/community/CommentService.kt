@@ -55,7 +55,7 @@ class CommentService(
                 val uref = userRepository.getReferenceById(uid)
                 notificationRepository.save(
                     NotificationEntity(
-                        user = uref,
+                        receiver = uref,
                         type = "COMMENT",
                         thread = thread,
                         comment = saved,

@@ -64,13 +64,16 @@ interface CommentRepository : JpaRepository<CommentEntity, UUID> {
 
 interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {
 
+    // 북마크 개수 (기존 Reaction/Bookmark 카운터용)
     fun countByThread_Id(threadId: UUID): Long
 
-    fun findByThread_IdAndUser_Id(
-        threadId: UUID,
-        userId: UUID
-    ): ThreadBookmarkEntity?
+    // 유저가 이 글을 북마크했는지 여부 확인용
+    fun findByThread_IdAndUser_Id(threadId: UUID, userId: UUID): ThreadBookmarkEntity?
 
+    // 특정 글에 달린 북마크들 조회 (필요하면 사용)
+    fun findAllByThread_Id(threadId: UUID): List<ThreadBookmarkEntity>
+
+    // "내 북마크 목록"용: Thread + Board까지 한 번에 패치
     @Query(
         """
         select b 
@@ -85,7 +88,7 @@ interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {
         pageable: Pageable
     ): Page<ThreadBookmarkEntity>
 
-    fun findAllByThread_Id(threadId: UUID): List<CommentEntity>
     fun countByUser_Id(userId: UUID): Long
 }
+
 

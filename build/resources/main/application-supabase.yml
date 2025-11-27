@@ -1,7 +1,7 @@
 spring:
   datasource:
     url: postgresql://postgres:chikadol123!@db.gsmbdibjiuwdqhrdvsfo.supabase.co:5432/postgres
-    username: ykkmr's Project
+    username: postgres.gsmbdibjiuwdqhrdvsfo
     password: chikadol123!
   flyway:
-    enabled: true
+    enabled: false

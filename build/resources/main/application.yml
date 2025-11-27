@@ -1,26 +1,30 @@
-
 spring:
   datasource:
     url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
-    username: postgres.gsmbdibjiuwdqhrdvsfo
-    password: chikadol123!
+    username: "postgres.gsmbdibjiuwdqhrdvsfo"
+    password: "chikadol123!"
     hikari:
       maximum-pool-size: 5
+
   jackson:
     property-naming-strategy: SNAKE_CASE
-    flyway:
-      locations:
-        - classpath:db/migration
-        - classpath:db/other
+
+  flyway:
+    enabled: false          # ✅ 이제 진짜 비활성화
+
   jpa:
+    hibernate:
+      ddl-auto: update      # ✅ 엔티티 기준으로 테이블 생성/업데이트
     properties:
       hibernate:
-        format_sql: true
-        generate_statistics: true
-  logging:
-    level:
-      org.hibernate.SQL: debug
-      org.hibernate.orm.jdbc.bind: trace
+        default_schema: rev
+        hbm2ddl:
+          create_namespaces: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
 
 jwt:
   secret: "Xk8s0a1Q2w3E4r5T6y7U8i9O0pAaBbCcDdEeFfGgHhIiJjKk"

@@ -20,7 +20,7 @@ class NotificationService(
     @Transactional
     fun markRead(userId: UUID, notificationId: UUID): NotificationRes {
         val n = notificationRepository.findById(notificationId).orElseThrow()
-        require(n.user.id == userId) { "Forbidden" }
+        require(n.receiver.id == userId) { "Forbidden" }
         n.isRead = true
         return notificationRepository.save(n).toRes()
     }

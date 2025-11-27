@@ -16,8 +16,8 @@ class NotificationEntity(
     @Id @GeneratedValue @UuidGenerator @JdbcTypeCode(SqlTypes.UUID)
     var id: UUID? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id")
-    var user: UserEntity,
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "receiver_id")
+    var receiver: UserEntity,
 
     @Column(nullable = false, length = 30)
     var type: String, // "COMMENT"
