@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.rev.app.api.service.community.ThreadServiceTagTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2025-11-27T12:11:17.435Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
+  <properties/>
+  <testcase name="create_with_invalid_tags_rejects()" classname="com.rev.app.api.service.community.ThreadServiceTagTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
