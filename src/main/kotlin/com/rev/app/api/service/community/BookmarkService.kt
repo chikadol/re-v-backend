@@ -1,10 +1,14 @@
 package com.rev.app.api.service.community
 
 import com.rev.app.api.security.JwtPrincipal
+import com.rev.app.api.service.community.dto.MyBookmarkedThreadRes
+import com.rev.app.api.service.community.dto.toMyBookmarkedThreadRes
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.repo.ThreadBookmarkRepository
 import com.rev.app.domain.community.repo.ThreadRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -26,4 +30,11 @@ class BookmarkService(
 
     @Transactional(readOnly = true)
     fun count(threadId: UUID): Long = bookmarkRepository.countByThread_Id(threadId)
-}
+
+    @Transactional(readOnly = true)
+    fun listMyBookmarks(userId: UUID, pageable: Pageable): Page<MyBookmarkedThreadRes> {
+        val page = bookmarkRepository.findAllByUser_IdWithThreadAndBoard(userId, pageable)
+        return page.map {
+            it.toMyBookmarkedThreadRes()
+        }
+    }}

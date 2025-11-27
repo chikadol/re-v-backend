@@ -1,5 +1,6 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.domain.community.repo.ThreadRepository
 import com.rev.app.api.service.community.dto.CreateThreadReq
 import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.api.service.community.dto.toRes
@@ -21,7 +22,7 @@ class ThreadService(
     private val boardRepository: BoardRepository,
     private val userRepository: UserRepository,
     private val tagRepository: TagRepository,
-    private val threadTagRepository: ThreadTagRepository
+    private val threadTagRepository: ThreadTagRepository,
 ) {
     private val tagRegex = Regex("^[A-Za-z0-9_-]{1,30}$")
     private val maxTags = 5
@@ -110,4 +111,13 @@ class ThreadService(
             threadTagRepository.save(ThreadTagEntity(thread = threadRef, tag = tag))
         }
     }
+
+    @Transactional(readOnly = true)
+    fun listMyThreads(
+        authorId: UUID,
+        pageable: Pageable
+    ): Page<ThreadRes> =
+        threadRepository
+            .findAllByAuthor_Id(authorId, pageable)
+            .map { it.toRes() }
 }

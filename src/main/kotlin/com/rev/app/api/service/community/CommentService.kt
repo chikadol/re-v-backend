@@ -12,6 +12,11 @@ import com.rev.app.domain.notification.NotificationRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
+import com.rev.app.api.service.community.dto.MyCommentRes
+import com.rev.app.api.service.community.dto.toMyCommentRes
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+
 
 @Service
 class CommentService(
@@ -66,4 +71,10 @@ class CommentService(
     @Transactional(readOnly = true)
     fun listThreadComments(threadId: UUID): List<CommentRes> =
         commentRepository.findAllByThread_Id(threadId).map { it.toRes() }
+
+    @Transactional(readOnly = true)
+    fun listMine(authorId: UUID, pageable: Pageable): Page<MyCommentRes> =
+        commentRepository
+            .findAllByAuthor_Id(authorId, pageable)
+            .map { it.toMyCommentRes() }
 }
