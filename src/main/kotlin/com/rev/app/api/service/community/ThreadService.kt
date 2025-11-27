@@ -2,6 +2,7 @@ package com.rev.app.api.service.community
 
 import com.rev.app.domain.community.repo.ThreadRepository
 import com.rev.app.api.service.community.dto.CreateThreadReq
+import com.rev.app.api.service.community.dto.ThreadDetailRes
 import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.api.service.community.dto.toRes
 import com.rev.app.api.service.community.dto.toResWithTags
@@ -23,7 +24,50 @@ class ThreadService(
     private val userRepository: UserRepository,
     private val tagRepository: TagRepository,
     private val threadTagRepository: ThreadTagRepository,
+    private val commentRepository: CommentRepository,
+    private val bookmarkRepository: ThreadBookmarkRepository,
+    private val reactionRepository: ThreadReactionRepository,
 ) {
+    private val allowedReactions = setOf("LIKE", "LOVE")
+
+    @Transactional(readOnly = true)
+    fun getDetail(
+        threadId: UUID,
+        meId: UUID? = null
+    ): ThreadDetailRes {
+        val thread = threadRepository.findById(threadId)
+            .orElseThrow { IllegalArgumentException("Thread not found: $threadId") }
+
+        val commentCount = commentRepository.countByThread_Id(threadId)
+        val bookmarkCount = bookmarkRepository.countByThread_Id(threadId)
+
+        val reactions: Map<String, Long> = allowedReactions
+            .associateWith { type -> reactionRepository.countByThread_IdAndType(threadId, type) }
+
+        val myReaction: String? = if (meId != null) {
+            allowedReactions.firstOrNull { type ->
+                reactionRepository.findByThread_IdAndUser_IdAndType(threadId, meId, type) != null
+            }
+        } else {
+            null
+        }
+
+        val bookmarked: Boolean = if (meId != null) {
+            bookmarkRepository.findByThread_IdAndUser_Id(threadId, meId) != null
+        } else {
+            false
+        }
+
+        return ThreadDetailRes(
+            thread = thread.toRes(),
+            commentCount = commentCount,
+            bookmarkCount = bookmarkCount,
+            reactions = reactions,
+            myReaction = myReaction,
+            bookmarked = bookmarked
+        )
+    }
+
     private val tagRegex = Regex("^[A-Za-z0-9_-]{1,30}$")
     private val maxTags = 5
 

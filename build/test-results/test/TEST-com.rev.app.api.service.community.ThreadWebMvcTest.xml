@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-27T11:26:08.053Z" hostname="ileuleuui-MacBookPro.local" time="0.014">
+<testsuite name="com.rev.app.api.service.community.ThreadWebMvcTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-27T12:11:17.437Z" hostname="ileuleuui-MacBookPro.local" time="0.014">
   <properties/>
   <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadWebMvcTest" time="0.014"/>
-  <system-out><![CDATA[20:26:08.058 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-20:26:08.059 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-20:26:08.059 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+  <system-out><![CDATA[21:11:17.442 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+21:11:17.442 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+21:11:17.442 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

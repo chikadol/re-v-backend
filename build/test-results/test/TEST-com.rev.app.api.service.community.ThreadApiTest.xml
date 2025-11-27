@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-27T11:26:06.389Z" hostname="ileuleuui-MacBookPro.local" time="1.558">
+<testsuite name="com.rev.app.api.service.community.ThreadApiTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-11-27T12:11:15.877Z" hostname="ileuleuui-MacBookPro.local" time="1.557">
   <properties/>
-  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="1.558"/>
-  <system-out><![CDATA[20:26:06.708 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
-20:26:07.538 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-20:26:07.538 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-20:26:07.540 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
+  <testcase name="listPublic_ok()" classname="com.rev.app.api.service.community.ThreadApiTest" time="1.557"/>
+  <system-out><![CDATA[21:11:16.238 [Test worker] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+21:11:17.015 [Test worker] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+21:11:17.015 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+21:11:17.017 [Test worker] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

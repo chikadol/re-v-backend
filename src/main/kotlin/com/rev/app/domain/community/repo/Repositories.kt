@@ -5,6 +5,7 @@ import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.domain.community.model.TagEntity
+import com.rev.app.domain.community.model.ThreadReactionEntity
 import com.rev.app.domain.community.model.ThreadTagEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -54,6 +55,9 @@ interface CommentRepository : JpaRepository<CommentEntity, UUID> {
         authorId: UUID,
         pageable: Pageable
     ): Page<CommentEntity>
+
+    fun countByThread_Id(threadId: UUID): Long
+
 }
 
 interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {
@@ -81,3 +85,4 @@ interface ThreadBookmarkRepository : JpaRepository<ThreadBookmarkEntity, UUID> {
 
     fun findAllByThread_Id(threadId: UUID): List<CommentEntity>
 }
+
