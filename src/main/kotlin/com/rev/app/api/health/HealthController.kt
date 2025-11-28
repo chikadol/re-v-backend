@@ -7,6 +7,6 @@ data class HealthRes(val status: String = "UP")
 
 @RestController
 class HealthController {
-    @GetMapping("/healthz")
+    @GetMapping("/health")
     fun health(): HealthRes = HealthRes()
 }
