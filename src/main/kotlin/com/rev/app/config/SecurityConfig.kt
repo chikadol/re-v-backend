@@ -4,22 +4,29 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 
 @Configuration
+@EnableWebSecurity
 class SecurityConfig {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
+
         http
+            // ✅ 세션/폼로그인/베이직 인증 다 끄기 (브라우저 팝업 사라짐)
+            .httpBasic { it.disable() }
+            .formLogin { it.disable() }
+
+            // ✅ CSRF 끄기 (Swagger / curl에서 POST 403 안 나게)
             .csrf { it.disable() }
-            .authorizeHttpRequests {
-                it
-                    // 허용하는 공개 엔드포인트가 있다면 여기에 permitAll()
-                    // 예: it.requestMatchers("/health").permitAll()
-                    .requestMatchers("/api/threads/**").authenticated()
+
+            // ✅ 모든 요청은 일단 허용 (로컬 개발 단계용)
+            .authorizeHttpRequests { auth ->
+                auth
                     .anyRequest().permitAll()
             }
-            .httpBasic { } // 401을 쉽게 재현하려면 basic/on도 OK (실서비스는 JWT)
+
         return http.build()
     }
 }

@@ -1,5 +1,7 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.api.controller.dto.ThreadCreateRequest
+import com.rev.app.api.controller.dto.ThreadResponse
 import com.rev.app.domain.community.repo.ThreadRepository
 import com.rev.app.api.service.community.dto.CreateThreadReq
 import com.rev.app.api.service.community.dto.ThreadDetailRes
@@ -164,4 +166,25 @@ class ThreadService(
         threadRepository
             .findAllByAuthor_Id(authorId, pageable)
             .map { it.toRes() }
+
+    fun create(
+        boardId: UUID,
+        authorId: UUID,
+        req: ThreadCreateRequest
+    ): ThreadEntity {   // ✅ 반환 타입을 ThreadEntity로 명시
+
+        val board = boardRepository.getReferenceById(boardId)
+        val author = userRepository.getReferenceById(authorId)
+
+        val entity = ThreadEntity(
+            board = board,
+            author = author,
+            title = req.title,
+            content = req.content,
+            isPrivate = req.isPrivate ?: false
+        )
+
+        return threadRepository.save(entity)   // ✅ 마지막에 엔티티를 리턴
+    }
+
 }
