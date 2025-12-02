@@ -7,6 +7,7 @@ import com.rev.app.api.service.community.CommentService
 import com.rev.app.api.service.community.dto.CommentRes
 import com.rev.app.api.service.community.dto.CreateCommentRequest
 import com.rev.app.domain.community.entity.CommentEntity
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -14,6 +15,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("/api/comments")
+@SecurityRequirement(name = "bearerAuth")
 class CommentController(
     private val commentService: CommentService
 ) {

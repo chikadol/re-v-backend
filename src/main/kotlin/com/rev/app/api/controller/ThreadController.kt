@@ -6,6 +6,7 @@ import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.ThreadService
 import com.rev.app.api.service.community.dto.ThreadDetailRes
 import com.rev.app.api.service.community.dto.ThreadRes
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -21,6 +22,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("/api/threads")
+@SecurityRequirement(name = "bearerAuth")
 class ThreadController(
     private val threadService: ThreadService
 ) {
