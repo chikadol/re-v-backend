@@ -22,7 +22,11 @@ class AuthService(
         val roles: List<String> = rolesOf(user)
 
         val access  = jwtProvider.generateAccessToken(uid, username, roles)
-        val refresh = jwtProvider.generateRefreshToken(uid)
+        val refresh = jwtProvider.generateRefreshToken(
+            uid,
+            email = TODO(),
+            listOf = TODO()
+        )
         return TokenPair(access, refresh)
     }
 
@@ -36,7 +40,11 @@ class AuthService(
         val roles: List<String> = rolesOf(user)
 
         val newAccess  = jwtProvider.generateAccessToken(uid, username, roles)
-        val newRefresh = jwtProvider.generateRefreshToken(uid)
+        val newRefresh = jwtProvider.generateRefreshToken(
+            uid,
+            email = TODO(),
+            listOf = TODO()
+        )
         return TokenPair(newAccess, newRefresh)
     }
 
@@ -96,4 +104,7 @@ class AuthService(
         catch (_: Exception) { null }
 }
 
-data class TokenPair(val accessToken: String, val refreshToken: String)
+data class TokenPair(
+    val accessToken: String,
+    val refreshToken: String
+)

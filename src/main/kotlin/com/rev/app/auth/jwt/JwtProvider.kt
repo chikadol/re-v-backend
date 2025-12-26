@@ -63,7 +63,7 @@ class JwtProvider(
             .compact()
     }
 
-    fun generateRefreshToken(userId: UUID): String {
+    fun generateRefreshToken(userId: UUID, email: String, listOf: List<String>): String {
         val now = Date()
         val exp = Date(now.time + props.refreshTtlSeconds * 1000)
         return Jwts.builder()
