@@ -24,3 +24,20 @@ jwt:
   secret: "your-super-long-secret-key-at-least-32-chars"
   access-token-expiration: 3600000     # 1시간
   refresh-token-expiration: 1209600000 # 14일
+
+payment:
+  return-url: "http://localhost:3000/payment/callback"
+  # 네이버페이 설정
+  naver:
+    client-id: "${NAVER_PAY_CLIENT_ID:}"
+    client-secret: "${NAVER_PAY_CLIENT_SECRET:}"
+    api-url: "https://dev.apis.naver.com" # 개발 환경: https://dev.apis.naver.com, 운영: https://apis.naver.com
+  # 토스페이먼츠 설정
+  toss:
+    secret-key: "${TOSS_SECRET_KEY:}" # 테스트: test_sk_..., 운영: live_sk_...
+    api-url: "https://api.tosspayments.com" # 테스트: https://api.tosspayments.com, 운영: 동일
+  # 카카오페이 설정
+  kakao:
+    admin-key: "${KAKAO_ADMIN_KEY:}" # REST API 키
+    cid: "${KAKAO_CID:}" # 가맹점 코드 (테스트: TC0ONETIME, 운영: 실제 가맹점 코드)
+    api-url: "https://kapi.kakao.com"

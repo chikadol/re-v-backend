@@ -9,7 +9,8 @@ data class PaymentRes(
     val ticketId: UUID,
     val amount: Int,
     val paymentMethod: PaymentMethod,
-    val status: PaymentStatus
+    val status: PaymentStatus,
+    val paymentUrl: String? = null // 결제 URL (결제 제공자로 리다이렉트)
 )
 
 data class PaymentRequest(
