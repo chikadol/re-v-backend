@@ -40,6 +40,11 @@ class ThreadService(
         val thread = threadRepository.findById(threadId)
             .orElseThrow { IllegalArgumentException("Thread not found: $threadId") }
 
+        // LAZY 로딩된 필드들을 명시적으로 접근하여 로드
+        thread.board?.id
+        thread.author?.id
+        thread.parent?.id
+
         val commentCount = commentRepository.countByThread_Id(threadId)
         val bookmarkCount = bookmarkRepository.countByThread_Id(threadId)
 
