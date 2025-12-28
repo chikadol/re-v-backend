@@ -14,8 +14,10 @@ class NotificationService(
     private val notificationRepository: NotificationRepository
 ) {
     @Transactional(readOnly = true)
-    fun listMine(userId: UUID, pageable: Pageable, bool: Boolean): Page<NotificationRes> =
-        notificationRepository.findAllByReceiver_IdOrderByCreatedAtDesc(userId, pageable).map { it.toRes() }
+    fun listMine(userId: UUID, pageable: Pageable, type: String? = null): Page<NotificationRes> {
+        // type 필터는 나중에 구현 가능
+        return notificationRepository.findAllByReceiver_IdOrderByCreatedAtDesc(userId, pageable).map { it.toRes() }
+    }
 
     @Transactional
     fun markRead(userId: UUID, notificationId: UUID): NotificationRes {

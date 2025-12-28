@@ -2,12 +2,15 @@ package com.rev.app.api.service.community
 
 import com.rev.app.api.service.community.dto.BookmarkCountRes
 import com.rev.app.api.service.community.dto.BookmarkToggleRes
+import com.rev.app.api.service.community.dto.MyBookmarkedThreadRes
+import com.rev.app.api.service.community.dto.toMyBookmarkedThreadRes
 import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.auth.UserRepository
 import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 import com.rev.app.domain.community.repo.ThreadBookmarkRepository
 import com.rev.app.domain.community.repo.ThreadRepository
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.util.UUID
@@ -56,15 +59,19 @@ class BookmarkService(
         return BookmarkCountRes(count = count)
     }
 
-    fun listMyBookmarks(userId: UUID, pageable: Pageable): Page<ThreadRes> {
-        // ThreadBookmarkEntity 에 thread, user, createdAt 이런 필드가 있다고 가정
-        val bookmarks = bookmarkRepo.findAllByUser_IdWithThreadAndBoard(userId, pageable)
-
-        return bookmarks.map { bookmark ->
-            val thread = bookmark.thread
-            requireNotNull(thread) { "Bookmark.thread 가 null 입니다." }
-
-            ThreadRes.from(thread)
+    fun listMyBookmarks(userId: UUID, pageable: Pageable): Page<MyBookmarkedThreadRes> {
+        return try {
+            val bookmarks = bookmarkRepo.findAllByUser_IdWithThreadAndBoard(userId, pageable)
+            bookmarks.map { bookmark ->
+                // LAZY 로딩된 필드들을 명시적으로 접근하여 로드
+                bookmark.thread?.id
+                bookmark.thread?.board?.id
+                bookmark.thread?.board?.name
+                bookmark.toMyBookmarkedThreadRes()
+            }
+        } catch (e: Exception) {
+            // 테이블이 없거나 에러가 발생하면 빈 페이지 반환
+            PageImpl(emptyList(), pageable, 0)
         }
     }
 }

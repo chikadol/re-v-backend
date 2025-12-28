@@ -23,15 +23,9 @@ class NotificationController(
         @AuthenticationPrincipal me: JwtPrincipal,
         pageable: Pageable,
         @RequestParam(name = "type", required = false) type: String? = null
-    ): () -> Page<NotificationRes> {
+    ): Page<NotificationRes> {
         val uid = requireNotNull(me.userId)
-        // 프로덕션에서는 Mockito 매처 사용 금지. 그냥 null 체크로 분기.
-        return {
-            service.listMine(
-                uid, pageable,
-                bool = true
-            )
-        }
+        return service.listMine(uid, pageable, type = type)
     }
 
     @PostMapping("/{notificationId}/read")
