@@ -33,43 +33,57 @@ class GenbaCrawlerService(
         logger.info("겐바 일정 크롤링 시작")
         try {
             val performances = fetchGenbaPerformances()
+            logger.info("크롤링으로 추출된 공연 수: ${performances.size}")
+            
+            if (performances.isEmpty()) {
+                logger.warn("크롤링 결과가 비어있습니다. 웹사이트 구조 확인이 필요합니다.")
+                return
+            }
+
             var created = 0
             var updated = 0
+            var skipped = 0
 
             for (performanceData in performances) {
-                // 중복 체크: 제목과 일시로 비교
-                val existing = performanceRepository.findAll().find { 
-                    it.title == performanceData.title && 
-                    it.performanceDateTime == performanceData.performanceDateTime
-                }
-
-                if (existing == null) {
-                    // 새로운 공연 추가
-                    performanceService.create(
-                        com.rev.app.api.service.ticket.dto.PerformanceCreateRequest(
-                            title = performanceData.title,
-                            description = performanceData.description,
-                            venue = performanceData.venue,
-                            performanceDateTime = performanceData.performanceDateTime,
-                            price = performanceData.price ?: 30000, // 기본 가격 3만원
-                            totalSeats = performanceData.totalSeats ?: 100, // 기본 좌석 100석
-                            imageUrl = performanceData.imageUrl
-                        )
-                    )
-                    created++
-                    logger.info("새 공연 추가: ${performanceData.title}")
-                } else {
-                    // 기존 공연 업데이트 (좌석 수 등이 변경될 수 있음)
-                    if (performanceData.remainingSeats != null && existing.remainingSeats != performanceData.remainingSeats) {
-                        existing.remainingSeats = performanceData.remainingSeats
-                        performanceRepository.save(existing)
-                        updated++
-                        logger.info("공연 업데이트: ${performanceData.title}")
+                try {
+                    // 중복 체크: 제목과 일시로 비교
+                    val existing = performanceRepository.findAll().find { 
+                        it.title == performanceData.title && 
+                        it.performanceDateTime == performanceData.performanceDateTime
                     }
+
+                    if (existing == null) {
+                        // 새로운 공연 추가
+                        val createdPerformance = performanceService.create(
+                            com.rev.app.api.service.ticket.dto.PerformanceCreateRequest(
+                                title = performanceData.title,
+                                description = performanceData.description,
+                                venue = performanceData.venue,
+                                performanceDateTime = performanceData.performanceDateTime,
+                                price = performanceData.price ?: 30000, // 기본 가격 3만원
+                                totalSeats = performanceData.totalSeats ?: 100, // 기본 좌석 100석
+                                imageUrl = performanceData.imageUrl
+                            )
+                        )
+                        created++
+                        logger.info("새 공연 추가: ${performanceData.title} @ ${performanceData.venue} - ${performanceData.performanceDateTime}")
+                    } else {
+                        // 기존 공연 업데이트 (좌석 수 등이 변경될 수 있음)
+                        if (performanceData.remainingSeats != null && existing.remainingSeats != performanceData.remainingSeats) {
+                            existing.remainingSeats = performanceData.remainingSeats
+                            performanceRepository.save(existing)
+                            updated++
+                            logger.info("공연 업데이트: ${performanceData.title}")
+                        } else {
+                            skipped++
+                        }
+                    }
+                } catch (e: Exception) {
+                    logger.error("공연 저장 실패: ${performanceData.title} - ${e.message}", e)
                 }
             }
 
-            logger.info("겐바 일정 크롤링 완료: 생성=$created, 업데이트=$updated")
+            logger.info("겐바 일정 크롤링 완료: 생성=$created, 업데이트=$updated, 건너뜀=$skipped")
         } catch (e: Exception) {
             logger.error("겐바 일정 크롤링 실패", e)
         }
@@ -79,6 +93,7 @@ class GenbaCrawlerService(
         val performances = mutableListOf<GenbaPerformanceData>()
 
         try {
+            logger.info("크롤링 시작: $baseUrl")
             val doc: Document = Jsoup.connect(baseUrl)
                 .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
                 .referrer("https://chikadol.net")
@@ -86,12 +101,28 @@ class GenbaCrawlerService(
                 .get()
 
             logger.info("웹페이지 로드 성공: ${doc.title()}")
+            logger.debug("페이지 HTML 길이: ${doc.html().length} bytes")
+
+            // HTML 구조 디버깅: 주요 요소 찾기
+            val bodyText = doc.body().text()
+            logger.info("페이지 본문 텍스트 길이: ${bodyText.length} chars")
+            logger.debug("페이지 본문 일부: ${bodyText.take(500)}")
+
+            // 캘린더나 이벤트 관련 요소 찾기 시도
+            val allElements = doc.select("*")
+            logger.info("전체 HTML 요소 수: ${allElements.size}")
+            
+            // 클래스 이름에서 힌트 찾기
+            val classNames = allElements.mapNotNull { it.className().takeIf { cn -> cn.isNotBlank() } }.distinct().take(20)
+            logger.info("발견된 주요 클래스명: ${classNames.joinToString(", ")}")
 
             // 다양한 선택자로 이벤트 요소 찾기
             val eventSelectors = listOf(
                 ".event", ".schedule-item", ".genba-item", 
                 "[data-genba]", ".performance-item", ".schedule",
-                ".fc-event-title", ".fc-event-time", ".calendar-event"
+                ".fc-event-title", ".fc-event-time", ".calendar-event",
+                ".fc-event", ".fc-day-event", "[data-event]",
+                ".schedule-list", ".event-list", ".genba-list"
             )
             
             var foundElements = false
@@ -100,15 +131,19 @@ class GenbaCrawlerService(
                 val elements = doc.select(selector)
                 if (elements.isNotEmpty()) {
                     logger.info("선택자 '$selector'로 ${elements.size}개 요소 발견")
+                    for (element in elements.take(5)) { // 처음 5개만 로그
+                        logger.debug("요소 텍스트: ${element.text().take(100)}")
+                    }
                     for (element in elements) {
                         try {
                             val performance = parseGenbaElement(element)
                             if (performance != null) {
+                                logger.info("공연 파싱 성공: ${performance.title} - ${performance.venue}")
                                 performances.add(performance)
                                 foundElements = true
                             }
                         } catch (e: Exception) {
-                            logger.debug("요소 파싱 실패 (선택자: $selector)", e)
+                            logger.warn("요소 파싱 실패 (선택자: $selector): ${e.message}", e)
                         }
                     }
                     if (foundElements) break
@@ -117,25 +152,35 @@ class GenbaCrawlerService(
 
             // 테이블이나 리스트에서 파싱 시도
             if (!foundElements) {
-                val tableRows = doc.select("table tr, .list-item, li, .item")
+                logger.info("이벤트 요소를 찾지 못해 테이블/리스트에서 파싱 시도")
+                val tableRows = doc.select("table tr, .list-item, li, .item, div[class*='event'], div[class*='schedule']")
+                logger.info("테이블/리스트 행 수: ${tableRows.size}")
+                var processedCount = 0
                 for (row in tableRows) {
-                    val text = row.text()
+                    val text = row.text().trim()
                     if (text.length > 10 && (text.contains("겐바") || text.contains("공연") || 
                         text.contains("라이브") || text.matches(Regex(".*\\d{4}[.\\-/]\\d{1,2}[.\\-/]\\d{1,2}.*")))) {
                         try {
+                            logger.debug("파싱 시도 중: ${text.take(100)}")
                             val performance = parseTextContent(text, row)
                             if (performance != null) {
+                                logger.info("텍스트에서 공연 파싱 성공: ${performance.title}")
                                 performances.add(performance)
                                 foundElements = true
+                                processedCount++
+                                if (processedCount >= 20) break // 최대 20개만 처리
                             }
                         } catch (e: Exception) {
-                            logger.debug("텍스트 파싱 실패: ${text.take(100)}", e)
+                            logger.debug("텍스트 파싱 실패: ${text.take(100)} - ${e.message}")
                         }
                     }
                 }
             }
 
             logger.info("총 ${performances.size}개 공연 데이터 추출 완료")
+            if (performances.isEmpty()) {
+                logger.warn("공연 데이터를 찾지 못했습니다. 웹사이트 구조가 변경되었을 수 있습니다.")
+            }
 
         } catch (e: Exception) {
             logger.error("웹페이지 로드 실패: ${e.message}", e)
