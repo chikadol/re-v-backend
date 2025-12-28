@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="updated" />
+    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="내정보 기능 업데이트">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -239,7 +242,7 @@
       <workItem from="1762862395735" duration="83862000" />
       <workItem from="1766905312138" duration="57000" />
       <workItem from="1766907452423" duration="1794000" />
-      <workItem from="1766909660491" duration="2679000" />
+      <workItem from="1766909660491" duration="8633000" />
     </task>
     <task id="LOCAL-00001" summary="auth">
       <option name="closed" value="true" />
@@ -441,7 +444,159 @@
       <option name="project" value="LOCAL" />
       <updated>1766914219506</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="updated">
+      <option name="closed" value="true" />
+      <created>1766914556164</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1766914556164</updated>
+    </task>
+    <task id="LOCAL-00027" summary="회원가입 기능 추가">
+      <option name="closed" value="true" />
+      <created>1766914811626</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1766914811626</updated>
+    </task>
+    <task id="LOCAL-00028" summary="회원가입 기능 추가">
+      <option name="closed" value="true" />
+      <created>1766914841120</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1766914841120</updated>
+    </task>
+    <task id="LOCAL-00029" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766915267761</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1766915267761</updated>
+    </task>
+    <task id="LOCAL-00030" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766915699601</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1766915699601</updated>
+    </task>
+    <task id="LOCAL-00031" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766915917175</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1766915917175</updated>
+    </task>
+    <task id="LOCAL-00032" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766916257745</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1766916257745</updated>
+    </task>
+    <task id="LOCAL-00033" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766916581947</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1766916581948</updated>
+    </task>
+    <task id="LOCAL-00034" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766916886980</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1766916886980</updated>
+    </task>
+    <task id="LOCAL-00035" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766917154084</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1766917154084</updated>
+    </task>
+    <task id="LOCAL-00036" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766917283321</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1766917283321</updated>
+    </task>
+    <task id="LOCAL-00037" summary="게시판 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766917493110</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1766917493110</updated>
+    </task>
+    <task id="LOCAL-00038" summary="댓글 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766917846821</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1766917846821</updated>
+    </task>
+    <task id="LOCAL-00039" summary="내정보 / 알림 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766918435013</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1766918435013</updated>
+    </task>
+    <task id="LOCAL-00040" summary="커뮤니티 전체 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766918919851</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1766918919851</updated>
+    </task>
+    <task id="LOCAL-00041" summary="커뮤니티 전체 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766919532988</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1766919532988</updated>
+    </task>
+    <task id="LOCAL-00042" summary="내정보 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766919653747</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1766919653747</updated>
+    </task>
+    <task id="LOCAL-00043" summary="내정보 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766919700304</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1766919700305</updated>
+    </task>
+    <task id="LOCAL-00044" summary="내정보 기능 업데이트">
+      <option name="closed" value="true" />
+      <created>1766919807115</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1766919807115</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -463,7 +618,13 @@
     <MESSAGE value="testcode all 200 OK" />
     <MESSAGE value="AuthService.kt updated" />
     <MESSAGE value="updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated" />
+    <MESSAGE value="회원가입 기능 추가" />
+    <MESSAGE value="게시판 기능 업데이트" />
+    <MESSAGE value="댓글 기능 업데이트" />
+    <MESSAGE value="내정보 / 알림 기능 업데이트" />
+    <MESSAGE value="커뮤니티 전체 기능 업데이트" />
+    <MESSAGE value="내정보 기능 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="내정보 기능 업데이트" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
