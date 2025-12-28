@@ -45,23 +45,46 @@ class ThreadService(
         thread.author?.id
         thread.parent?.id
 
-        val commentCount = commentRepository.countByThread_Id(threadId)
-        val bookmarkCount = bookmarkRepository.countByThread_Id(threadId)
+        val commentCount = try {
+            commentRepository.countByThread_Id(threadId)
+        } catch (e: Exception) {
+            0L
+        }
+        
+        val bookmarkCount = try {
+            bookmarkRepository.countByThread_Id(threadId)
+        } catch (e: Exception) {
+            0L
+        }
 
-        val reactions: Map<String, Long> = allowedReactions
-            .associateWith { type -> reactionRepository.countByThread_IdAndType(threadId, type) }
-
-        val myReaction: String? = if (meId != null) {
-            allowedReactions.firstOrNull { type ->
-                reactionRepository.findByThread_IdAndUser_IdAndType(threadId, meId, type) != null
+        val reactions: Map<String, Long> = try {
+            allowedReactions.associateWith { type -> 
+                reactionRepository.countByThread_IdAndType(threadId, type)
             }
-        } else {
+        } catch (e: Exception) {
+            // reaction 테이블이 없거나 에러가 발생하면 빈 맵 반환
+            emptyMap()
+        }
+
+        val myReaction: String? = try {
+            if (meId != null) {
+                allowedReactions.firstOrNull { type ->
+                    reactionRepository.findByThread_IdAndUser_IdAndType(threadId, meId, type) != null
+                }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
             null
         }
 
-        val bookmarked: Boolean = if (meId != null) {
-            bookmarkRepository.findByThread_IdAndUser_Id(threadId, meId) != null
-        } else {
+        val bookmarked: Boolean = try {
+            if (meId != null) {
+                bookmarkRepository.findByThread_IdAndUser_Id(threadId, meId) != null
+            } else {
+                false
+            }
+        } catch (e: Exception) {
             false
         }
 
