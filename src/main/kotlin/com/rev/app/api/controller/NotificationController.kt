@@ -45,10 +45,11 @@ class NotificationController(
     }
 
     @GetMapping("/unread-count")
+    @SecurityRequirement(name = "bearerAuth", required = false) // 인증 선택적
     fun getUnreadCount(
-        @AuthenticationPrincipal me: JwtPrincipal
+        @AuthenticationPrincipal me: JwtPrincipal?
     ): Map<String, Long> {
-        val uid = requireNotNull(me.userId)
+        val uid = me?.userId ?: return mapOf("unreadCount" to 0L)
         val count = notificationService.unreadCount(uid)
         return mapOf("unreadCount" to count)
     }
