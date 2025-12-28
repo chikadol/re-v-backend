@@ -73,6 +73,10 @@ dependencies {
 
     // HTML Parsing (크롤링용)
     implementation("org.jsoup:jsoup:1.17.2")
+    
+    // Selenium (브라우저 자동화 크롤링용)
+    implementation("org.seleniumhq.selenium:selenium-java:4.15.0")
+    implementation("io.github.bonigarcia:webdrivermanager:5.6.2")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 

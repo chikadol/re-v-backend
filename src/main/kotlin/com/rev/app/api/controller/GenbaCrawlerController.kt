@@ -13,10 +13,12 @@ class GenbaCrawlerController(
     private val genbaCrawlerService: GenbaCrawlerService
 ) {
     @PostMapping("/crawl")
-    fun triggerCrawl(): ResponseEntity<Map<String, String>> {
+    fun triggerCrawl(
+        @org.springframework.web.bind.annotation.RequestParam(name = "clear", required = false, defaultValue = "false") clear: Boolean
+    ): ResponseEntity<Map<String, String>> {
         // 수동으로 크롤링 실행 (관리자용)
         try {
-            genbaCrawlerService.crawlGenbaSchedules()
+            genbaCrawlerService.crawlGenbaSchedules(clearExisting = clear)
             return ResponseEntity.ok(mapOf("message" to "크롤링이 완료되었습니다. 로그를 확인하세요."))
         } catch (e: Exception) {
             return ResponseEntity.status(500).body(mapOf("error" to "크롤링 실패: ${e.message}"))
@@ -24,9 +26,11 @@ class GenbaCrawlerController(
     }
 
     @GetMapping("/crawl")
-    fun triggerCrawlGet(): ResponseEntity<Map<String, String>> {
+    fun triggerCrawlGet(
+        @org.springframework.web.bind.annotation.RequestParam(name = "clear", required = false, defaultValue = "false") clear: Boolean
+    ): ResponseEntity<Map<String, String>> {
         // GET 요청도 허용 (테스트용)
-        return triggerCrawl()
+        return triggerCrawl(clear)
     }
 }
 
