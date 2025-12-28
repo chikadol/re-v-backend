@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Locale
@@ -215,6 +216,87 @@ class GenbaCrawlerService(
         }
 
         return performances.distinctBy { "${it.title}_${it.performanceDateTime}" }
+    }
+
+    /**
+     * FullCalendar 이벤트 JSON 문자열을 파싱하여 GenbaPerformanceData 리스트로 변환
+     */
+    private fun parseCalendarEvents(jsonArrayStr: String): List<GenbaPerformanceData> {
+        val events = mutableListOf<GenbaPerformanceData>()
+        
+        try {
+            // 간단한 JSON 파싱 (정규식 기반)
+            // 예: [{title: "공연명", start: "2024-01-15T19:00:00", ...}, ...]
+            
+            // 각 객체 추출
+            val objectPattern = Regex("""\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}""", RegexOption.DOT_MATCHES_ALL)
+            val objects = objectPattern.findAll(jsonArrayStr)
+            
+            for (objMatch in objects) {
+                val objStr = objMatch.value
+                
+                // title 추출
+                val titleMatch = Regex("""['"]title['"]\s*:\s*['"]([^'"]+)['"]""").find(objStr)
+                val title = titleMatch?.groupValues?.get(1) ?: continue
+                
+                // start 또는 date 추출
+                val startMatch = Regex("""['"]start['"]\s*:\s*['"]([^'"]+)['"]""").find(objStr)
+                    ?: Regex("""['"]date['"]\s*:\s*['"]([^'"]+)['"]""").find(objStr)
+                val dateStr = startMatch?.groupValues?.get(1) ?: continue
+                
+                // description 또는 content 추출
+                val descMatch = Regex("""['"]description['"]\s*:\s*['"]([^'"]+)['"]""").find(objStr)
+                    ?: Regex("""['"]content['"]\s*:\s*['"]([^'"]+)['"]""").find(objStr)
+                val description = descMatch?.groupValues?.get(1)
+                
+                // url 또는 link 추출 (이미지 등)
+                val urlMatch = Regex("""['"]url['"]\s*:\s*['"]([^'"]+)['"]""").find(objStr)
+                    ?: Regex("""['"]image['"]\s*:\s*['"]([^'"]+)['"]""").find(objStr)
+                val imageUrl = urlMatch?.groupValues?.get(1)
+                
+                // 장소 추출 (description에서 @ 뒤 텍스트 찾기)
+                var venue = "미정"
+                description?.let { desc ->
+                    val venueMatch = Regex("""@\s*([가-힣a-zA-Z0-9\s]+)""").find(desc)
+                    venue = venueMatch?.groupValues?.get(1)?.trim() ?: "미정"
+                }
+                
+                // 날짜 파싱
+                val dateTime = try {
+                    // ISO 8601 형식: 2024-01-15T19:00:00 또는 2024-01-15
+                    if (dateStr.contains("T")) {
+                        java.time.Instant.parse(dateStr).atZone(ZoneId.systemDefault()).toLocalDateTime()
+                    } else {
+                        java.time.LocalDate.parse(dateStr).atTime(19, 0)
+                    }
+                } catch (e: Exception) {
+                    logger.debug("날짜 파싱 실패: $dateStr - ${e.message}")
+                    continue
+                }
+                
+                // 과거 날짜는 제외
+                if (dateTime.isBefore(LocalDateTime.now())) {
+                    continue
+                }
+                
+                events.add(
+                    GenbaPerformanceData(
+                        title = title.trim(),
+                        description = description?.trim(),
+                        venue = venue.trim(),
+                        performanceDateTime = dateTime,
+                        price = null,
+                        totalSeats = null,
+                        remainingSeats = null,
+                        imageUrl = imageUrl
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            logger.warn("캘린더 이벤트 파싱 중 오류: ${e.message}", e)
+        }
+        
+        return events
     }
 
     private fun parseGenbaElement(element: Element): GenbaPerformanceData? {

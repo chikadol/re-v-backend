@@ -45,7 +45,6 @@ class NotificationController(
     }
 
     @GetMapping("/unread-count")
-    @SecurityRequirement(name = "bearerAuth", required = false) // 인증 선택적
     fun getUnreadCount(
         @AuthenticationPrincipal me: JwtPrincipal?
     ): Map<String, Long> {
