@@ -4,6 +4,7 @@ package com.rev.app.api.controller
 import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.notification.NotificationService
 import com.rev.app.api.service.notification.dto.NotificationRes
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -12,8 +13,10 @@ import java.util.UUID
 
 @RestController
 @RequestMapping("/api/notifications")
+@SecurityRequirement(name = "bearerAuth")
 class NotificationController(
-    private val service: NotificationService
+    private val service: NotificationService,
+    private val notificationService: NotificationService
 ) {
     @GetMapping
     fun listMine(
@@ -45,5 +48,14 @@ class NotificationController(
         val uid = requireNotNull(me.userId)
         service.markAllRead(uid)
         return mapOf("ok" to true)
+    }
+
+    @GetMapping("/unread-count")
+    fun getUnreadCount(
+        @AuthenticationPrincipal me: JwtPrincipal
+    ): Map<String, Long> {
+        val uid = requireNotNull(me.userId)
+        val count = notificationService.unreadCount(uid)
+        return mapOf("unreadCount" to count)
     }
 }

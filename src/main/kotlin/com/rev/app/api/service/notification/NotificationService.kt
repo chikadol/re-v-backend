@@ -15,12 +15,12 @@ class NotificationService(
 ) {
     @Transactional(readOnly = true)
     fun listMine(userId: UUID, pageable: Pageable, bool: Boolean): Page<NotificationRes> =
-        notificationRepository.findAllByUser_IdOrderByCreatedAtDesc(userId, pageable).map { it.toRes() }
+        notificationRepository.findAllByReceiver_IdOrderByCreatedAtDesc(userId, pageable).map { it.toRes() }
 
     @Transactional
     fun markRead(userId: UUID, notificationId: UUID): NotificationRes {
         val n = notificationRepository.findById(notificationId).orElseThrow()
-        require(n.user.id == userId) { "Forbidden" }
+        require(n.receiver.id == userId) { "Forbidden" }
         n.isRead = true
         return notificationRepository.save(n).toRes()
     }
@@ -28,12 +28,12 @@ class NotificationService(
     @Transactional
     fun markAllRead(userId: UUID) {
         val page = notificationRepository
-            .findAllByUser_IdOrderByCreatedAtDesc(userId, Pageable.ofSize(500))
+            .findAllByReceiver_IdOrderByCreatedAtDesc(userId, Pageable.ofSize(500))
         val items = page.content.onEach { it.isRead = true }   // ✅ content만 저장
         notificationRepository.saveAll(items)
     }
 
     @Transactional(readOnly = true)
     fun unreadCount(userId: UUID): Long =
-        notificationRepository.countByUser_IdAndIsReadFalse(userId)
+        notificationRepository.countByReceiver_IdAndIsReadFalse(userId)
 }

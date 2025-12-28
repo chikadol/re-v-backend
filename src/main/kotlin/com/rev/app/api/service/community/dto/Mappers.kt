@@ -3,8 +3,27 @@ package com.rev.app.api.service.community.dto
 import com.rev.app.domain.community.Board
 import com.rev.app.domain.community.entity.CommentEntity
 import com.rev.app.domain.community.entity.ThreadEntity
-import java.util.*
+import com.rev.app.domain.community.entity.ThreadBookmarkEntity
 
+fun CommentEntity.toMyCommentRes(): MyCommentRes =
+    MyCommentRes(
+        commentId = requireNotNull(id),
+        threadId = requireNotNull(thread.id),
+        threadTitle = thread.title,
+        boardId = thread.board?.id,
+        boardName = thread.board?.name,
+        content = content,
+        createdAt = createdAt
+    )
+fun ThreadBookmarkEntity.toMyBookmarkedThreadRes(): MyBookmarkedThreadRes =
+    MyBookmarkedThreadRes(
+        threadId = requireNotNull(thread.id),
+        title = thread.title,
+        boardId = thread.board?.id,
+        boardName = thread.board?.name,
+        createdAt = thread.createdAt,   // ✅ ThreadEntity 쪽 필드만 사용
+        bookmarkedAt = null             // ✅ 북마크 엔티티에 createdAt 없으니 일단 null
+    )
 fun Board.toRes(): BoardRes = BoardRes(
     id = requireNotNull(id),
     name = name,

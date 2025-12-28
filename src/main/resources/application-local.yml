@@ -1,8 +1,15 @@
 spring:
   datasource:
-    url: postgresql://postgres:chikadol123!@db.gsmbdibjiuwdqhrdvsfo.supabase.co:5432/postgres
-    username: ykkmr's Project
+    url: postgresql://postgres.gsmbdibjiuwdqhrdvsfo:chikadol123!@aws-1-ap-northeast-2.pooler.supabase.com:6543/postgres
+    username: postgres.gsmbdibjiuwdqhrdvsfo
     password: chikadol123!
   flyway:
     enabled: false
-
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: rev
+        hbm2ddl:
+          create_namespaces: true

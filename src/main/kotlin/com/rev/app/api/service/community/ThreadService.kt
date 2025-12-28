@@ -1,6 +1,10 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.api.controller.dto.ThreadCreateRequest
+import com.rev.app.api.controller.dto.ThreadResponse
+import com.rev.app.domain.community.repo.ThreadRepository
 import com.rev.app.api.service.community.dto.CreateThreadReq
+import com.rev.app.api.service.community.dto.ThreadDetailRes
 import com.rev.app.api.service.community.dto.ThreadRes
 import com.rev.app.api.service.community.dto.toRes
 import com.rev.app.api.service.community.dto.toResWithTags
@@ -21,8 +25,51 @@ class ThreadService(
     private val boardRepository: BoardRepository,
     private val userRepository: UserRepository,
     private val tagRepository: TagRepository,
-    private val threadTagRepository: ThreadTagRepository
+    private val threadTagRepository: ThreadTagRepository,
+    private val commentRepository: CommentRepository,
+    private val bookmarkRepository: ThreadBookmarkRepository,
+    private val reactionRepository: ThreadReactionRepository,
 ) {
+    private val allowedReactions = setOf("LIKE", "LOVE")
+
+    @Transactional(readOnly = true)
+    fun getDetail(
+        threadId: UUID,
+        meId: UUID? = null
+    ): ThreadDetailRes {
+        val thread = threadRepository.findById(threadId)
+            .orElseThrow { IllegalArgumentException("Thread not found: $threadId") }
+
+        val commentCount = commentRepository.countByThread_Id(threadId)
+        val bookmarkCount = bookmarkRepository.countByThread_Id(threadId)
+
+        val reactions: Map<String, Long> = allowedReactions
+            .associateWith { type -> reactionRepository.countByThread_IdAndType(threadId, type) }
+
+        val myReaction: String? = if (meId != null) {
+            allowedReactions.firstOrNull { type ->
+                reactionRepository.findByThread_IdAndUser_IdAndType(threadId, meId, type) != null
+            }
+        } else {
+            null
+        }
+
+        val bookmarked: Boolean = if (meId != null) {
+            bookmarkRepository.findByThread_IdAndUser_Id(threadId, meId) != null
+        } else {
+            false
+        }
+
+        return ThreadDetailRes(
+            thread = thread.toRes(),
+            commentCount = commentCount,
+            bookmarkCount = bookmarkCount,
+            reactions = reactions,
+            myReaction = myReaction,
+            bookmarked = bookmarked
+        )
+    }
+
     private val tagRegex = Regex("^[A-Za-z0-9_-]{1,30}$")
     private val maxTags = 5
 
@@ -110,4 +157,34 @@ class ThreadService(
             threadTagRepository.save(ThreadTagEntity(thread = threadRef, tag = tag))
         }
     }
+
+    @Transactional(readOnly = true)
+    fun listMyThreads(
+        authorId: UUID,
+        pageable: Pageable
+    ): Page<ThreadRes> =
+        threadRepository
+            .findAllByAuthor_Id(authorId, pageable)
+            .map { it.toRes() }
+
+    fun create(
+        boardId: UUID,
+        authorId: UUID,
+        req: ThreadCreateRequest
+    ): ThreadEntity {   // ✅ 반환 타입을 ThreadEntity로 명시
+
+        val board = boardRepository.getReferenceById(boardId)
+        val author = userRepository.getReferenceById(authorId)
+
+        val entity = ThreadEntity(
+            board = board,
+            author = author,
+            title = req.title,
+            content = req.content,
+            isPrivate = req.isPrivate ?: false
+        )
+
+        return threadRepository.save(entity)   // ✅ 마지막에 엔티티를 리턴
+    }
+
 }

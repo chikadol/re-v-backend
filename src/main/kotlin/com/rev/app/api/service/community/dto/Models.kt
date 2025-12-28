@@ -1,5 +1,6 @@
 package com.rev.app.api.service.community.dto
 
+import com.rev.app.domain.community.entity.ThreadEntity
 import java.time.Instant
 import java.util.UUID
 
@@ -22,7 +23,32 @@ data class ThreadRes(
     val createdAt: Instant?,
     val updatedAt: Instant?,
     val tags: List<String> = emptyList()
-)
+){
+    companion object {
+        fun from(entity: ThreadEntity): ThreadRes? =
+            entity.id?.let {
+                entity.board?.let { it1 ->
+                    entity.author?.let { it2 ->
+                        entity.tags?.let { tags ->
+                            ThreadRes(
+                                id = it,
+                                boardId = it1.id,
+                                authorId = it2.id,
+                                title = entity.title,
+                                createdAt = entity.createdAt,
+                                content = entity.content,
+                                parentThreadId = null,
+                                isPrivate = entity.isPrivate,
+                                categoryId = entity.categoryId,
+                                updatedAt = entity.updatedAt,
+                                tags = tags
+                            )
+                        }
+                    }
+                }
+            }
+    }
+}
 
 
 data class CommentRes(

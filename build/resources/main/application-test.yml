@@ -1,12 +1,12 @@
 spring:
   flyway:
-    enabled: true
+    enabled: false
     schemas: rev
-    baseline-on-migrate: true      # ✅ 핵심
-    clean-disabled: false        # (선택) clean을 쓸 거면 주석 해제
+    baseline-on-migrate: true
+    clean-disabled: false
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     properties:
       hibernate:
         default_schema: rev

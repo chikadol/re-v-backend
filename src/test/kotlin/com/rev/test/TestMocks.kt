@@ -28,21 +28,6 @@ fun <T> lenientReturn(value: T) = Mockito.lenient().doReturn(value)
 
 fun <T> emptyPage(): Page<T> = PageImpl(emptyList(), PageRequest.of(0, 10), 0)
 
-class PermissivePrincipalResolver(private val uid: UUID) : HandlerMethodArgumentResolver {
-    private val mapper = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
-    override fun supportsParameter(p: org.springframework.core.MethodParameter): Boolean {
-        if (p.hasParameterAnnotation(AuthenticationPrincipal::class.java)) return true
-        val n = p.parameterType.simpleName.lowercase()
-        return n.contains("jwt") && n.contains("principal")
-    }
-    override fun resolveArgument(
-        p: org.springframework.core.MethodParameter,
-        mav: ModelAndViewContainer?, req: NativeWebRequest, bf: WebDataBinderFactory?
-    ): Any = mapper.convertValue(
-        mapOf("userId" to uid, "email" to "mock@test.com", "roles" to listOf("USER")),
-        p.parameterType
-    )
-}
 
 fun standaloneMvc(controller: Any, principalUid: UUID? = null): MockMvc {
     val om = ObjectMapper().registerKotlinModule().registerModule(JavaTimeModule())
