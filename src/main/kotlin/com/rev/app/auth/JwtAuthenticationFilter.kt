@@ -4,17 +4,14 @@ import com.rev.app.auth.jwt.JwtProvider
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
-@ConditionalOnProperty(name = ["auth.jwt.enabled"], havingValue = "true", matchIfMissing = true)
 class JwtAuthenticationFilter(
-    private val jwtProvider: JwtProvider   // JwtService가 아니라 JwtProvider
+    private val jwtProvider: JwtProvider
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -22,16 +19,28 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-        val token = jwtProvider.resolveToken(request)
+
+        val token = resolveToken(request)
+
         if (token != null && jwtProvider.validate(token)) {
             val userId = jwtProvider.getUserId(token)
-            val roles  = jwtProvider.getRoles(token)
+
+            val authentication = UsernamePasswordAuthenticationToken(
+                userId,   // principal
+                null,     // credentials
+                emptyList() // authorities (지금은 없음)
+            )
+
+            SecurityContextHolder.getContext().authentication = authentication
         }
+
         filterChain.doFilter(request, response)
     }
 
     private fun resolveToken(request: HttpServletRequest): String? {
-        val header = request.getHeader("Authorization") ?: return null
-        return if (header.startsWith("Bearer ")) header.substring(7) else null
+        val bearer = request.getHeader("Authorization")
+        return if (bearer != null && bearer.startsWith("Bearer ")) {
+            bearer.substring(7)
+        } else null
     }
 }

@@ -1,35 +1,26 @@
 spring:
   datasource:
-    url: jdbc:postgresql://aws-1-ap-northeast-2.pooler.supabase.com:5432/postgres?sslmode=require
-    username: "postgres.gsmbdibjiuwdqhrdvsfo"
-    password: "chikadol123!"
-    hikari:
-      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:5432/rev
+    username: postgres
+    password: postgres
 
-  jackson:
-    property-naming-strategy: SNAKE_CASE
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
 
   flyway:
-    enabled: false          # ✅ 이제 진짜 비활성화
+    locations: classpath:db/migration,classpath:db/callbacks
+    schemas: rev
+    default-schema: rev
 
-  jpa:
-    hibernate:
-      ddl-auto: update      # ✅ 엔티티 기준으로 테이블 생성/업데이트
-    properties:
-      hibernate:
-        default_schema: rev
-        hbm2ddl:
-          create_namespaces: true
+  sql:
+    init:
+      mode: never
 
-logging:
-  level:
-    org.hibernate.SQL: debug
-    org.hibernate.orm.jdbc.bind: trace
+server:
+  port: ${PORT:8080}
 
 jwt:
-  secret: "Xk8s0a1Q2w3E4r5T6y7U8i9O0pAaBbCcDdEeFfGgHhIiJjKk"
-  issuer: re-v
-  access-ttl-seconds: 900
-  refresh-ttl-seconds: 1209600
-  header: Authorization
-  prefix: "Bearer "
+  secret: "your-super-long-secret-key-at-least-32-chars"
+  access-token-expiration: 3600000     # 1시간
+  refresh-token-expiration: 1209600000 # 14일

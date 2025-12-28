@@ -1,10 +1,12 @@
 package com.rev.app.api.controller
 
 import com.rev.app.auth.AuthService
+import com.rev.app.auth.TokenResponse
 import com.rev.app.auth.jwt.JwtProvider
 import io.swagger.v3.oas.annotations.parameters.RequestBody
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
@@ -16,16 +18,18 @@ abstract class AuthController {
     abstract val authService: AuthService
     abstract val jwtProvider: JwtProvider
     @PostMapping("/login")
-    fun login(@RequestBody req: LoginRequest): LoginResponse {
-        // 실제 로그인 로직은 DB 기반으로 나중에 구현할 것.
-        // 일단은 테스트용으로 무조건 성공 처리.
-
-        val fakeUserId = UUID.fromString("00000000-0000-0000-0000-000000000001")
-
-        val accessToken = jwtProvider.generateAccessToken(fakeUserId, req.email, listOf("USER"))
-        val refreshToken = jwtProvider.generateRefreshToken(fakeUserId, req.email, listOf("USER"))
-
-        return LoginResponse(accessToken, refreshToken)
+    fun login(@RequestBody req: LoginRequest): TokenResponse? {
+        val token = authService.loginByEmail(req.email, req.password)
+        return token?.let {
+            TokenResponse(
+                it
+            )
+        }
+    }
+    @PostMapping("/refresh")
+    fun refresh(@RequestHeader("Authorization") token: String): com.rev.app.auth.dto.TokenResponse {
+        val refreshToken = token.removePrefix("Bearer ")
+        return authService.refresh(refreshToken)
     }
 
     data class LoginRequest(
