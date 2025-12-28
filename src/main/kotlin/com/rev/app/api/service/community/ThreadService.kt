@@ -184,7 +184,7 @@ class ThreadService(
             isPrivate = req.isPrivate ?: false
         )
 
-        return threadRepository.save(entity)   // ✅ 마지막에 엔티티를 리턴
+        return threadRepository.saveAndFlush(entity)   // ✅ flush하여 ID와 createdAt이 즉시 반영되도록
     }
 
 }

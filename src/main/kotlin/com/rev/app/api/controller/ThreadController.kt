@@ -52,7 +52,7 @@ class ThreadController(
         @PathVariable boardId: UUID,
         @RequestBody @Valid req: ThreadCreateRequest,
         @AuthenticationPrincipal me: JwtPrincipal?
-    ): ThreadResponse? {
+    ): ThreadResponse {
         val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
         
         val thread = threadService.create(
@@ -61,6 +61,14 @@ class ThreadController(
             req = req
         )
 
-        return ThreadResponse.from(thread)
+        // ThreadResponse.from()은 LAZY 로딩 때문에 null을 반환할 수 있으므로 직접 생성
+        return ThreadResponse(
+            id = thread.id ?: throw IllegalStateException("Thread ID가 생성되지 않았습니다."),
+            boardId = boardId,
+            authorId = thread.author?.id,
+            title = thread.title,
+            content = thread.content,
+            createdAt = thread.createdAt ?: java.time.Instant.now()
+        )
     }
 }
