@@ -50,14 +50,14 @@ class ThreadController(
     @PostMapping("/{boardId}/threads")
     fun createThread(
         @PathVariable boardId: UUID,
-        @RequestBody @Valid req: ThreadCreateRequest
-    ): ThreadResponse? {
-        // 🔧 테스트용 고정 유저 ID
-        val fakeUserId = UUID.fromString("00000000-0000-0000-0000-000000000001")
-
+        @RequestBody @Valid req: ThreadCreateRequest,
+        @AuthenticationPrincipal me: JwtPrincipal?
+    ): ThreadResponse {
+        val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
+        
         val thread = threadService.create(
             boardId = boardId,
-            authorId = fakeUserId,
+            authorId = authorId,
             req = req
         )
 
