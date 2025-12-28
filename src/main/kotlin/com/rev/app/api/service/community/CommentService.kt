@@ -26,6 +26,7 @@ class CommentService(
     private val userRepository: UserRepository,
     private val notificationRepository: NotificationRepository   // ✅ 추가
 ) {
+    @Transactional
     fun create(authorId: UUID, req: CommentCreateRequest): CommentEntity {
         val author = userRepository.getReferenceById(authorId)
         val thread = threadRepository.getReferenceById(req.threadId)
@@ -38,7 +39,7 @@ class CommentService(
             content = req.content,
         )
 
-        return commentRepository.save(entity)
+        return commentRepository.saveAndFlush(entity)
     }
 
     @Transactional(readOnly = true)

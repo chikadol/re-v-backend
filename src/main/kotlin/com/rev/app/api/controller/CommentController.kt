@@ -33,14 +33,22 @@ class CommentController(
 
     @PostMapping
     fun createComment(
-        @org.springframework.web.bind.annotation.RequestBody @Valid req: CommentCreateRequest
-    ): CommentResponse? {
+        @AuthenticationPrincipal me: JwtPrincipal?,
+        @RequestBody @Valid req: CommentCreateRequest
+    ): CommentResponse {
+        val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
+        
+        val saved = commentService.create(authorId, req)
 
-        val fakeUserId = UUID.fromString("00000000-0000-0000-0000-000000000001")
-
-        val saved = commentService.create(fakeUserId, req)
-
-        return CommentResponse.from(saved)
+        // CommentResponse.from()은 LAZY 로딩 때문에 null을 반환할 수 있으므로 직접 생성
+        return CommentResponse(
+            id = saved.id ?: throw IllegalStateException("Comment ID가 생성되지 않았습니다."),
+            threadId = req.threadId,
+            authorId = authorId,
+            parentId = saved.parent?.id,
+            content = saved.content,
+            createdAt = saved.createdAt ?: java.time.Instant.now()
+        )
     }
 
 }

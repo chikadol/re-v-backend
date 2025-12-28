@@ -10,8 +10,7 @@ data class CommentDto(
     val authorId: UUID?,
     val parentId: UUID?,
     val content: String,
-    val createdAt: Instant?,
-    val updatedAt: Instant?
+    val createdAt: Instant?
 )
 
 fun CommentEntity.toDto(): CommentDto =
@@ -21,6 +20,5 @@ fun CommentEntity.toDto(): CommentDto =
         authorId = author?.id,
         parentId = parent?.id,
         content = content,
-        createdAt = createdAt,
-        updatedAt = updatedAt
+        createdAt = createdAt
     )
