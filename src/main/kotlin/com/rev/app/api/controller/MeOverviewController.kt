@@ -19,9 +19,9 @@ class MeOverviewController(
 
     @GetMapping
     fun getOverview(
-        @AuthenticationPrincipal me: JwtPrincipal
+        @AuthenticationPrincipal me: JwtPrincipal?
     ): MeOverviewRes {
-        val uid: UUID = requireNotNull(me.userId)
+        val uid = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
         return meOverviewService.getOverview(uid)
     }
 }
