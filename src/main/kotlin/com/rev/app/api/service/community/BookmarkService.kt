@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
@@ -22,6 +23,7 @@ class BookmarkService(
     private val userRepo: UserRepository
 ) {
 
+    @Transactional
     fun toggle(userId: UUID, threadId: UUID): BookmarkToggleRes {
         // 이미 북마크 했는지 확인
         val existing = bookmarkRepo.findByThread_IdAndUser_Id(threadId, userId)

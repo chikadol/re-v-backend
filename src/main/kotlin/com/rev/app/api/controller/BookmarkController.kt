@@ -1,9 +1,11 @@
 package com.rev.app.api.controller
 
+import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.BookmarkService
 import com.rev.app.api.service.community.dto.BookmarkCountRes
 import com.rev.app.api.service.community.dto.BookmarkToggleRes
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -18,14 +20,13 @@ class BookmarkController(
     private val bookmarkService: BookmarkService
 ) {
 
-    // ✅ 북마크 토글 (테스트용: 가짜 유저 ID 사용)
     @PostMapping("/threads/{threadId}/toggle")
     fun toggle(
+        @AuthenticationPrincipal me: JwtPrincipal?,
         @PathVariable threadId: UUID
     ): BookmarkToggleRes {
-        // 다른 데서도 쓰던 테스트용 유저 ID
-        val fakeUserId = UUID.fromString("00000000-0000-0000-0000-000000000001")
-        return bookmarkService.toggle(fakeUserId, threadId)
+        val userId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
+        return bookmarkService.toggle(userId, threadId)
     }
 
     // ✅ 특정 글 북마크 개수 조회
