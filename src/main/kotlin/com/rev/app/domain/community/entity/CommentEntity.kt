@@ -29,6 +29,9 @@ class CommentEntity(
     @Column(nullable = false, columnDefinition = "text")
     var content: String,
 
-    var createdAt: Instant? = Instant.now(),
-    var updatedAt: Instant? = Instant.now()
+    @Column(name = "created_at")
+    var createdAt: Instant? = Instant.now()
+    
+    // updatedAt 필드는 데이터베이스에 컬럼이 없으므로 제거
+    // var updatedAt: Instant? = Instant.now()
 )
