@@ -32,11 +32,30 @@ class ThreadService(
 ) {
     private val allowedReactions = setOf("LIKE", "LOVE")
 
-    @Transactional(readOnly = true)
     fun getDetail(
         threadId: UUID,
         meId: UUID? = null
     ): ThreadDetailRes {
+        val thread = getThreadWithRelations(threadId)
+        
+        val commentCount = getCommentCount(threadId)
+        val bookmarkCount = getBookmarkCount(threadId)
+        val reactions = getReactions(threadId)
+        val myReaction = getMyReaction(threadId, meId)
+        val bookmarked = getBookmarked(threadId, meId)
+
+        return ThreadDetailRes(
+            thread = thread.toRes(),
+            commentCount = commentCount,
+            bookmarkCount = bookmarkCount,
+            reactions = reactions,
+            myReaction = myReaction,
+            bookmarked = bookmarked
+        )
+    }
+    
+    @Transactional(readOnly = true)
+    private fun getThreadWithRelations(threadId: UUID): ThreadEntity {
         val thread = threadRepository.findById(threadId)
             .orElseThrow { IllegalArgumentException("Thread not found: $threadId") }
 
@@ -44,29 +63,38 @@ class ThreadService(
         thread.board?.id
         thread.author?.id
         thread.parent?.id
-
-        val commentCount = try {
+        
+        return thread
+    }
+    
+    private fun getCommentCount(threadId: UUID): Long {
+        return try {
             commentRepository.countByThread_Id(threadId)
         } catch (e: Exception) {
             0L
         }
-        
-        val bookmarkCount = try {
+    }
+    
+    private fun getBookmarkCount(threadId: UUID): Long {
+        return try {
             bookmarkRepository.countByThread_Id(threadId)
         } catch (e: Exception) {
             0L
         }
-
-        val reactions: Map<String, Long> = try {
+    }
+    
+    private fun getReactions(threadId: UUID): Map<String, Long> {
+        return try {
             allowedReactions.associateWith { type -> 
                 reactionRepository.countByThread_IdAndType(threadId, type)
             }
         } catch (e: Exception) {
-            // reaction 테이블이 없거나 에러가 발생하면 빈 맵 반환
             emptyMap()
         }
-
-        val myReaction: String? = try {
+    }
+    
+    private fun getMyReaction(threadId: UUID, meId: UUID?): String? {
+        return try {
             if (meId != null) {
                 allowedReactions.firstOrNull { type ->
                     reactionRepository.findByThread_IdAndUser_IdAndType(threadId, meId, type) != null
@@ -77,8 +105,10 @@ class ThreadService(
         } catch (e: Exception) {
             null
         }
-
-        val bookmarked: Boolean = try {
+    }
+    
+    private fun getBookmarked(threadId: UUID, meId: UUID?): Boolean {
+        return try {
             if (meId != null) {
                 bookmarkRepository.findByThread_IdAndUser_Id(threadId, meId) != null
             } else {
@@ -87,15 +117,6 @@ class ThreadService(
         } catch (e: Exception) {
             false
         }
-
-        return ThreadDetailRes(
-            thread = thread.toRes(),
-            commentCount = commentCount,
-            bookmarkCount = bookmarkCount,
-            reactions = reactions,
-            myReaction = myReaction,
-            bookmarked = bookmarked
-        )
     }
 
     private val tagRegex = Regex("^[A-Za-z0-9_-]{1,30}$")
