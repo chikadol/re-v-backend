@@ -75,7 +75,7 @@ import java.util.*
             password = encodedPassword
         )
         
-        val savedUser = userRepository.save(newUser)
+        val savedUser = userRepository.saveAndFlush(newUser)
         
         // 회원가입 후 자동 로그인
         return savedUser.id?.let { userId ->

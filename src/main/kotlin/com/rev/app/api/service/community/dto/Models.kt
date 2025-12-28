@@ -11,6 +11,12 @@ data class BoardRes(
     val description: String?
 )
 
+data class BoardCreateRequest(
+    val name: String,
+    val slug: String,
+    val description: String? = null
+)
+
 data class ThreadRes(
     val id: UUID,
     val title: String,
