@@ -97,81 +97,101 @@ class GenbaCrawlerService(
             val doc: Document = Jsoup.connect(baseUrl)
                 .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
                 .referrer("https://chikadol.net")
-                .timeout(15000)
+                .timeout(20000)
+                .followRedirects(true)
                 .get()
 
             logger.info("웹페이지 로드 성공: ${doc.title()}")
-            logger.debug("페이지 HTML 길이: ${doc.html().length} bytes")
-
-            // HTML 구조 디버깅: 주요 요소 찾기
-            val bodyText = doc.body().text()
-            logger.info("페이지 본문 텍스트 길이: ${bodyText.length} chars")
-            logger.debug("페이지 본문 일부: ${bodyText.take(500)}")
-
-            // 캘린더나 이벤트 관련 요소 찾기 시도
-            val allElements = doc.select("*")
-            logger.info("전체 HTML 요소 수: ${allElements.size}")
             
-            // 클래스 이름에서 힌트 찾기
-            val classNames = allElements.mapNotNull { it.className().takeIf { cn -> cn.isNotBlank() } }.distinct().take(20)
-            logger.info("발견된 주요 클래스명: ${classNames.joinToString(", ")}")
-
-            // 다양한 선택자로 이벤트 요소 찾기
-            val eventSelectors = listOf(
-                ".event", ".schedule-item", ".genba-item", 
-                "[data-genba]", ".performance-item", ".schedule",
-                ".fc-event-title", ".fc-event-time", ".calendar-event",
-                ".fc-event", ".fc-day-event", "[data-event]",
-                ".schedule-list", ".event-list", ".genba-list"
-            )
+            // 전체 HTML 확인 (디버깅)
+            val htmlContent = doc.html()
+            logger.info("페이지 HTML 길이: ${htmlContent.length} bytes")
             
-            var foundElements = false
+            // 스크립트 태그에서 JSON 데이터 찾기 (가장 중요!)
+            val scripts = doc.select("script:not([src])")
+            logger.info("인라인 script 태그 수: ${scripts.size}")
             
-            for (selector in eventSelectors) {
-                val elements = doc.select(selector)
-                if (elements.isNotEmpty()) {
-                    logger.info("선택자 '$selector'로 ${elements.size}개 요소 발견")
-                    for (element in elements.take(5)) { // 처음 5개만 로그
-                        logger.debug("요소 텍스트: ${element.text().take(100)}")
-                    }
-                    for (element in elements) {
-                        try {
-                            val performance = parseGenbaElement(element)
-                            if (performance != null) {
-                                logger.info("공연 파싱 성공: ${performance.title} - ${performance.venue}")
-                                performances.add(performance)
-                                foundElements = true
-                            }
-                        } catch (e: Exception) {
-                            logger.warn("요소 파싱 실패 (선택자: $selector): ${e.message}", e)
+            for ((index, script) in scripts.withIndex()) {
+                val scriptContent = script.html() ?: script.data()
+                if (scriptContent.isBlank()) continue
+                
+                // JSON 데이터나 이벤트 데이터가 포함된 스크립트 찾기
+                if (scriptContent.contains("event") || scriptContent.contains("genba") || 
+                    scriptContent.contains("calendar") || scriptContent.contains("schedule") ||
+                    scriptContent.contains("title") && scriptContent.contains("date")) {
+                    
+                    logger.info("관련 스크립트 #$index 발견 (길이: ${scriptContent.length})")
+                    logger.debug("스크립트 일부: ${scriptContent.take(500)}")
+                    
+                    // JSON 배열 패턴 찾기
+                    try {
+                        val jsonArrayPattern = Regex("""\[.*?"(?:title|name|event)".*?\]""", RegexOption.DOT_MATCHES_ALL)
+                        val arrayMatch = jsonArrayPattern.find(scriptContent)
+                        if (arrayMatch != null) {
+                            logger.info("JSON 배열 패턴 발견: ${arrayMatch.value.take(300)}")
+                            // JSON 파싱 시도 (간단한 경우)
                         }
+                    } catch (e: Exception) {
+                        logger.debug("JSON 패턴 찾기 실패: ${e.message}")
                     }
-                    if (foundElements) break
                 }
             }
 
-            // 테이블이나 리스트에서 파싱 시도
-            if (!foundElements) {
-                logger.info("이벤트 요소를 찾지 못해 테이블/리스트에서 파싱 시도")
-                val tableRows = doc.select("table tr, .list-item, li, .item, div[class*='event'], div[class*='schedule']")
-                logger.info("테이블/리스트 행 수: ${tableRows.size}")
-                var processedCount = 0
-                for (row in tableRows) {
-                    val text = row.text().trim()
-                    if (text.length > 10 && (text.contains("겐바") || text.contains("공연") || 
-                        text.contains("라이브") || text.matches(Regex(".*\\d{4}[.\\-/]\\d{1,2}[.\\-/]\\d{1,2}.*")))) {
+            // 모든 텍스트 노드에서 날짜 패턴 찾기
+            val bodyText = doc.body().text()
+            logger.info("본문 텍스트 길이: ${bodyText.length} chars")
+            
+            // 날짜 패턴이 포함된 줄 찾기
+            val lines = bodyText.split("\n", "\r\n", "\r").map { it.trim() }.filter { it.isNotBlank() }
+            logger.info("텍스트 줄 수: ${lines.size}")
+            
+            var foundCount = 0
+            for (line in lines) {
+                if (line.length < 10) continue
+                
+                // 날짜 패턴과 관련 키워드가 있는 줄만 처리
+                val hasDate = Regex("""\d{4}[.\-/]\d{1,2}[.\-/]\d{1,2}""").containsMatchIn(line)
+                val hasKeyword = line.contains("겐바") || line.contains("공연") || line.contains("라이브") || 
+                                line.contains("@") || line.length > 30
+                
+                if (hasDate && hasKeyword) {
+                    try {
+                        logger.debug("파싱 시도: ${line.take(150)}")
+                        val performance = parseTextContent(line, null)
+                        if (performance != null && performance.title.isNotBlank() && 
+                            performance.title != "지하돌 공연" && 
+                            !performance.title.all { it.isWhitespace() || it.isDigit() }) {
+                            logger.info("공연 파싱 성공: ${performance.title} @ ${performance.venue} - ${performance.performanceDateTime}")
+                            performances.add(performance)
+                            foundCount++
+                            if (foundCount >= 50) break // 최대 50개
+                        }
+                    } catch (e: Exception) {
+                        logger.debug("파싱 실패: ${e.message}")
+                    }
+                }
+            }
+
+            // 추가로 모든 div, span 요소에서도 찾기
+            if (performances.isEmpty()) {
+                logger.info("표준 텍스트 파싱 실패, 모든 요소에서 검색")
+                val allDivs = doc.select("div, span, p, li, td")
+                for (element in allDivs) {
+                    val text = element.text().trim()
+                    if (text.length > 20 && Regex("""\d{4}[.\-/]\d{1,2}[.\-/]\d{1,2}""").containsMatchIn(text)) {
                         try {
-                            logger.debug("파싱 시도 중: ${text.take(100)}")
-                            val performance = parseTextContent(text, row)
-                            if (performance != null) {
-                                logger.info("텍스트에서 공연 파싱 성공: ${performance.title}")
+                            val performance = parseTextContent(text, element)
+                            if (performance != null && performances.none { 
+                                it.title == performance.title && 
+                                it.performanceDateTime == performance.performanceDateTime 
+                            }) {
+                                logger.info("추가 공연 발견: ${performance.title}")
                                 performances.add(performance)
-                                foundElements = true
-                                processedCount++
-                                if (processedCount >= 20) break // 최대 20개만 처리
+                                foundCount++
+                                if (foundCount >= 50) break
                             }
                         } catch (e: Exception) {
-                            logger.debug("텍스트 파싱 실패: ${text.take(100)} - ${e.message}")
+                            // 무시
                         }
                     }
                 }
@@ -179,7 +199,15 @@ class GenbaCrawlerService(
 
             logger.info("총 ${performances.size}개 공연 데이터 추출 완료")
             if (performances.isEmpty()) {
-                logger.warn("공연 데이터를 찾지 못했습니다. 웹사이트 구조가 변경되었을 수 있습니다.")
+                logger.warn("""
+                    공연 데이터를 찾지 못했습니다.
+                    HTML 일부: ${doc.body().text().take(2000)}
+                    스크립트 개수: ${doc.select("script").size}
+                """.trimIndent())
+            } else {
+                performances.forEach { perf ->
+                    logger.info("추출된 공연: ${perf.title} @ ${perf.venue} - ${perf.performanceDateTime}")
+                }
             }
 
         } catch (e: Exception) {
