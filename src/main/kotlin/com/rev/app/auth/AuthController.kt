@@ -1,6 +1,7 @@
 package com.rev.app.auth
 
 import com.rev.app.auth.dto.LoginRequest
+import com.rev.app.auth.dto.SignUpRequest
 import com.rev.app.auth.dto.TokenResponse
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -13,6 +14,12 @@ data class RefreshRequest(val refreshToken: String)
 class AuthController(
     private val authService: AuthService
 ) {
+    @PostMapping("/register")
+    fun register(@Valid @RequestBody req: SignUpRequest): ResponseEntity<TokenResponse> {
+        val tokenResponse = authService.register(req.email, req.username, req.password)
+        return ResponseEntity.ok(tokenResponse)
+    }
+
     @PostMapping("/login")
     fun login(@Valid @RequestBody req: LoginRequest): ResponseEntity<TokenResponse> {
         val tokenResponse = authService.loginByEmail(req.email, req.password)
