@@ -52,7 +52,7 @@ class ThreadController(
         @PathVariable boardId: UUID,
         @RequestBody @Valid req: ThreadCreateRequest,
         @AuthenticationPrincipal me: JwtPrincipal?
-    ): ThreadResponse {
+    ): ThreadResponse? {
         val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
         
         val thread = threadService.create(

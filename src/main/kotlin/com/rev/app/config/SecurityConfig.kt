@@ -1,19 +1,24 @@
 package com.rev.app.config
 
+import com.rev.app.auth.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+) {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
@@ -45,8 +50,14 @@ class SecurityConfig {
             // ✅ CSRF 끄기 (Swagger / curl에서 POST 403 안 나게)
             .csrf { it.disable() }
 
+            // ✅ 세션 사용 안 함 (JWT 사용)
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+
             // ✅ CORS 설정
             .cors { it.configurationSource(corsConfigurationSource()) }
+
+            // ✅ JWT 필터 추가
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
             // ✅ 모든 요청은 일단 허용 (로컬 개발 단계용)
             .authorizeHttpRequests { auth ->

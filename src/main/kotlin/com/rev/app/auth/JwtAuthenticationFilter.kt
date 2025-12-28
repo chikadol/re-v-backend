@@ -1,5 +1,6 @@
 package com.rev.app.auth
 
+import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.auth.jwt.JwtProvider
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -11,7 +12,8 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
 class JwtAuthenticationFilter(
-    private val jwtProvider: JwtProvider
+    private val jwtProvider: JwtProvider,
+    private val userRepository: UserRepository
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -24,11 +26,21 @@ class JwtAuthenticationFilter(
 
         if (token != null && jwtProvider.validate(token)) {
             val userId = jwtProvider.getUserId(token)
+            
+            // 사용자 정보 조회하여 email 가져오기
+            val user = userRepository.findById(userId).orElse(null)
+            val email = user?.email ?: ""
+
+            val principal = JwtPrincipal(
+                userId = userId,
+                email = email,
+                roles = emptyList()
+            )
 
             val authentication = UsernamePasswordAuthenticationToken(
-                userId,   // principal
-                null,     // credentials
-                emptyList() // authorities (지금은 없음)
+                principal,   // principal
+                null,        // credentials
+                emptyList()  // authorities (지금은 없음)
             )
 
             SecurityContextHolder.getContext().authentication = authentication
