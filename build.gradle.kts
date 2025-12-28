@@ -71,6 +71,9 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
+    // HTML Parsing (크롤링용)
+    implementation("org.jsoup:jsoup:1.17.2")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // --- Test ---
