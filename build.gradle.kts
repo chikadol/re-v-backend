@@ -76,12 +76,13 @@ dependencies {
     // --- Test ---
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "junit", module = "junit") // JUnit4 제외
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
     testImplementation("org.springframework.security:spring-security-test")
 
     // Mockito & Mockito-Kotlin
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.3.1")
-    // testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
+   // testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
 
     // Jackson (테스트에서 objectMapper 필요 시)
     testImplementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -99,28 +100,13 @@ dependencies {
     // H2 (원하면 in-memory 테스트 대체용)
     testRuntimeOnly("com.h2database:h2:2.3.232")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-    testImplementation("org.mockito:mockito-junit-jupiter:5.13.0")
+    // Kotlin Test
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-    }
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    testImplementation("org.mockito:mockito-core:5.12.0")
-    testImplementation("org.mockito:mockito-inline:5.2.0") // ✅ final class / final method 모킹용
 
-    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
-    implementation("com.mysql:mysql-connector-j:8.3.0")
-
-    runtimeOnly("com.mysql:mysql-connector-j")
-    implementation("org.postgresql:postgresql:42.7.3")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    // Mockito 추가 의존성
+    testImplementation("org.mockito:mockito-junit-jupiter:5.13.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0") // final class / final method 모킹용
 }
 
 tasks.test {

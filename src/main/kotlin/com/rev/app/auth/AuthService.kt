@@ -33,7 +33,10 @@ class AuthService(
         val access = jwtProvider.generateAccessToken(userId)
         val refresh = jwtProvider.generateRefreshToken(userId)
 
-        return TokenResponse(access, refresh)
+        return TokenResponse(
+            accessToken = access,
+            refreshToken = refresh
+        )
     }
 
     fun refresh(refreshToken: String): TokenResponse {
@@ -53,10 +56,3 @@ class AuthService(
         try { target::class.java.getMethod(methodName).invoke(target) as? T }
         catch (_: Exception) { null }
 }
-
-
-
-data class TokenPair(
-    val accessToken: String,
-    val refreshToken: String
-)

@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/rev
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5432/revdb
+    username: rev
+    password: revpass
 
     hibernate:
       ddl-auto: validate
