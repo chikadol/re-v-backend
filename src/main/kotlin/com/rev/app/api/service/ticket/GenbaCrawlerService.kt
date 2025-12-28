@@ -216,20 +216,20 @@ class GenbaCrawlerService(
     }
 
     private fun parseTextContent(text: String, element: Element?): GenbaPerformanceData? {
-        if (text.isBlank()) return null
+        if (text.isBlank() || text.length < 10) return null
         
         // 텍스트에서 패턴 추출 시도
         // 예: "2024.01.15 19:00 지하돌A 공연 @ 홍대 라이브홀"
+        // 예: "2024-12-28 지하돌B @ 강남"
         
         val datePattern = Regex("""(\d{4})[.\-/](\d{1,2})[.\-/](\d{1,2})""")
         val timePattern = Regex("""(\d{1,2}):(\d{2})""")
         
         val dateMatch = datePattern.find(text)
-        val timeMatch = timePattern.find(text)
-        
         if (dateMatch == null) return null
         
         val (year, month, day) = dateMatch.destructured
+        val timeMatch = timePattern.find(text)
         val hour: String
         val minute: String
         if (timeMatch != null) {
@@ -249,26 +249,59 @@ class GenbaCrawlerService(
                 hour.toInt(),
                 minute.toInt()
             )
+            // 과거 날짜는 제외
         } catch (e: Exception) {
-            logger.warn("날짜 파싱 실패: $text", e)
+            logger.debug("날짜 파싱 실패: $text - ${e.message}")
+            return null
+        }
+        
+        // 과거 날짜는 제외
+        if (dateTime.isBefore(LocalDateTime.now())) {
             return null
         }
 
-        // 장소 추출 (보통 @ 뒤에 나옴)
-        val venueMatch = Regex("""@\s*([가-힣a-zA-Z0-9\s]+)""").find(text)
-        val venue = venueMatch?.groupValues?.get(1)?.trim() ?: "미정"
+        // 장소 추출 (보통 @ 뒤에 나오거나 특정 패턴)
+        val venuePatterns = listOf(
+            Regex("""@\s*([가-힣a-zA-Z0-9\s]+)""" ),  // @ 홍대 라이브홀
+            Regex("""장소[:\s]+([가-힣a-zA-Z0-9\s]+)""" ),  // 장소: 홍대
+            Regex("""([가-힣]+(?:홀|스튜디오|클럽|공연장))""" )  // 홍대라이브홀
+        )
+        
+        var venue = "미정"
+        for (pattern in venuePatterns) {
+            val match = pattern.find(text)
+            if (match != null) {
+                venue = match.groupValues.getOrNull(1)?.trim() ?: "미정"
+                if (venue.isNotBlank() && venue != "미정") break
+            }
+        }
 
-        // 제목 추출 (날짜/시간 전의 텍스트)
-        val titleParts = text.split(Regex("""\d{4}[.\-/]\d{1,2}[.\-/]\d{1,2}"""))
-        val title = if (titleParts.isNotEmpty()) {
-            titleParts[0].trim().takeIf { it.isNotBlank() } ?: "지하돌 공연"
-        } else {
-            "지하돌 공연"
+        // 제목 추출 - 날짜 앞뒤 텍스트에서 추출
+        val beforeDate = text.substring(0, dateMatch.range.first).trim()
+        val afterDate = text.substring(dateMatch.range.last + 1).trim()
+        
+        var title = "지하돌 공연"
+        // 날짜 앞의 텍스트에서 제목 찾기
+        if (beforeDate.isNotBlank() && beforeDate.length > 2) {
+            title = beforeDate.take(100)
+        } else if (afterDate.isNotBlank()) {
+            // 날짜 뒤에서 @ 전까지를 제목으로
+            val titleMatch = Regex("""([^@]+?)(?:@|$)""").find(afterDate)
+            if (titleMatch != null) {
+                title = titleMatch.groupValues[1].trim().take(100)
+            } else {
+                title = afterDate.split("@").first().trim().take(100)
+            }
+        }
+        
+        // 너무 짧거나 의미없는 제목은 스킵
+        if (title.length < 2 || title == "지하돌 공연" && text.length < 30) {
+            return null
         }
 
         return GenbaPerformanceData(
             title = title,
-            description = text.trim(),
+            description = text.trim().take(500),
             venue = venue,
             performanceDateTime = dateTime,
             price = null,
