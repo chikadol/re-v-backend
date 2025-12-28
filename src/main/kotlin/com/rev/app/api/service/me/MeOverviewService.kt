@@ -19,12 +19,11 @@ class MeOverviewService(
     private val notificationRepository: NotificationRepository
 ) {
 
-    @Transactional(readOnly = true)
     fun getOverview(userId: UUID): MeOverviewRes {
-        val threadCount = threadRepository.countByAuthor_Id(userId)
-        val commentCount = commentRepository.countByAuthor_Id(userId)
-        val bookmarkCount: Long = threadBookmarkRepository.countByUser_Id(userId)
-        val unreadNotificationCount = notificationRepository.countByReceiver_IdAndIsReadFalse(userId)
+        val threadCount = getThreadCount(userId)
+        val commentCount = getCommentCount(userId)
+        val bookmarkCount = getBookmarkCount(userId)
+        val unreadNotificationCount = getUnreadNotificationCount(userId)
 
         return MeOverviewRes(
             threadCount = threadCount,
@@ -32,5 +31,38 @@ class MeOverviewService(
             bookmarkCount = bookmarkCount,
             unreadNotificationCount = unreadNotificationCount
         )
+    }
+    
+    @Transactional(readOnly = true)
+    private fun getThreadCount(userId: UUID): Long {
+        return try {
+            threadRepository.countByAuthor_Id(userId)
+        } catch (e: Exception) {
+            0L
+        }
+    }
+    
+    private fun getCommentCount(userId: UUID): Long {
+        return try {
+            commentRepository.countByAuthor_Id(userId)
+        } catch (e: Exception) {
+            0L
+        }
+    }
+    
+    private fun getBookmarkCount(userId: UUID): Long {
+        return try {
+            threadBookmarkRepository.countByUser_Id(userId)
+        } catch (e: Exception) {
+            0L
+        }
+    }
+    
+    private fun getUnreadNotificationCount(userId: UUID): Long {
+        return try {
+            notificationRepository.countByReceiver_IdAndIsReadFalse(userId)
+        } catch (e: Exception) {
+            0L
+        }
     }
 }
