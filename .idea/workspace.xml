@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="AuthService.kt updated" />
+    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="AuthService.kt updated">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -238,7 +243,7 @@
       <workItem from="1762773539049" duration="16978000" />
       <workItem from="1762862395735" duration="83862000" />
       <workItem from="1766905312138" duration="57000" />
-      <workItem from="1766907452423" duration="1450000" />
+      <workItem from="1766907452423" duration="1794000" />
     </task>
     <task id="LOCAL-00001" summary="auth">
       <option name="closed" value="true" />
@@ -408,7 +413,23 @@
       <option name="project" value="LOCAL" />
       <updated>1766904673319</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="AuthService.kt updated">
+      <option name="closed" value="true" />
+      <created>1766909309704</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1766909309705</updated>
+    </task>
+    <task id="LOCAL-00023" summary="AuthService.kt updated">
+      <option name="closed" value="true" />
+      <created>1766909557639</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1766909557639</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
