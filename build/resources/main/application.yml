@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/revdb
+    username: rev
+    password: revpass
+
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+
+  flyway:
+    locations: classpath:db/migration,classpath:db/callbacks
+    schemas: rev
+    default-schema: rev
+
+  sql:
+    init:
+      mode: never
+
+server:
+  port: ${PORT:8080}
+
+jwt:
+  secret: "your-super-long-secret-key-at-least-32-chars"
+  access-token-expiration: 3600000     # 1시간
+  refresh-token-expiration: 1209600000 # 14일
