@@ -1,0 +1,189 @@
+<changelist name="25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]" date="1766906364785" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/shelved.patch" />
+  <option name="DESCRIPTION" value="25. 12. 28. 오후 4:19, 업데이트 전에 커밋되지 않은 변경 내용 [변경]" />
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/source-to-output.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/id-to-file.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/lookups.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab_i" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/lookups.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/last-build.bin" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/last-build.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/last-build.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/8.14/executionHistory/executionHistory.bin" />
+    <option name="AFTER_PATH" value=".gradle/8.14/executionHistory/executionHistory.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/executionHistory.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/id-to-file.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/class-fq-name-to-source.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/lookups.tab.keystream" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/source-to-classes.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/lookups.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/proto.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.len" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/lookups.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/class-fq-name-to-source.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/lookups.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/lookups.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/internal-name-to-source.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/source-to-classes.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/source-to-classes.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/internal-name-to-source.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/file-to-id.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/id-to-file.tab.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/source-to-output.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/file-system.probe" />
+    <option name="AFTER_PATH" value=".gradle/file-system.probe" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/file-system.probe" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/file-to-id.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.s" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/proto.tab.values.s" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/proto.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="AFTER_PATH" value=".gradle/buildOutputCleanup/buildOutputCleanup.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/buildOutputCleanup.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/proto.tab.values" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/proto.tab.values" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/id-to-file.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab.keystream.len" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/id-to-file.tab.keystream.len" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/class-attributes.tab.values.at" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/8.14/executionHistory/executionHistory.lock" />
+    <option name="AFTER_PATH" value=".gradle/8.14/executionHistory/executionHistory.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/executionHistory.lock" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/lookups/id-to-file.tab_i" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/id-to-file.tab_i" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/local-state/build-history.bin" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/local-state/build-history.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/build-history.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="AFTER_PATH" value=".gradle/buildOutputCleanup/outputFiles.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/outputFiles.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/8.14/fileHashes/fileHashes.bin" />
+    <option name="AFTER_PATH" value=".gradle/8.14/fileHashes/fileHashes.bin" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/fileHashes.bin" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" />
+    <option name="AFTER_PATH" value="build/kotlin/compileKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/class-attributes.tab" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value=".gradle/8.14/fileHashes/fileHashes.lock" />
+    <option name="AFTER_PATH" value=".gradle/8.14/fileHashes/fileHashes.lock" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/25__12__28__오후_4_19,_업데이트_전에_커밋되지_않은_변경_내용_[변경]/fileHashes.lock" />
+  </binary>
+</changelist>
