@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.rev.app.api.controller.ThreadControllerTagWebMvcTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2025-12-28T06:54:37.252Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
+  <properties/>
+  <testcase name="list_with_tags_ok()" classname="com.rev.app.api.controller.ThreadControllerTagWebMvcTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.rev.app.api.service.notification.NotificationServiceTest" tests="2" skipped="2" failures="0" errors="0" timestamp="2025-12-28T06:54:39.642Z" hostname="ileuleuui-MacBookPro.local" time="0.0">
+  <properties/>
+  <testcase name="markRead_forbidden_when_not_owner()" classname="com.rev.app.api.service.notification.NotificationServiceTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="markAllRead_marks_everything_and_saves()" classname="com.rev.app.api.service.notification.NotificationServiceTest" time="0.0">
+    <skipped/>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
