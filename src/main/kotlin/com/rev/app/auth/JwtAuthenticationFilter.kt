@@ -25,9 +25,18 @@ class JwtAuthenticationFilter(
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
+        val path = request.requestURI
+        
+        // OAuth2 로그인 경로는 JWT 필터를 건너뛰기 (세션 사용)
+        if (path.startsWith("/oauth2/") || path.startsWith("/login/oauth2/")) {
+            logger.debug("OAuth2 경로 감지, JWT 필터 건너뛰기: $path")
+            filterChain.doFilter(request, response)
+            return
+        }
+        
         val token = resolveToken(request)
         
-        logger.debug("JWT 필터 실행: path=${request.requestURI}, token 존재=${token != null}")
+        logger.debug("JWT 필터 실행: path=$path, token 존재=${token != null}")
 
         if (token != null && jwtProvider.validate(token)) {
             val userId = jwtProvider.getUserId(token)

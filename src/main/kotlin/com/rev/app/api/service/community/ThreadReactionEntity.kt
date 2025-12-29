@@ -15,7 +15,11 @@ import java.util.UUID
     uniqueConstraints = [UniqueConstraint(columnNames = ["thread_id","user_id","type"])]
 )
 class ThreadReactionEntity(
-    @Id @GeneratedValue @UuidGenerator @JdbcTypeCode(SqlTypes.UUID)
+    @Id 
+    @GeneratedValue 
+    @UuidGenerator 
+    @JdbcTypeCode(SqlTypes.VARCHAR) // H2에서는 UUID를 VARCHAR로 저장
+    @Column(columnDefinition = "VARCHAR(36)", length = 36)
     var id: UUID? = null,
 
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "thread_id")

@@ -1,43 +1,67 @@
 spring:
+  application:
+    name: rev-backend
+  
   datasource:
-    url: jdbc:postgresql://localhost:5432/revdb
-    username: rev
-    password: revpass
+    # 개발 환경: H2 파일 기반 데이터베이스 사용 (데이터 영구 저장)
+    # 프로덕션: PostgreSQL (Supabase) 사용
+    url: ${DATABASE_URL:jdbc:h2:file:./data/revdb;MODE=PostgreSQL;AUTO_SERVER=TRUE}
+    username: ${DATABASE_USERNAME:sa}
+    password: ${DATABASE_PASSWORD:}
+    driver-class-name: ${DATABASE_DRIVER:org.h2.Driver}
+    hikari:
+      connection-timeout: 5000
+      maximum-pool-size: 10
+      initialization-fail-timeout: -1  # 연결 실패 시에도 애플리케이션 시작 허용
 
+  jpa:
     hibernate:
-      ddl-auto: validate
+      # H2 인메모리 DB 사용 시 자동으로 테이블 생성
+      ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.H2Dialect}
+        default_schema: rev
 
+  # OAuth2 설정은 환경 변수가 설정된 경우에만 활성화됩니다
+  # 소셜 로그인을 사용하려면 다음 환경 변수를 설정하세요:
+  # GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
+  # NAVER_CLIENT_ID, NAVER_CLIENT_SECRET  
+  # KAKAO_CLIENT_ID, KAKAO_CLIENT_SECRET
+  # 환경 변수가 없으면 OAuth2는 자동으로 비활성화됩니다
+  # 
+  # 주의: application.yml에 OAuth2 설정을 추가하면 Spring Boot 자동 설정이
+  # 빈 클라이언트 ID를 검증하여 에러가 발생할 수 있습니다.
+  # 따라서 OAuth2 설정은 환경 변수로만 관리하고, application.yml에는 추가하지 않습니다.
+
+  # Flyway 설정 (연결 문제 시 일시적으로 비활성화 가능)
+  # Supabase 연결이 안 될 때는 false로 설정
   flyway:
-    locations: classpath:db/migration,classpath:db/callbacks
-    schemas: rev
-    default-schema: rev
-
-  sql:
-    init:
-      mode: never
+    enabled: false
+    baseline-on-migrate: true
+    locations: classpath:db/migration
 
 server:
-  port: ${PORT:8080}
+  port: 8080
+  servlet:
+    session:
+      cookie:
+        # OAuth2 로그인을 위해 세션 쿠키 설정
+        name: JSESSIONID
+        http-only: true
+        secure: false  # 개발 환경에서는 false, 프로덕션에서는 true
+        same-site: lax  # OAuth2 리다이렉트를 위해 lax 설정
+        max-age: 1800  # 30분
 
 jwt:
-  secret: "your-super-long-secret-key-at-least-32-chars"
-  access-token-expiration: 3600000     # 1시간
-  refresh-token-expiration: 1209600000 # 14일
+  secret: ${JWT_SECRET:your-secret-key-change-this-in-production-min-256-bits-please-use-a-strong-random-secret-key}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:3600000} # 1시간 (밀리초)
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000} # 7일 (밀리초)
 
-payment:
-  return-url: "http://localhost:5173/payment/callback" # Vite 기본 포트
-  # 네이버페이 설정
-  naver:
-    client-id: "${NAVER_PAY_CLIENT_ID:}"
-    client-secret: "${NAVER_PAY_CLIENT_SECRET:}"
-    api-url: "https://dev.apis.naver.com" # 개발 환경: https://dev.apis.naver.com, 운영: https://apis.naver.com
-  # 토스페이먼츠 설정
-  toss:
-    secret-key: "${TOSS_SECRET_KEY:}" # 테스트: test_sk_..., 운영: live_sk_...
-    api-url: "https://api.tosspayments.com" # 테스트: https://api.tosspayments.com, 운영: 동일
-  # 카카오페이 설정
-  kakao:
-    admin-key: "${KAKAO_ADMIN_KEY:}" # REST API 키
-    cid: "${KAKAO_CID:}" # 가맹점 코드 (테스트: TC0ONETIME, 운영: 실제 가맹점 코드)
-    api-url: "https://kapi.kakao.com"
+logging:
+  level:
+    com.rev.app: DEBUG
+    org.springframework.security: DEBUG
+    org.flywaydb: DEBUG

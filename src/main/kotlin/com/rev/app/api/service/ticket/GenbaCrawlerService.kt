@@ -40,8 +40,8 @@ class GenbaCrawlerService(
     // @Scheduled(cron = "0 0 * * * *") // 매 시간 정각 - 주석 처리 (수동 실행)
     // @Scheduled(fixedRate = 3600000) // 1시간마다 (밀리초)
     @Transactional
-    fun crawlGenbaSchedules(clearExisting: Boolean = false) {
-        logger.info("겐바 일정 크롤링 시작 (clearExisting=$clearExisting)")
+    fun crawlGenbaSchedules(clearExisting: Boolean = false, fast: Boolean = true) {
+        logger.info("겐바 일정 크롤링 시작 (clearExisting=$clearExisting, fast=$fast)")
         
         // 기존 데이터 삭제 옵션
         if (clearExisting) {
@@ -78,49 +78,48 @@ class GenbaCrawlerService(
             logger.info("중복 제거 전: ${performances.size}개, 중복 제거 후: ${uniquePerformances.size}개")
             
                     // 상세 페이지에서 가격 정보 추출 (모든 공연에 대해 detailUrl이 있으면 재추출)
-                    val performancesWithPrice = mutableListOf<GenbaPerformanceData>()
-                    var tempDriver: WebDriver? = null
-                    
-                    try {
-                        // 가격 정보 추출을 위한 WebDriver 준비 (detailUrl이 있는 공연이 하나라도 있으면)
-                        if (uniquePerformances.any { it.detailUrl != null }) {
-                            logger.info("상세 페이지에서 가격 정보 추출 시작 (총 ${uniquePerformances.count { it.detailUrl != null }}개 공연)")
-                            WebDriverManager.chromedriver().setup()
-                            val chromeOptions = ChromeOptions()
-                            chromeOptions.addArguments("--headless")
-                            chromeOptions.addArguments("--no-sandbox")
-                            chromeOptions.addArguments("--disable-dev-shm-usage")
-                            chromeOptions.addArguments("--disable-gpu")
-                            tempDriver = ChromeDriver(chromeOptions)
-                        }
-                        
-                        for (performanceData in uniquePerformances) {
-                            var finalPrice = performanceData.price
-                            
-                            // 상세 페이지 URL이 있으면 항상 가격 재추출 (더 정확한 가격 정보를 위해)
-                            if (performanceData.detailUrl != null && tempDriver != null) {
-                                val extractedPrice = extractPriceFromDetailPage(tempDriver, performanceData.detailUrl)
-                                if (extractedPrice != null) {
-                                    finalPrice = extractedPrice
-                                    logger.info("상세 페이지에서 가격 추출: ${performanceData.title} - ${finalPrice}원 (이전: ${performanceData.price ?: "없음"})")
-                                } else {
-                                    logger.debug("상세 페이지에서 가격 추출 실패: ${performanceData.title} (URL: ${performanceData.detailUrl})")
-                                }
-                            }
-                            
-                            performancesWithPrice.add(
-                                performanceData.copy(price = finalPrice)
-                            )
-                        }
-                    } catch (e: Exception) {
-                        logger.warn("상세 페이지 가격 추출 중 오류 (기본값 사용): ${e.message}")
-                        performancesWithPrice.addAll(uniquePerformances)
-                    } finally {
+                    val performancesWithPrice = if (fast) {
+                        logger.info("fast 모드: 상세 페이지 가격 추출을 건너뜁니다.")
+                        uniquePerformances
+                    } else {
+                        val list = mutableListOf<GenbaPerformanceData>()
+                        var tempDriver: WebDriver? = null
                         try {
-                            tempDriver?.quit()
+                            if (uniquePerformances.any { it.detailUrl != null }) {
+                                logger.info("상세 페이지에서 가격 정보 추출 시작 (총 ${uniquePerformances.count { it.detailUrl != null }}개 공연)")
+                                WebDriverManager.chromedriver().setup()
+                                val chromeOptions = ChromeOptions()
+                                chromeOptions.addArguments("--headless")
+                                chromeOptions.addArguments("--no-sandbox")
+                                chromeOptions.addArguments("--disable-dev-shm-usage")
+                                chromeOptions.addArguments("--disable-gpu")
+                                tempDriver = ChromeDriver(chromeOptions)
+                            }
+
+                            for (performanceData in uniquePerformances) {
+                                var finalPrice = performanceData.price
+                                if (performanceData.detailUrl != null && tempDriver != null) {
+                                    val extractedPrice = extractPriceFromDetailPage(tempDriver, performanceData.detailUrl)
+                                    if (extractedPrice != null) {
+                                        finalPrice = extractedPrice
+                                        logger.info("상세 페이지에서 가격 추출: ${performanceData.title} - ${finalPrice}원 (이전: ${performanceData.price ?: "없음"})")
+                                    } else {
+                                        logger.debug("상세 페이지에서 가격 추출 실패: ${performanceData.title} (URL: ${performanceData.detailUrl})")
+                                    }
+                                }
+                                list.add(performanceData.copy(price = finalPrice))
+                            }
                         } catch (e: Exception) {
-                            logger.warn("임시 WebDriver 종료 중 오류: ${e.message}")
+                            logger.warn("상세 페이지 가격 추출 중 오류 (기본값 사용): ${e.message}")
+                            list.addAll(uniquePerformances)
+                        } finally {
+                            try {
+                                tempDriver?.quit()
+                            } catch (e: Exception) {
+                                logger.warn("임시 WebDriver 종료 중 오류: ${e.message}")
+                            }
                         }
+                        list
                     }
                     
                     for (performanceData in performancesWithPrice) {

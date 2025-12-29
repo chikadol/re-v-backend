@@ -57,6 +57,8 @@ dependencies {
 
     // Database (runtime)
     runtimeOnly("org.postgresql:postgresql:42.7.4")
+    // H2 Database (개발 환경용 - 인메모리)
+    runtimeOnly("com.h2database:h2")
 
     // Flyway (runtime 마이그레이션)
     val flywayVersion = "10.17.0"

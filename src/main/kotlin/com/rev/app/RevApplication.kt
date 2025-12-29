@@ -8,7 +8,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 
-@SpringBootApplication(scanBasePackages = ["com.rev.app"])
+@SpringBootApplication(
+    scanBasePackages = ["com.rev.app"],
+    exclude = [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration::class]
+)
 @ConfigurationPropertiesScan
 @EnableConfigurationProperties(JwtProperties::class)
 class RevApplication

@@ -40,7 +40,28 @@ class CommentService(
             content = req.content,
         )
 
-        return commentRepository.saveAndFlush(entity)
+        val saved = commentRepository.saveAndFlush(entity)
+
+        // 알림 생성: 쓰레드 작성자에게 (자기 자신이면 스킵) — 메시지는 익명
+        try {
+            val receiver = thread.author
+            if (receiver != null && receiver.id != authorId) {
+                notificationRepository.save(
+                    NotificationEntity(
+                        receiver = receiver,
+                        type = "COMMENT",
+                        thread = thread,
+                        comment = saved,
+                        message = "익명 사용자가 댓글을 남겼습니다."
+                    )
+                )
+            }
+        } catch (e: Exception) {
+            // 알림 실패는 댓글 저장에 영향 주지 않음
+            println("알림 생성 실패: ${e.message}")
+        }
+
+        return saved
     }
 
     @Transactional(readOnly = true)
