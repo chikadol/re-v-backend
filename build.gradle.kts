@@ -78,6 +78,9 @@ dependencies {
     implementation("org.seleniumhq.selenium:selenium-java:4.15.0")
     implementation("io.github.bonigarcia:webdrivermanager:5.6.2")
 
+    // OAuth2 Client (소셜 로그인)
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // --- Test ---

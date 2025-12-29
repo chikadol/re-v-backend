@@ -22,5 +22,11 @@ class UserEntity(
     var username: String,
 
     @Column(nullable = false)
-    var password: String
+    var password: String,
+
+    @Column(nullable = true)
+    var provider: String? = null, // 'google', 'naver', 'kakao', null (일반 회원가입)
+
+    @Column(nullable = true, unique = true)
+    var providerId: String? = null // OAuth2 provider의 사용자 ID
 )

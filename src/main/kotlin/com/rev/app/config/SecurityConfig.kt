@@ -1,6 +1,7 @@
 package com.rev.app.config
 
 import com.rev.app.auth.JwtAuthenticationFilter
+import com.rev.app.auth.OAuth2SuccessHandler
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -17,7 +18,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val oAuth2SuccessHandler: OAuth2SuccessHandler
 ) {
 
     @Bean
@@ -56,12 +58,22 @@ class SecurityConfig(
             // ✅ CORS 설정
             .cors { it.configurationSource(corsConfigurationSource()) }
 
+            // ✅ OAuth2 로그인 설정
+            .oauth2Login { oauth2 ->
+                oauth2
+                    .successHandler(oAuth2SuccessHandler)
+                    .userInfoEndpoint { userInfo ->
+                        userInfo.userService(org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService())
+                    }
+            }
+
             // ✅ JWT 필터 추가
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
             // ✅ 모든 요청은 일단 허용 (로컬 개발 단계용)
             .authorizeHttpRequests { auth ->
                 auth
+                    .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                     .anyRequest().permitAll()
             }
 
