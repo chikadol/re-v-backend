@@ -141,7 +141,8 @@ class PaymentService(
             ticketId = ticket.id!!,
             amount = payment.amount,
             paymentMethod = payment.paymentMethod,
-            status = payment.status
+            status = payment.status,
+            paymentUrl = null // 승인 완료 후에는 paymentUrl 불필요
         )
     }
 
@@ -185,7 +186,8 @@ class PaymentService(
             ticketId = ticket.id!!,
             amount = payment.amount,
             paymentMethod = payment.paymentMethod,
-            status = payment.status
+            status = payment.status,
+            paymentUrl = null // 취소 완료 후에는 paymentUrl 불필요
         )
     }
 
@@ -197,7 +199,22 @@ class PaymentService(
                 ticketId = it.ticket!!.id!!,
                 amount = it.amount,
                 paymentMethod = it.paymentMethod,
-                status = it.status
+                status = it.status,
+                paymentUrl = null // 조회 시에는 paymentUrl 불필요
+            )
+        }
+    }
+
+    @Transactional(readOnly = true)
+    fun getById(paymentId: UUID): PaymentRes? {
+        return paymentRepository.findById(paymentId).orElse(null)?.let { payment ->
+            PaymentRes(
+                id = payment.id!!,
+                ticketId = payment.ticket!!.id!!,
+                amount = payment.amount,
+                paymentMethod = payment.paymentMethod,
+                status = payment.status,
+                paymentUrl = null // 조회 시에는 paymentUrl 불필요
             )
         }
     }

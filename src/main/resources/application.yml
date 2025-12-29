@@ -26,7 +26,7 @@ jwt:
   refresh-token-expiration: 1209600000 # 14일
 
 payment:
-  return-url: "http://localhost:3000/payment/callback"
+  return-url: "http://localhost:5173/payment/callback" # Vite 기본 포트
   # 네이버페이 설정
   naver:
     client-id: "${NAVER_PAY_CLIENT_ID:}"

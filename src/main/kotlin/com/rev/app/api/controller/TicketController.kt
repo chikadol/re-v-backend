@@ -5,6 +5,7 @@ import com.rev.app.api.service.ticket.TicketService
 import com.rev.app.api.service.ticket.dto.TicketPurchaseRequest
 import com.rev.app.api.service.ticket.dto.TicketRes
 import jakarta.validation.Valid
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
@@ -17,13 +18,19 @@ import java.util.UUID
 class TicketController(
     private val ticketService: TicketService
 ) {
+    private val logger = LoggerFactory.getLogger(TicketController::class.java)
+    
     @PostMapping("/purchase")
     @ResponseStatus(HttpStatus.CREATED)
     fun purchase(
         @AuthenticationPrincipal me: JwtPrincipal?,
         @Valid @RequestBody request: TicketPurchaseRequest
     ): TicketRes {
+        logger.info("티켓 구매 요청: performanceId=${request.performanceId}, quantity=${request.quantity}, me=$me")
+        logger.info("SecurityContext 인증 정보: ${org.springframework.security.core.context.SecurityContextHolder.getContext().authentication}")
+        
         val userId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
+        logger.info("사용자 ID 확인: userId=$userId")
         return ticketService.purchase(userId, request)
     }
 
