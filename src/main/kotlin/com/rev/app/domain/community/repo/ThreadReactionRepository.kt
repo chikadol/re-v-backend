@@ -4,7 +4,7 @@ import com.rev.app.domain.community.model.ThreadReactionEntity   // âœ… model íŒ
 import org.springframework.data.jpa.repository.JpaRepository
 import java.util.UUID
 
-interface ThreadReactionRepository : JpaRepository<ThreadReactionEntity, UUID> {
+interface ThreadReactionRepository : JpaRepository<ThreadReactionEntity, Long> {
     fun findByThread_IdAndUser_IdAndType(threadId: UUID, userId: UUID, type: String): ThreadReactionEntity?
     fun countByThread_IdAndType(threadId: UUID, type: String): Long
     fun findAllByThread_Id(threadId: UUID): List<ThreadReactionEntity>

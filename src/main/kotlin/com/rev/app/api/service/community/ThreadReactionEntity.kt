@@ -3,11 +3,7 @@ package com.rev.app.domain.community.model
 import com.rev.app.auth.UserEntity
 import com.rev.app.domain.community.entity.ThreadEntity
 import jakarta.persistence.*
-import org.hibernate.annotations.JdbcTypeCode
-import org.hibernate.annotations.UuidGenerator
-import org.hibernate.type.SqlTypes
 import java.time.Instant
-import java.util.UUID
 
 @Entity
 @Table(
@@ -16,21 +12,32 @@ import java.util.UUID
 )
 class ThreadReactionEntity(
     @Id 
-    @GeneratedValue 
-    @UuidGenerator 
-    @JdbcTypeCode(SqlTypes.VARCHAR) // H2에서는 UUID를 VARCHAR로 저장
-    @Column(columnDefinition = "VARCHAR(36)", length = 36)
-    var id: UUID? = null,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "thread_id")
+    @ManyToOne(fetch = FetchType.LAZY) 
+    @JoinColumn(name = "thread_id", nullable = false)
     var thread: ThreadEntity?,
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY) 
+    @JoinColumn(name = "user_id", nullable = false)
     var user: UserEntity?,
 
-    @Column(nullable = false, length = 20)
+    @Column(name = "type", nullable = false, length = 20)
     var type: String, // "LIKE", "LOVE"...
 
     @Column(name = "created_at", nullable = false)
     var createdAt: Instant = Instant.now()
-)
+) {
+    // H2가 자동 생성한 reaction 컬럼과의 호환성을 위한 속성
+    // type과 항상 동일한 값을 저장
+    @Column(name = "reaction", nullable = false, length = 20)
+    var reaction: String = ""
+        get() = type
+    
+    @PrePersist
+    @PreUpdate
+    fun syncReactionBeforeSave() {
+        reaction = type
+    }
+}

@@ -8,17 +8,22 @@ import org.springframework.web.bind.annotation.*
 import java.util.UUID
 
 @RestController
-@RequestMapping("/api/threads/{threadId}/reactions")
+@RequestMapping("/api/threads")
 class ReactionController(
     private val reactionService: ReactionService
 ) {
-    @PostMapping("/{type}")
+    @PostMapping("/{threadId}/reactions/{type}")
     fun toggle(
         @AuthenticationPrincipal me: JwtPrincipal,
-        @PathVariable threadId: UUID,
+        @PathVariable(name = "threadId") threadIdString: String,
         @PathVariable type: String
     ): ToggleReactionRes {
         val uid = requireNotNull(me.userId)
+        val threadId = try {
+            UUID.fromString(threadIdString)
+        } catch (e: IllegalArgumentException) {
+            throw IllegalArgumentException("Invalid threadId format: $threadIdString", e)
+        }
         return reactionService.toggle(uid, threadId, type)
     }
 }

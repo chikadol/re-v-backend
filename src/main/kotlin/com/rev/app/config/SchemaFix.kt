@@ -68,6 +68,39 @@ class SchemaFix(
         } catch (e: Exception) {
             println("⚠️ schema fix (adv/door price) 실패(무시): ${e.message}")
         }
+
+        // thread_reaction 테이블의 reaction 컬럼을 VARCHAR로 변경 (H2 ENUM 호환성 문제 해결)
+        try {
+            // 먼저 컬럼을 삭제 시도 (존재하지 않으면 무시)
+            try {
+                jdbcTemplate.execute("ALTER TABLE rev.thread_reaction DROP COLUMN IF EXISTS reaction;")
+            } catch (e: Exception) {
+                // H2에서는 IF EXISTS를 지원하지 않을 수 있으므로 무시
+            }
+            
+            // VARCHAR 타입으로 컬럼 추가
+            jdbcTemplate.execute(
+                """
+                ALTER TABLE rev.thread_reaction 
+                ADD COLUMN reaction VARCHAR(20);
+                """.trimIndent()
+            )
+            println("✅ schema fix: thread_reaction.reaction 컬럼을 VARCHAR로 추가 완료")
+        } catch (e: Exception) {
+            // 컬럼이 이미 존재하거나 다른 이유로 실패한 경우
+            try {
+                // 타입 변경 시도
+                jdbcTemplate.execute(
+                    """
+                    ALTER TABLE rev.thread_reaction 
+                    ALTER COLUMN reaction VARCHAR(20);
+                    """.trimIndent()
+                )
+                println("✅ schema fix: thread_reaction.reaction 컬럼 타입 변경 완료")
+            } catch (e2: Exception) {
+                println("⚠️ schema fix (thread_reaction.reaction) 실패(무시): ${e2.message}")
+            }
+        }
     }
 }
 

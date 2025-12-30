@@ -44,6 +44,29 @@ class IdolController(
         return idolService.create(req.name, req.description, req.imageUrl)
     }
 
+    @DeleteMapping
+    @SecurityRequirement(name = "bearerAuth")
+    fun deleteAll(
+        @AuthenticationPrincipal me: JwtPrincipal?
+    ): Map<String, String> {
+        val userId = me?.userId ?: throw IllegalArgumentException("로그인이 필요합니다.")
+        ensureIdol(userId)
+        idolService.deleteAll()
+        return mapOf("message" to "모든 아이돌 데이터가 삭제되었습니다.")
+    }
+
+    @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
+    fun delete(
+        @AuthenticationPrincipal me: JwtPrincipal?,
+        @PathVariable id: UUID
+    ): Map<String, String> {
+        val userId = me?.userId ?: throw IllegalArgumentException("로그인이 필요합니다.")
+        ensureIdol(userId)
+        idolService.delete(id)
+        return mapOf("message" to "아이돌이 삭제되었습니다.")
+    }
+
     private fun ensureIdol(userId: UUID) {
         val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException("사용자를 찾을 수 없습니다.") }
         require(user.role == UserRole.IDOL) { "지하아이돌 권한이 필요합니다." }

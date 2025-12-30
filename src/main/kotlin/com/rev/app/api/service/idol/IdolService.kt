@@ -5,6 +5,7 @@ import com.rev.app.domain.idol.IdolEntity
 import com.rev.app.domain.idol.IdolRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 
 @Service
 class IdolService(
@@ -15,7 +16,7 @@ class IdolService(
         idolRepository.findAll().map { IdolRes.from(it) }
 
     @Transactional(readOnly = true)
-    fun get(id: java.util.UUID): IdolRes =
+    fun get(id: UUID): IdolRes =
         IdolRes.from(idolRepository.findById(id).orElseThrow { IllegalArgumentException("아이돌을 찾을 수 없습니다.") })
 
     @Transactional
@@ -31,6 +32,19 @@ class IdolService(
             )
         )
         return IdolRes.from(saved)
+    }
+
+    @Transactional
+    fun deleteAll() {
+        idolRepository.deleteAll()
+    }
+
+    @Transactional
+    fun delete(id: UUID) {
+        if (!idolRepository.existsById(id)) {
+            throw IllegalArgumentException("아이돌을 찾을 수 없습니다.")
+        }
+        idolRepository.deleteById(id)
     }
 }
 
