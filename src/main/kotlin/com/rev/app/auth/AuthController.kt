@@ -16,7 +16,7 @@ class AuthController(
 ) {
     @PostMapping("/register")
     fun register(@Valid @RequestBody req: SignUpRequest): ResponseEntity<TokenResponse> {
-        val tokenResponse = authService.register(req.email, req.username, req.password)
+        val tokenResponse = authService.register(req.email, req.username, req.password, req.role)
         return ResponseEntity.ok(tokenResponse)
     }
 

@@ -28,5 +28,9 @@ class UserEntity(
     var provider: String? = null, // 'google', 'naver', 'kakao', null (일반 회원가입)
 
     @Column(nullable = true, unique = true)
-    var providerId: String? = null // OAuth2 provider의 사용자 ID
+    var providerId: String? = null, // OAuth2 provider의 사용자 ID
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    var role: UserRole = UserRole.USER // USER, IDOL
 )

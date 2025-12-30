@@ -3,6 +3,8 @@ package com.rev.app.api.service.ticket
 import com.rev.app.domain.ticket.entity.PerformanceEntity
 import com.rev.app.domain.ticket.entity.PerformanceStatus
 import com.rev.app.domain.ticket.repo.PerformanceRepository
+import com.rev.app.domain.idol.IdolRepository
+import com.rev.app.domain.idol.IdolEntity
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
@@ -26,11 +28,13 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.util.Locale
+import java.util.UUID
 
 @Service
 class GenbaCrawlerService(
     private val performanceRepository: PerformanceRepository,
-    private val performanceService: PerformanceService
+    private val performanceService: PerformanceService,
+    private val idolRepository: IdolRepository
 ) {
     private val logger = LoggerFactory.getLogger(GenbaCrawlerService::class.java)
     private val baseUrl = "https://chikadol.net/genba"
@@ -78,15 +82,21 @@ class GenbaCrawlerService(
             logger.info("중복 제거 전: ${performances.size}개, 중복 제거 후: ${uniquePerformances.size}개")
             
                     // 상세 페이지에서 가격 정보 추출 (모든 공연에 대해 detailUrl이 있으면 재추출)
+                    // 먼저 출연진은 Jsoup으로 모두 시도 (fast 여부와 무관)
+                    val withPerformers = uniquePerformances.map { pd ->
+                        val performers = pd.detailUrl?.let { extractPerformersFromDetail(it) } ?: emptyList()
+                        pd.copy(performers = performers)
+                    }
+
                     val performancesWithPrice = if (fast) {
-                        logger.info("fast 모드: 상세 페이지 가격 추출을 건너뜁니다.")
-                        uniquePerformances
+                        logger.info("fast 모드: 가격 추출만 건너뛰고 출연진은 Jsoup으로 반영합니다.")
+                        withPerformers
                     } else {
                         val list = mutableListOf<GenbaPerformanceData>()
                         var tempDriver: WebDriver? = null
                         try {
-                            if (uniquePerformances.any { it.detailUrl != null }) {
-                                logger.info("상세 페이지에서 가격 정보 추출 시작 (총 ${uniquePerformances.count { it.detailUrl != null }}개 공연)")
+                            if (withPerformers.any { it.detailUrl != null }) {
+                                logger.info("상세 페이지에서 가격 정보 추출 시작 (총 ${withPerformers.count { it.detailUrl != null }}개 공연)")
                                 WebDriverManager.chromedriver().setup()
                                 val chromeOptions = ChromeOptions()
                                 chromeOptions.addArguments("--headless")
@@ -96,22 +106,22 @@ class GenbaCrawlerService(
                                 tempDriver = ChromeDriver(chromeOptions)
                             }
 
-                            for (performanceData in uniquePerformances) {
+                            for (performanceData in withPerformers) {
                                 var finalPrice = performanceData.price
+
                                 if (performanceData.detailUrl != null && tempDriver != null) {
                                     val extractedPrice = extractPriceFromDetailPage(tempDriver, performanceData.detailUrl)
                                     if (extractedPrice != null) {
                                         finalPrice = extractedPrice
                                         logger.info("상세 페이지에서 가격 추출: ${performanceData.title} - ${finalPrice}원 (이전: ${performanceData.price ?: "없음"})")
-                                    } else {
-                                        logger.debug("상세 페이지에서 가격 추출 실패: ${performanceData.title} (URL: ${performanceData.detailUrl})")
                                     }
                                 }
+
                                 list.add(performanceData.copy(price = finalPrice))
                             }
                         } catch (e: Exception) {
-                            logger.warn("상세 페이지 가격 추출 중 오류 (기본값 사용): ${e.message}")
-                            list.addAll(uniquePerformances)
+                            logger.warn("상세 페이지 추출 중 오류 (기본값 사용): ${e.message}")
+                            list.addAll(withPerformers)
                         } finally {
                             try {
                                 tempDriver?.quit()
@@ -124,6 +134,7 @@ class GenbaCrawlerService(
                     
                     for (performanceData in performancesWithPrice) {
                 try {
+                    val idolId = resolveIdolId(performanceData.performers, performanceData.title)
                     // 중복 체크: 제목과 일시만으로 비교 (장소는 "미정"일 수 있어서 제외)
                     // 제목이 정확히 같고, 날짜/시간이 정확히 같은 경우만 중복으로 판단
                     val existing = performanceRepository.findAll().find { 
@@ -141,7 +152,8 @@ class GenbaCrawlerService(
                                 performanceDateTime = performanceData.performanceDateTime,
                                 price = performanceData.price ?: 30000, // 기본 가격 3만원 (크롤링에서 추출하지 못한 경우)
                                 totalSeats = performanceData.totalSeats ?: 200, // 스탠딩이므로 기본 200명
-                                imageUrl = performanceData.imageUrl
+                                    imageUrl = performanceData.imageUrl,
+                                    idolId = idolId
                             )
                         )
                         created++
@@ -1650,6 +1662,100 @@ class GenbaCrawlerService(
         return null
     }
 
+        private fun extractPerformersFromDetail(detailUrl: String): List<String> {
+            return try {
+                val doc = Jsoup.connect(detailUrl)
+                    .userAgent("Mozilla/5.0")
+                    .timeout(10_000)
+                    .get()
+
+                val candidates = mutableListOf<String>()
+
+                // 시간표 패턴에서 이름 추출 (예: 19:20-19:40 유포아이)
+                val timeNameRegex = Regex("""\b\d{1,2}:\d{2}\s*[–-]\s*\d{1,2}:\d{2}\s+([^\n\r]{1,60}?)\b""")
+
+                // 1) 메타 태그 (og:title / og:description / description)
+                listOf(
+                    doc.selectFirst("meta[property=og:description]")?.attr("content"),
+                    doc.selectFirst("meta[property=og:title]")?.attr("content"),
+                    doc.selectFirst("meta[name=description]")?.attr("content")
+                ).forEach { meta ->
+                    if (!meta.isNullOrBlank()) candidates.add(meta)
+                }
+
+                // 2) 본문 텍스트에서 패턴 검색
+                val bodyText = doc.body().text()
+                val patterns = listOf(
+                    Regex("""출연(?:진|자)?\s*[:：]?\s*([^\n]+)""", RegexOption.IGNORE_CASE),
+                    Regex("""라인업\s*[:：]?\s*([^\n]+)""", RegexOption.IGNORE_CASE),
+                    Regex("""LINE\s?UP\s*[:：]?\s*([^\n]+)""", RegexOption.IGNORE_CASE),
+                    Regex("""出演\s*[:：]?\s*([^\n]+)""", RegexOption.IGNORE_CASE)
+                )
+                for (p in patterns) {
+                    val m = p.find(bodyText)
+                    if (m != null) {
+                        candidates.add(m.groupValues[1])
+                        break
+                    }
+                }
+
+                // 3) 리스트 요소(li) 우선 스캔
+                val listBlocks = doc.select("li").mapNotNull { it.text()?.trim() }.filter { it.length in 2..200 }
+                candidates.addAll(listBlocks)
+
+                // 3-1) 테이블/타임테이블에서 시간+이름 추출
+                val tableRows = doc.select("table tr").mapNotNull { it.text()?.trim() }.filter { it.isNotEmpty() }
+                val timeFromTable = tableRows.flatMap { row ->
+                    timeNameRegex.findAll(row).map { it.groupValues[1] }.toList()
+                }
+                candidates.addAll(timeFromTable)
+
+                // 4) 라벨/키워드가 붙은 DOM 요소 탐색
+                val keywordElems = doc.select("*:matchesOwn((?i)출연|출연진|라인업|line up|出演)")
+                for (elem in keywordElems) {
+                    val text = elem.parent()?.text() ?: elem.text()
+                    if (!text.isNullOrBlank()) candidates.add(text)
+                }
+
+                // 5) fallback: 텍스트 블록에서 구분자 또는 2개 이상의 토큰이 있는 첫 문장
+                if (candidates.isEmpty()) {
+                    val blocks = doc.select("p, div, span")
+                        .mapNotNull { it.text()?.trim() }
+                        .filter { it.isNotEmpty() && it.length in 5..200 }
+                    for (b in blocks) {
+                        val tokens = b.split(",", "/", "|", "·", "・", "-", "–")
+                            .flatMap { it.split(" ") }
+                            .map { it.trim() }
+                            .filter { it.isNotEmpty() && it.length in 1..50 }
+                        if (tokens.size >= 2) {
+                            candidates.add(tokens.joinToString(","))
+                            break
+                        }
+                    }
+                }
+
+                // 6) 본문 전체에서 시간+이름 패턴 추가 스캔
+                val timeFromBody = timeNameRegex.findAll(bodyText).map { it.groupValues[1] }.toList()
+                candidates.addAll(timeFromBody)
+
+                if (candidates.isEmpty()) return emptyList()
+
+                val performers = candidates.flatMap { line ->
+                    line.split(",", "/", "|", "·", "・", "-", "–")
+                        .flatMap { it.split(" ") }
+                        .map { it.trim() }
+                        .filter { it.isNotEmpty() && it.length in 1..50 }
+                }.distinct()
+
+                if (performers.isEmpty()) {
+                    logger.debug("출연진 파싱 결과 없음: $detailUrl, body(200자)=${bodyText.take(200)}")
+                }
+                performers
+            } catch (e: Exception) {
+                logger.debug("출연진 추출 실패: $detailUrl, ${e.message}")
+                emptyList()
+            }
+        }
         private data class GenbaPerformanceData(
             val title: String,
             val description: String?,
@@ -1659,7 +1765,31 @@ class GenbaCrawlerService(
             val totalSeats: Int?,
             val remainingSeats: Int?,
             val imageUrl: String?,
-            val detailUrl: String? = null // 상세 페이지 URL
+            val detailUrl: String? = null, // 상세 페이지 URL
+            val performers: List<String> = emptyList() // 출연진
         )
+
+        private fun resolveIdolId(performers: List<String>, title: String): UUID? {
+            // 1순위: 출연진 목록에서 첫 번째 이름
+            val candidate = performers.firstOrNull()?.trim()?.takeIf { it.isNotEmpty() }
+            // 2순위: 제목 선두 토큰
+            val fallback = title
+                .split("-", "–", "|", "@")
+                .firstOrNull()
+                ?.trim()
+                ?.takeIf { it.isNotEmpty() }
+
+            val name = candidate ?: fallback ?: return null
+
+            val existing = idolRepository.findByNameIgnoreCase(name)
+            if (existing != null) return existing.id
+
+            return try {
+                idolRepository.save(IdolEntity(name = name)).id
+            } catch (e: Exception) {
+                logger.warn("아이돌 저장 실패(무시): $name, ${e.message}")
+                null
+            }
+        }
 }
 

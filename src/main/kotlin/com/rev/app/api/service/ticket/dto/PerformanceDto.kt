@@ -12,10 +12,14 @@ data class PerformanceRes(
     val venue: String,
     val performanceDateTime: LocalDateTime,
     val price: Int,
+    val advPrice: Int?,
+    val doorPrice: Int?,
     val totalSeats: Int,
     val remainingSeats: Int,
     val imageUrl: String?,
-    val status: PerformanceStatus
+    val status: PerformanceStatus,
+    val idolId: UUID?,
+    val performers: List<String> = emptyList()
 ) {
     companion object {
         fun from(entity: PerformanceEntity): PerformanceRes = PerformanceRes(
@@ -25,10 +29,14 @@ data class PerformanceRes(
             venue = entity.venue,
             performanceDateTime = entity.performanceDateTime,
             price = entity.price,
+            advPrice = entity.advPrice,
+            doorPrice = entity.doorPrice,
             totalSeats = entity.totalSeats,
             remainingSeats = entity.remainingSeats,
             imageUrl = entity.imageUrl,
-            status = entity.status
+            status = entity.status,
+            idolId = entity.idol?.id,
+            performers = entity.performers.toList()
         )
     }
 }
@@ -38,8 +46,12 @@ data class PerformanceCreateRequest(
     val description: String? = null,
     val venue: String,
     val performanceDateTime: LocalDateTime,
-    val price: Int,
+    val price: Int? = null,
+    val advPrice: Int? = null,
+    val doorPrice: Int? = null,
     val totalSeats: Int,
-    val imageUrl: String? = null
+    val imageUrl: String? = null,
+    val idolId: UUID? = null,
+    val performers: List<String> = emptyList()
 )
 

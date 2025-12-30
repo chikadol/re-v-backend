@@ -54,7 +54,7 @@ import java.util.*
         }
 
     @Transactional
-    fun register(email: String, username: String, password: String): TokenResponse {
+    fun register(email: String, username: String, password: String, role: String): TokenResponse {
         // 이메일 중복 확인
         if (userRepository.findByEmail(email) != null) {
             throw IllegalArgumentException("이미 등록된 이메일입니다.")
@@ -72,7 +72,8 @@ import java.util.*
         val newUser = UserEntity(
             email = email,
             username = username,
-            password = encodedPassword
+            password = encodedPassword,
+            role = runCatching { UserRole.valueOf(role.uppercase()) }.getOrElse { UserRole.USER }
         )
         
         val savedUser = userRepository.saveAndFlush(newUser)

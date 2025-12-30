@@ -8,5 +8,6 @@ import java.util.UUID
 interface PerformanceRepository : JpaRepository<PerformanceEntity, UUID> {
     fun findAllByStatusOrderByPerformanceDateTimeAsc(status: PerformanceStatus): List<PerformanceEntity>
     fun findAllByOrderByPerformanceDateTimeAsc(): List<PerformanceEntity>
+    fun findAllByIdol_IdOrderByPerformanceDateTimeAsc(idolId: UUID): List<PerformanceEntity>
 }
 

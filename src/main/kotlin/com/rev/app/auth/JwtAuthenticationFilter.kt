@@ -45,13 +45,14 @@ class JwtAuthenticationFilter(
             // 사용자 정보 조회하여 email 가져오기
             val user = userRepository.findById(userId).orElse(null)
             val email = user?.email ?: ""
+            val roleName = user?.role?.name
             
             logger.debug("사용자 정보 조회: userId=$userId, email=$email")
 
             val principal = JwtPrincipal(
                 userId = userId,
                 email = email,
-                roles = emptyList()
+                roles = roleName?.let { listOf(it) } ?: emptyList()
             )
 
             val authentication = UsernamePasswordAuthenticationToken(

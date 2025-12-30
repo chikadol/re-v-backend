@@ -5,6 +5,7 @@ import com.rev.app.api.service.ticket.dto.PerformanceRes
 import com.rev.app.domain.ticket.entity.PerformanceEntity
 import com.rev.app.domain.ticket.entity.PerformanceStatus
 import com.rev.app.domain.ticket.repo.PerformanceRepository
+import com.rev.app.domain.idol.IdolRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -12,7 +13,8 @@ import java.util.UUID
 
 @Service
 class PerformanceService(
-    private val performanceRepository: PerformanceRepository
+    private val performanceRepository: PerformanceRepository,
+    private val idolRepository: IdolRepository
 ) {
     @Transactional(readOnly = true)
     fun getAll(): List<PerformanceRes> {
@@ -29,16 +31,22 @@ class PerformanceService(
 
     @Transactional
     fun create(request: PerformanceCreateRequest): PerformanceRes {
+        val idol = request.idolId?.let { idolRepository.findById(it).orElse(null) }
+        val effectivePrice = request.advPrice ?: request.doorPrice ?: request.price ?: 30000
         val performance = PerformanceEntity(
             title = request.title,
             description = request.description,
             venue = request.venue,
             performanceDateTime = request.performanceDateTime,
-            price = request.price,
+            price = effectivePrice,
+            advPrice = request.advPrice,
+            doorPrice = request.doorPrice,
             totalSeats = request.totalSeats,
             remainingSeats = request.totalSeats,
             imageUrl = request.imageUrl,
-            status = PerformanceStatus.UPCOMING
+            status = PerformanceStatus.UPCOMING,
+            idol = idol,
+            performers = request.performers.toMutableList()
         )
         val saved = performanceRepository.saveAndFlush(performance)
         return PerformanceRes.from(saved)
@@ -57,5 +65,9 @@ class PerformanceService(
         return performanceRepository.findAllByStatusOrderByPerformanceDateTimeAsc(PerformanceStatus.UPCOMING)
             .map { PerformanceRes.from(it) }
     }
+
+    @Transactional(readOnly = true)
+    fun getByIdol(idolId: UUID): List<PerformanceRes> =
+        performanceRepository.findAllByIdol_IdOrderByPerformanceDateTimeAsc(idolId).map { PerformanceRes.from(it) }
 }
 

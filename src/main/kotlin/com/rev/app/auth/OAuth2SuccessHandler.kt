@@ -58,7 +58,7 @@ class OAuth2SuccessHandler(
             }
 
             // 사용자 조회 또는 생성
-            val user = findOrCreateUser(email, username, registrationId, providerId)
+        val user = findOrCreateUser(email, username, registrationId, providerId)
 
             // JWT 토큰 생성
             val tokenResponse = user.id?.let { userId ->
@@ -183,7 +183,8 @@ class OAuth2SuccessHandler(
             username = username,
             password = passwordEncoder.encode(UUID.randomUUID().toString()), // OAuth2 사용자는 랜덤 비밀번호
             provider = provider,
-            providerId = providerId
+            providerId = providerId,
+            role = UserRole.USER
         )
         logger.info("새 OAuth2 사용자 생성: $email (provider=$provider)")
         return userRepository.saveAndFlush(newUser)

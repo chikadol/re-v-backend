@@ -16,7 +16,7 @@ class AgitoCrawlerController(
     @RequestMapping(value = ["/crawl"], method = [RequestMethod.GET, RequestMethod.POST], produces = ["application/json;charset=UTF-8"])
     fun triggerCrawl(
         @RequestParam(name = "clear", required = false, defaultValue = "false") clear: Boolean,
-        @RequestParam(name = "fast", required = false, defaultValue = "true") fast: Boolean
+        @RequestParam(name = "fast", required = false, defaultValue = "false") fast: Boolean
     ): ResponseEntity<Map<String, String>> {
         // 수동으로 크롤링 실행 (관리자용)
         // azito.kr은 앱 다운로드 페이지이므로 Genba 크롤러 사용

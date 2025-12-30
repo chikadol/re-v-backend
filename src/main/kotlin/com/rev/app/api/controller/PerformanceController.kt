@@ -1,11 +1,15 @@
 package com.rev.app.api.controller
 
 import com.rev.app.api.service.ticket.PerformanceService
+import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.ticket.dto.PerformanceCreateRequest
 import com.rev.app.api.service.ticket.dto.PerformanceRes
 import com.rev.app.domain.ticket.entity.PerformanceStatus
+import com.rev.app.auth.UserRepository
+import com.rev.app.auth.UserRole
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 import java.util.UUID
@@ -13,7 +17,8 @@ import java.util.UUID
 @RestController
 @RequestMapping("/api/performances")
 class PerformanceController(
-    private val performanceService: PerformanceService
+    private val performanceService: PerformanceService,
+    private val userRepository: UserRepository
 ) {
     @GetMapping
     fun getAll(): List<PerformanceRes> {
@@ -32,7 +37,12 @@ class PerformanceController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@Valid @RequestBody request: PerformanceCreateRequest): PerformanceRes {
+    fun create(
+        @AuthenticationPrincipal me: JwtPrincipal?,
+        @Valid @RequestBody request: PerformanceCreateRequest
+    ): PerformanceRes {
+        val userId = me?.userId ?: throw IllegalArgumentException("로그인이 필요합니다.")
+        ensureIdol(userId)
         return performanceService.create(request)
     }
 
@@ -82,6 +92,11 @@ class PerformanceController(
     ): PerformanceRes {
         performanceService.updateStatus(id, status)
         return performanceService.getById(id)
+    }
+
+    private fun ensureIdol(userId: UUID) {
+        val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException("사용자를 찾을 수 없습니다.") }
+        require(user.role == UserRole.IDOL) { "지하아이돌 권한이 필요합니다." }
     }
 }
 
