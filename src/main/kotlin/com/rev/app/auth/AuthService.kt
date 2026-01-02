@@ -23,15 +23,18 @@ import java.util.*
         }
 
         return user.id?.let { userId ->
+            val roles = listOf(user.role.name)
             TokenResponse(
-                accessToken = jwtProvider.generateAccessToken(userId),
+                accessToken = jwtProvider.generateAccessToken(userId, roles),
                 refreshToken = jwtProvider.generateRefreshToken(userId)
             )
         }
         }
 
     fun login(userId: UUID): TokenResponse {
-            val access = jwtProvider.generateAccessToken(userId)
+            val user = userRepository.findById(userId).orElseThrow()
+            val roles = listOf(user.role.name)
+            val access = jwtProvider.generateAccessToken(userId, roles)
             val refresh = jwtProvider.generateRefreshToken(userId)
 
         return TokenResponse(
@@ -46,9 +49,11 @@ import java.util.*
             }
 
             val userId = jwtProvider.getUserId(refreshToken)
+            val user = userRepository.findById(userId).orElseThrow()
+            val roles = listOf(user.role.name)
 
         return TokenResponse(
-            accessToken = jwtProvider.generateAccessToken(userId),
+            accessToken = jwtProvider.generateAccessToken(userId, roles),
             refreshToken = jwtProvider.generateRefreshToken(userId)
             )
         }
@@ -80,8 +85,9 @@ import java.util.*
         
         // 회원가입 후 자동 로그인
         return savedUser.id?.let { userId ->
+            val roles = listOf(savedUser.role.name)
             TokenResponse(
-                accessToken = jwtProvider.generateAccessToken(userId),
+                accessToken = jwtProvider.generateAccessToken(userId, roles),
                 refreshToken = jwtProvider.generateRefreshToken(userId)
             )
         } ?: throw IllegalStateException("사용자 생성 실패")

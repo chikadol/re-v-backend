@@ -62,8 +62,9 @@ class OAuth2SuccessHandler(
 
             // JWT 토큰 생성
             val tokenResponse = user.id?.let { userId ->
+                val roles = listOf(user.role.name)
                 TokenResponse(
-                    accessToken = jwtProvider.generateAccessToken(userId),
+                    accessToken = jwtProvider.generateAccessToken(userId, roles),
                     refreshToken = jwtProvider.generateRefreshToken(userId)
                 )
             } ?: throw IllegalStateException("사용자 ID가 없습니다.")

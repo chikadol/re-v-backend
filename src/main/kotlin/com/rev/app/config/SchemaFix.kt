@@ -101,6 +101,31 @@ class SchemaFix(
                 println("⚠️ schema fix (thread_reaction.reaction) 실패(무시): ${e2.message}")
             }
         }
+
+        // board_request 테이블 생성
+        try {
+            jdbcTemplate.execute(
+                """
+                CREATE TABLE IF NOT EXISTS rev.board_request (
+                    id UUID PRIMARY KEY,
+                    name VARCHAR(100) NOT NULL,
+                    slug VARCHAR(100) NOT NULL,
+                    description TEXT,
+                    reason TEXT,
+                    requester_id UUID NOT NULL,
+                    status VARCHAR(20) NOT NULL DEFAULT 'PENDING',
+                    created_at TIMESTAMP,
+                    processed_at TIMESTAMP,
+                    processed_by_id UUID,
+                    CONSTRAINT fk_board_request_requester FOREIGN KEY (requester_id) REFERENCES rev.users(id),
+                    CONSTRAINT fk_board_request_processed_by FOREIGN KEY (processed_by_id) REFERENCES rev.users(id)
+                );
+                """.trimIndent()
+            )
+            println("✅ schema fix: board_request 테이블 확인/생성 완료")
+        } catch (e: Exception) {
+            println("⚠️ schema fix (board_request) 실패(무시): ${e.message}")
+        }
     }
 }
 

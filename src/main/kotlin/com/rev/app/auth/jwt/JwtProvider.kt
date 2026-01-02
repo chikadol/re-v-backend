@@ -25,20 +25,21 @@ class JwtProvider(
         Keys.hmacShaKeyFor(secret.toByteArray())
     }
 
-    fun generateAccessToken(userId: UUID): String {
-        return generateToken(userId, accessTokenExpiration)
+    fun generateAccessToken(userId: UUID, roles: List<String> = emptyList()): String {
+        return generateToken(userId, accessTokenExpiration, roles)
     }
 
     fun generateRefreshToken(userId: UUID): String {
-        return generateToken(userId, refreshTokenExpiration)
+        return generateToken(userId, refreshTokenExpiration, emptyList())
     }
 
-    private fun generateToken(userId: UUID, expiration: Long): String {
+    private fun generateToken(userId: UUID, expiration: Long, roles: List<String>): String {
         val now = Date()
         val exp = Date(now.time + expiration)
 
         return Jwts.builder()
             .setSubject(userId.toString())
+            .claim("roles", roles) // roles를 JWT에 포함
             .setIssuedAt(now)
             .setExpiration(exp)
             .signWith(key, SignatureAlgorithm.HS256)
