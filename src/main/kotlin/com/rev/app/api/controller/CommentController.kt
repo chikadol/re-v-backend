@@ -40,6 +40,13 @@ class CommentController(
         
         val saved = commentService.create(authorId, req)
 
+        // 게시물 작성자와 댓글 작성자가 같은지 확인
+        val threadAuthorId = saved.thread?.author?.id
+        val commentAuthorId = saved.author?.id
+        val isAuthor = threadAuthorId != null && 
+                       commentAuthorId != null && 
+                       threadAuthorId == commentAuthorId
+
         // CommentResponse.from()은 LAZY 로딩 때문에 null을 반환할 수 있으므로 직접 생성
         return CommentResponse(
             id = saved.id ?: throw IllegalStateException("Comment ID가 생성되지 않았습니다."),
@@ -47,7 +54,8 @@ class CommentController(
             authorId = authorId,
             parentId = saved.parent?.id,
             content = saved.content,
-            createdAt = saved.createdAt ?: java.time.Instant.now()
+            createdAt = saved.createdAt ?: java.time.Instant.now(),
+            isAuthor = isAuthor
         )
     }
 

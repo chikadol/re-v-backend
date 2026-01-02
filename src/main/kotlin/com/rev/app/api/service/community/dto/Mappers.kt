@@ -47,11 +47,21 @@ fun ThreadEntity.toRes(): ThreadRes = ThreadRes(
 fun ThreadEntity.toResWithTags(tags: List<String>): ThreadRes =
     this.toRes().copy(tags = tags)
 
-fun CommentEntity.toRes(): CommentRes = CommentRes(
-    id = requireNotNull(id),
-    threadId = requireNotNull(thread?.id),
-    authorId = null, // 익명 처리
-    parentId = parent?.id,
-    content = content,
-    createdAt = createdAt
-)
+fun CommentEntity.toRes(): CommentRes {
+    // 게시물 작성자와 댓글 작성자가 같은지 확인
+    val threadAuthorId = thread?.author?.id
+    val commentAuthorId = author?.id
+    val isAuthor = threadAuthorId != null && 
+                   commentAuthorId != null && 
+                   threadAuthorId == commentAuthorId
+    
+    return CommentRes(
+        id = requireNotNull(id),
+        threadId = requireNotNull(thread?.id),
+        authorId = null, // 익명 처리
+        parentId = parent?.id,
+        content = content,
+        createdAt = createdAt,
+        isAuthor = isAuthor
+    )
+}

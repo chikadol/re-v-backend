@@ -63,5 +63,6 @@ data class CommentRes(
     val authorId: UUID?,
     val parentId: UUID?,
     val content: String,
-    val createdAt: Instant?
+    val createdAt: Instant?,
+    val isAuthor: Boolean = false // 게시물 작성자인지 여부
 )

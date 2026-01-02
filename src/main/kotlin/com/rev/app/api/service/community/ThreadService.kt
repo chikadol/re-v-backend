@@ -186,6 +186,28 @@ class ThreadService(
         }
     }
 
+    // 검색 기능: 제목과 내용으로 검색
+    @Transactional(readOnly = true)
+    fun search(boardId: UUID, keyword: String, pageable: Pageable): Page<ThreadRes> {
+        if (keyword.isBlank()) {
+            return listPublic(boardId, pageable)
+        }
+        
+        val page = threadRepository.findByBoard_IdAndIsPrivateFalseAndTitleOrContentContaining(
+            boardId = boardId,
+            keyword = keyword.trim(),
+            pageable = pageable
+        )
+        
+        return page.map { th ->
+            val id = th.id
+            val tagNames =
+                if (id != null) threadTagRepository.findByThread_Id(id).map { it.tag.name }
+                else emptyList()
+            th.toResWithTags(tagNames)
+        }
+    }
+
     private fun normalizeAndValidate(raw: List<String>?): List<String> {
         val list = (raw ?: emptyList())
             .map { it.trim().lowercase() }

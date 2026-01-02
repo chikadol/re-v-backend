@@ -33,10 +33,21 @@ class ThreadController(
     fun listPublic(
         @PathVariable boardId: UUID,
         @RequestParam(name = "tags", required = false) tags: List<String>?,
+        @RequestParam(name = "search", required = false) search: String?,
         pageable: Pageable
-    ): Page<ThreadRes> =
-        if (tags.isNullOrEmpty()) threadService.listPublic(boardId, pageable)
-        else threadService.listPublic(boardId, pageable, tags)
+    ): Page<ThreadRes> {
+        // 검색어가 있으면 검색 기능 사용
+        if (!search.isNullOrBlank()) {
+            return threadService.search(boardId, search, pageable)
+        }
+        
+        // 태그 필터가 있으면 태그 필터 사용
+        return if (tags.isNullOrEmpty()) {
+            threadService.listPublic(boardId, pageable)
+        } else {
+            threadService.listPublic(boardId, pageable, tags)
+        }
+    }
 
     @GetMapping("/{threadId}")
     fun getDetail(

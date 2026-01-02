@@ -40,6 +40,25 @@ interface ThreadRepository : JpaRepository<ThreadEntity, UUID> {
         pageable: Pageable
     ): Page<ThreadEntity>
 
+    // 검색 기능: 제목, 내용, 댓글 내용으로 검색
+    @Query(
+        """
+        select distinct th from ThreadEntity th
+        join th.board b
+        left join CommentEntity c on c.thread = th
+        where b.id = :boardId 
+          and th.isPrivate = false
+          and (lower(th.title) like lower(concat('%', :keyword, '%'))
+               or lower(th.content) like lower(concat('%', :keyword, '%'))
+               or lower(c.content) like lower(concat('%', :keyword, '%')))
+        """
+    )
+    fun findByBoard_IdAndIsPrivateFalseAndTitleOrContentContaining(
+        @Param("boardId") boardId: UUID,
+        @Param("keyword") keyword: String,
+        pageable: Pageable
+    ): Page<ThreadEntity>
+
     // ✅ 여기! 내 글 목록용 메서드
     fun findAllByAuthor_Id(
         authorId: UUID,
