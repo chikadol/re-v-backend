@@ -36,4 +36,12 @@ class BoardService(
         val savedBoard = boardRepository.saveAndFlush(newBoard)
         return savedBoard.toRes()
     }
+
+    @Transactional
+    fun delete(id: UUID) {
+        if (!boardRepository.existsById(id)) {
+            throw IllegalArgumentException("게시판을 찾을 수 없습니다: $id")
+        }
+        boardRepository.deleteById(id)
+    }
 }

@@ -258,4 +258,12 @@ class ThreadService(
         return threadRepository.saveAndFlush(entity)   // ✅ flush하여 ID와 createdAt이 즉시 반영되도록
     }
 
+    @Transactional
+    fun delete(threadId: UUID) {
+        if (!threadRepository.existsById(threadId)) {
+            throw IllegalArgumentException("게시글을 찾을 수 없습니다: $threadId")
+        }
+        threadRepository.deleteById(threadId)
+    }
+
 }

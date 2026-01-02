@@ -86,4 +86,12 @@ class CommentService(
             PageImpl(emptyList(), pageable, 0)
         }
     }
+
+    @Transactional
+    fun delete(commentId: UUID) {
+        if (!commentRepository.existsById(commentId)) {
+            throw IllegalArgumentException("댓글을 찾을 수 없습니다: $commentId")
+        }
+        commentRepository.deleteById(commentId)
+    }
 }

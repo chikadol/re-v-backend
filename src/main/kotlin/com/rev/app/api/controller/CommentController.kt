@@ -9,6 +9,7 @@ import com.rev.app.api.service.community.dto.CreateCommentRequest
 import com.rev.app.domain.community.entity.CommentEntity
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
 import java.util.UUID
@@ -57,6 +58,16 @@ class CommentController(
             createdAt = saved.createdAt ?: java.time.Instant.now(),
             isAuthor = isAuthor
         )
+    }
+
+    @DeleteMapping("/{commentId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    fun deleteComment(
+        @AuthenticationPrincipal me: JwtPrincipal?,
+        @PathVariable commentId: UUID
+    ): Map<String, String> {
+        commentService.delete(commentId)
+        return mapOf("message" to "댓글이 삭제되었습니다.")
     }
 
 }

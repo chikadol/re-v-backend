@@ -35,4 +35,15 @@ class BoardController(
         val board = boardService.create(request)
         return ResponseEntity.status(HttpStatus.CREATED).body(board)
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @SecurityRequirement(name = "bearerAuth")
+    fun delete(
+        @AuthenticationPrincipal me: JwtPrincipal?,
+        @PathVariable id: UUID
+    ): ResponseEntity<Map<String, String>> {
+        boardService.delete(id)
+        return ResponseEntity.ok(mapOf("message" to "게시판이 삭제되었습니다."))
+    }
 }

@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="게시판 생성 요청 페이지 추가, 게시판 생성 기능 어드민으로 변경">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="리드미 업데이트">
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/config/DataInitializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/rev/app/config/DataInitializer.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,15 +246,7 @@
       <workItem from="1766975351295" duration="759000" />
       <workItem from="1766976257711" duration="16000" />
       <workItem from="1766976386763" duration="3673000" />
-      <workItem from="1766980907893" duration="26540000" />
-    </task>
-    <task id="LOCAL-00026" summary="updated">
-      <option name="closed" value="true" />
-      <created>1766914556164</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1766914556164</updated>
+      <workItem from="1766980907893" duration="27295000" />
     </task>
     <task id="LOCAL-00027" summary="회원가입 기능 추가">
       <option name="closed" value="true" />
@@ -640,7 +632,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767340042443</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="리드미 업데이트">
+      <option name="closed" value="true" />
+      <created>1767340589131</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1767340589131</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -666,13 +666,13 @@
     <MESSAGE value="카카오 네이버 토스 각각 페이 api 통합 업데이트" />
     <MESSAGE value="네이버, 구글, 카카오 연동 회원가입 api 통합 업데이트" />
     <MESSAGE value="네이버, 구글, 카카오 연동 회원가입 api, 알람기능 통합 업데이트" />
-    <MESSAGE value="리드미 업데이트" />
     <MESSAGE value="아이돌 공연 정보 등록 업데이트" />
     <MESSAGE value="토글 에러 수정 업데이트" />
     <MESSAGE value="작성글 보기 수정 업데이트" />
     <MESSAGE value="개시판 내 검색 기능 추가" />
     <MESSAGE value="게시판 생성 요청 페이지 추가, 게시판 생성 기능 어드민으로 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="게시판 생성 요청 페이지 추가, 게시판 생성 기능 어드민으로 변경" />
+    <MESSAGE value="리드미 업데이트" />
+    <option name="LAST_COMMIT_MESSAGE" value="리드미 업데이트" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
