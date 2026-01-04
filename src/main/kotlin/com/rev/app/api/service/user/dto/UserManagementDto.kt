@@ -14,6 +14,7 @@ data class UserManagementRes(
 )
 
 data class UserRoleUpdateRequest(
+    @field:jakarta.validation.constraints.NotNull(message = "역할은 필수 항목입니다.")
     val role: UserRole
 )
 

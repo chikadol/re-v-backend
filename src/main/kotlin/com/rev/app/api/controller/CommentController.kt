@@ -1,5 +1,6 @@
 package com.rev.app.api.controller
 
+import com.rev.app.api.controller.dto.ApiResponse
 import com.rev.app.api.controller.dto.CommentCreateRequest
 import com.rev.app.api.controller.dto.CommentResponse
 import com.rev.app.api.security.JwtPrincipal
@@ -9,6 +10,7 @@ import com.rev.app.api.service.community.dto.CreateCommentRequest
 import com.rev.app.domain.community.entity.CommentEntity
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -29,35 +31,48 @@ class CommentController(
 */
 
     @GetMapping("/threads/{threadId}")
-    fun list(@PathVariable threadId: UUID): List<CommentRes> =
-        commentService.listThreadComments(threadId)
+    fun list(@PathVariable threadId: UUID): ResponseEntity<ApiResponse<List<CommentRes>>> {
+        return try {
+            val comments = commentService.listThreadComments(threadId)
+            ResponseHelper.ok(comments)
+        } catch (e: Exception) {
+            ResponseHelper.error("COMMENT_LIST_FAILED", "댓글 목록을 불러오는 중 오류가 발생했습니다.")
+        }
+    }
 
     @PostMapping
     fun createComment(
         @AuthenticationPrincipal me: JwtPrincipal?,
         @RequestBody @Valid req: CommentCreateRequest
-    ): CommentResponse {
-        val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
-        
-        val saved = commentService.create(authorId, req)
+    ): ResponseEntity<ApiResponse<CommentResponse>> {
+        return try {
+            val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
+            
+            val saved = commentService.create(authorId, req)
 
-        // 게시물 작성자와 댓글 작성자가 같은지 확인
-        val threadAuthorId = saved.thread?.author?.id
-        val commentAuthorId = saved.author?.id
-        val isAuthor = threadAuthorId != null && 
-                       commentAuthorId != null && 
-                       threadAuthorId == commentAuthorId
+            // 게시물 작성자와 댓글 작성자가 같은지 확인
+            val threadAuthorId = saved.thread?.author?.id
+            val commentAuthorId = saved.author?.id
+            val isAuthor = threadAuthorId != null && 
+                           commentAuthorId != null && 
+                           threadAuthorId == commentAuthorId
 
-        // CommentResponse.from()은 LAZY 로딩 때문에 null을 반환할 수 있으므로 직접 생성
-        return CommentResponse(
-            id = saved.id ?: throw IllegalStateException("Comment ID가 생성되지 않았습니다."),
-            threadId = req.threadId,
-            authorId = authorId,
-            parentId = saved.parent?.id,
-            content = saved.content,
-            createdAt = saved.createdAt ?: java.time.Instant.now(),
-            isAuthor = isAuthor
-        )
+            // CommentResponse.from()은 LAZY 로딩 때문에 null을 반환할 수 있으므로 직접 생성
+            val response = CommentResponse(
+                id = saved.id ?: throw IllegalStateException("Comment ID가 생성되지 않았습니다."),
+                threadId = req.threadId,
+                authorId = authorId,
+                parentId = saved.parent?.id,
+                content = saved.content,
+                createdAt = saved.createdAt ?: java.time.Instant.now(),
+                isAuthor = isAuthor
+            )
+            ResponseHelper.ok(response, "댓글이 작성되었습니다.")
+        } catch (e: IllegalArgumentException) {
+            ResponseHelper.unauthorized(e.message ?: "인증이 필요합니다.")
+        } catch (e: Exception) {
+            ResponseHelper.error("COMMENT_CREATE_FAILED", "댓글 작성 중 오류가 발생했습니다.")
+        }
     }
 
     @DeleteMapping("/{commentId}")
@@ -65,9 +80,15 @@ class CommentController(
     fun deleteComment(
         @AuthenticationPrincipal me: JwtPrincipal?,
         @PathVariable commentId: UUID
-    ): Map<String, String> {
-        commentService.delete(commentId)
-        return mapOf("message" to "댓글이 삭제되었습니다.")
+    ): ResponseEntity<ApiResponse<Nothing>> {
+        return try {
+            commentService.delete(commentId)
+            ResponseHelper.ok<Nothing>("댓글이 삭제되었습니다.")
+        } catch (e: IllegalArgumentException) {
+            ResponseHelper.notFound("댓글을 찾을 수 없습니다.")
+        } catch (e: Exception) {
+            ResponseHelper.error("COMMENT_DELETE_FAILED", "댓글 삭제 중 오류가 발생했습니다.")
+        }
     }
 
 }

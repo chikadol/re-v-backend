@@ -1,5 +1,6 @@
 package com.rev.app.api.controller
 
+import com.rev.app.api.controller.dto.ApiResponse
 import com.rev.app.api.controller.dto.ThreadCreateRequest
 import com.rev.app.api.controller.dto.ThreadResponse
 import com.rev.app.api.security.JwtPrincipal
@@ -8,8 +9,8 @@ import com.rev.app.api.service.community.dto.ThreadDetailRes
 import com.rev.app.api.service.community.dto.ThreadRes
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import jakarta.validation.Valid
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -37,17 +38,19 @@ class ThreadController(
         @RequestParam(name = "tags", required = false) tags: List<String>?,
         @RequestParam(name = "search", required = false) search: String?,
         pageable: Pageable
-    ): Page<ThreadRes> {
-        // 검색어가 있으면 검색 기능 사용
-        if (!search.isNullOrBlank()) {
-            return threadService.search(boardId, search, pageable)
-        }
-        
-        // 태그 필터가 있으면 태그 필터 사용
-        return if (tags.isNullOrEmpty()) {
-            threadService.listPublic(boardId, pageable)
-        } else {
-            threadService.listPublic(boardId, pageable, tags)
+    ): ResponseEntity<ApiResponse<com.rev.app.api.controller.PageResponse<ThreadRes>>> {
+        return try {
+            // 검색어가 있으면 검색 기능 사용
+            val page = if (!search.isNullOrBlank()) {
+                threadService.search(boardId, search, pageable)
+            } else if (tags.isNullOrEmpty()) {
+                threadService.listPublic(boardId, pageable)
+            } else {
+                threadService.listPublic(boardId, pageable, tags)
+            }
+            ResponseHelper.ok(page)
+        } catch (e: Exception) {
+            ResponseHelper.error("THREAD_LIST_FAILED", "게시글 목록을 불러오는 중 오류가 발생했습니다.")
         }
     }
 
@@ -55,9 +58,16 @@ class ThreadController(
     fun getDetail(
         @PathVariable threadId: UUID,
         @AuthenticationPrincipal me: JwtPrincipal?
-    ): ThreadDetailRes {
-        val meId = me?.userId
-        return threadService.getDetail(threadId, meId)
+    ): ResponseEntity<ApiResponse<ThreadDetailRes>> {
+        return try {
+            val meId = me?.userId
+            val detail = threadService.getDetail(threadId, meId)
+            ResponseHelper.ok(detail)
+        } catch (e: IllegalArgumentException) {
+            ResponseHelper.notFound("게시글을 찾을 수 없습니다.")
+        } catch (e: Exception) {
+            ResponseHelper.error("THREAD_DETAIL_FAILED", "게시글을 불러오는 중 오류가 발생했습니다.")
+        }
     }
 
     @PostMapping("/{boardId}/threads")
@@ -65,24 +75,31 @@ class ThreadController(
         @PathVariable boardId: UUID,
         @RequestBody @Valid req: ThreadCreateRequest,
         @AuthenticationPrincipal me: JwtPrincipal?
-    ): ThreadResponse {
-        val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
-        
-        val thread = threadService.create(
-            boardId = boardId,
-            authorId = authorId,
-            req = req
-        )
+    ): ResponseEntity<ApiResponse<ThreadResponse>> {
+        return try {
+            val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
+            
+            val thread = threadService.create(
+                boardId = boardId,
+                authorId = authorId,
+                req = req
+            )
 
-        // ThreadResponse.from()은 LAZY 로딩 때문에 null을 반환할 수 있으므로 직접 생성
-        return ThreadResponse(
-            id = thread.id ?: throw IllegalStateException("Thread ID가 생성되지 않았습니다."),
-            boardId = boardId,
-            authorId = thread.author?.id,
-            title = thread.title,
-            content = thread.content,
-            createdAt = thread.createdAt ?: java.time.Instant.now()
-        )
+            // ThreadResponse.from()은 LAZY 로딩 때문에 null을 반환할 수 있으므로 직접 생성
+            val response = ThreadResponse(
+                id = thread.id ?: throw IllegalStateException("Thread ID가 생성되지 않았습니다."),
+                boardId = boardId,
+                authorId = thread.author?.id,
+                title = thread.title,
+                content = thread.content,
+                createdAt = thread.createdAt ?: java.time.Instant.now()
+            )
+            ResponseHelper.ok(response, "게시글이 생성되었습니다.")
+        } catch (e: IllegalArgumentException) {
+            ResponseHelper.unauthorized(e.message ?: "인증이 필요합니다.")
+        } catch (e: Exception) {
+            ResponseHelper.error("THREAD_CREATE_FAILED", "게시글 생성 중 오류가 발생했습니다.")
+        }
     }
 
     @DeleteMapping("/{threadId}")
@@ -90,8 +107,14 @@ class ThreadController(
     fun deleteThread(
         @AuthenticationPrincipal me: JwtPrincipal?,
         @PathVariable threadId: UUID
-    ): Map<String, String> {
-        threadService.delete(threadId)
-        return mapOf("message" to "게시글이 삭제되었습니다.")
+    ): ResponseEntity<ApiResponse<Nothing>> {
+        return try {
+            threadService.delete(threadId)
+            ResponseHelper.ok<Nothing>("게시글이 삭제되었습니다.")
+        } catch (e: IllegalArgumentException) {
+            ResponseHelper.notFound("게시글을 찾을 수 없습니다.")
+        } catch (e: Exception) {
+            ResponseHelper.error("THREAD_DELETE_FAILED", "게시글 삭제 중 오류가 발생했습니다.")
+        }
     }
 }

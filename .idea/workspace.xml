@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="어드민 페이지 추가">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/BoardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/kotlin/main/com/rev/app/api/service/community/BoardService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.kotlin/sessions/kotlin-compiler-16120029953377123645.salive" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/revdb.lock.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/revdb.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/revdb.mv.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,15 +252,7 @@
       <workItem from="1766975351295" duration="759000" />
       <workItem from="1766976257711" duration="16000" />
       <workItem from="1766976386763" duration="3673000" />
-      <workItem from="1766980907893" duration="28471000" />
-    </task>
-    <task id="LOCAL-00028" summary="회원가입 기능 추가">
-      <option name="closed" value="true" />
-      <created>1766914841120</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1766914841120</updated>
+      <workItem from="1766980907893" duration="28748000" />
     </task>
     <task id="LOCAL-00029" summary="게시판 기능 업데이트">
       <option name="closed" value="true" />
@@ -641,7 +638,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767344817124</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="어드민 페이지 추가">
+      <option name="closed" value="true" />
+      <created>1767363000468</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1767363000468</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
