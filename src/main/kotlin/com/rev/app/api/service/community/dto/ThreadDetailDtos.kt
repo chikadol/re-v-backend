@@ -9,7 +9,6 @@ import java.util.UUID
  */
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 data class ThreadDetailRes(
-    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
     val thread: ThreadRes,
     val commentCount: Long,
     val bookmarkCount: Long,

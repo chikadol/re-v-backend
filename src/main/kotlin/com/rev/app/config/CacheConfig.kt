@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.cache.CacheManager
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.support.NoOpCacheManager
@@ -38,9 +39,10 @@ class CacheConfig {
             connection.close()
             
             // Redis 사용 가능하면 RedisCacheManager 생성
-            // ObjectMapper에 JSR310 모듈 추가하여 Instant 직렬화 지원
+            // ObjectMapper에 Kotlin 모듈과 JSR310 모듈 추가
             val objectMapper = ObjectMapper().apply {
-                registerModule(JavaTimeModule())
+                registerKotlinModule() // Kotlin data class 역직렬화 지원
+                registerModule(JavaTimeModule()) // Instant 직렬화 지원
                 // 알 수 없는 속성 무시
                 configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 // 타입 정보를 포함하여 역직렬화 시 정확한 타입으로 복원
