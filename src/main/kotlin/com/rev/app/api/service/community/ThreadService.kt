@@ -3,6 +3,8 @@ package com.rev.app.api.service.community
 import com.rev.app.api.controller.PageResponse
 import com.rev.app.api.controller.dto.ThreadCreateRequest
 import com.rev.app.api.controller.dto.ThreadResponse
+import com.rev.app.api.error.ErrorCode
+import com.rev.app.api.error.ResourceNotFoundException
 import com.rev.app.domain.community.repo.ThreadRepository
 import com.rev.app.api.service.community.dto.CreateThreadReq
 import com.rev.app.api.service.community.dto.ThreadDetailRes
@@ -62,7 +64,11 @@ class ThreadService(
     private fun getThreadWithRelations(threadId: UUID): ThreadEntity {
         // JOIN FETCH로 N+1 문제 해결
         val thread = threadRepository.findByIdWithRelations(threadId)
-            ?: throw IllegalArgumentException("Thread not found: $threadId")
+            ?: throw ResourceNotFoundException(
+                errorCode = ErrorCode.THREAD_NOT_FOUND,
+                message = "게시글을 찾을 수 없습니다: $threadId",
+                details = mapOf("threadId" to threadId.toString())
+            )
         
         return thread
     }
