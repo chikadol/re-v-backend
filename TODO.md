@@ -116,10 +116,11 @@
    - ✅ 총 개수, 페이지 정보 포함
    - ✅ 모든 페이징 API에 적용
 
-9. **성능 최적화**
-   - React.memo 활용
-   - 코드 스플리팅
-   - 이미지 최적화
+9. ✅ **성능 최적화**
+   - ✅ React.memo 활용 (CommentList, ErrorMessage, LoadingSpinner 등)
+   - ✅ 코드 스플리팅 (React.lazy, Suspense)
+   - ✅ 이미지 최적화 (OptimizedImage 컴포넌트, lazy loading)
+   - ✅ Redis 캐시 최적화 (ThreadDetailRes, ThreadRes에 @JsonTypeInfo 추가)
 
 ---
 

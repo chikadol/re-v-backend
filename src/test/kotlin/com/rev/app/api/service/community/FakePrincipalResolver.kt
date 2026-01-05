@@ -19,7 +19,7 @@ class FakePrincipalResolver : HandlerMethodArgumentResolver {
         binder: WebDataBinderFactory?
     ): Any = JwtPrincipal(
         userId = UUID.fromString("11111111-1111-1111-1111-111111111111"),
-        email = TODO(),
-        roles = TODO()
+        email = "test@example.com",
+        roles = listOf("USER")
     )
 }

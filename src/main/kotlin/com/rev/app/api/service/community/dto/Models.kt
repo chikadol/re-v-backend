@@ -1,5 +1,6 @@
 package com.rev.app.api.service.community.dto
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.rev.app.domain.community.entity.ThreadEntity
 import java.time.Instant
 import java.util.UUID
@@ -27,6 +28,11 @@ data class BoardCreateRequest(
     val description: String? = null
 )
 
+/**
+ * 게시글 응답 DTO
+ * Redis 캐싱을 위한 Jackson 타입 정보 포함
+ */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 data class ThreadRes(
     val id: UUID,
     val title: String,

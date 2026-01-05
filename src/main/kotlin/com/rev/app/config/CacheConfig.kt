@@ -44,7 +44,7 @@ class CacheConfig {
                 // 알 수 없는 속성 무시
                 configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 // 타입 정보를 포함하여 역직렬화 시 정확한 타입으로 복원
-                // @JsonTypeInfo 어노테이션을 사용하므로 activateDefaultTyping은 선택적
+                // @JsonTypeInfo 어노테이션과 함께 사용하여 제네릭 타입 역직렬화 지원
                 activateDefaultTyping(
                     LaissezFaireSubTypeValidator.instance,
                     ObjectMapper.DefaultTyping.NON_FINAL,

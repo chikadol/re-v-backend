@@ -37,8 +37,7 @@ class ThreadService(
 ) {
     private val allowedReactions = setOf("LIKE", "LOVE")
 
-    // @Cacheable(value = ["threadDetail"], key = "#threadId.toString() + '_' + (#meId?.toString() ?: 'anonymous')")
-    // 일시적으로 캐싱 비활성화 (Redis 역직렬화 문제 해결 전까지)
+    @Cacheable(value = ["threadDetail"], key = "#threadId.toString() + '_' + (#meId?.toString() ?: 'anonymous')")
     fun getDetail(
         threadId: UUID,
         meId: UUID? = null
