@@ -37,27 +37,34 @@ class ThreadService(
 ) {
     private val allowedReactions = setOf("LIKE", "LOVE")
 
-    @Cacheable(value = ["threadDetail"], key = "#threadId.toString() + '_' + (#meId?.toString() ?: 'anonymous')")
+    // @Cacheable(value = ["threadDetail"], key = "#threadId.toString() + '_' + (#meId?.toString() ?: 'anonymous')")
+    // 일시적으로 캐싱 비활성화 (Redis 역직렬화 문제 해결 전까지)
     fun getDetail(
         threadId: UUID,
         meId: UUID? = null
     ): ThreadDetailRes {
-        val thread = getThreadWithRelations(threadId)
-        
-        val commentCount = getCommentCount(threadId)
-        val bookmarkCount = getBookmarkCount(threadId)
-        val reactions = getReactions(threadId)
-        val myReaction = getMyReaction(threadId, meId)
-        val bookmarked = getBookmarked(threadId, meId)
+        try {
+            val thread = getThreadWithRelations(threadId)
+            
+            val commentCount = getCommentCount(threadId)
+            val bookmarkCount = getBookmarkCount(threadId)
+            val reactions = getReactions(threadId)
+            val myReaction = getMyReaction(threadId, meId)
+            val bookmarked = getBookmarked(threadId, meId)
 
-        return ThreadDetailRes(
-            thread = thread.toRes(),
-            commentCount = commentCount,
-            bookmarkCount = bookmarkCount,
-            reactions = reactions,
-            myReaction = myReaction,
-            bookmarked = bookmarked
-        )
+            return ThreadDetailRes(
+                thread = thread.toRes(),
+                commentCount = commentCount,
+                bookmarkCount = bookmarkCount,
+                reactions = reactions,
+                myReaction = myReaction,
+                bookmarked = bookmarked
+            )
+        } catch (e: Exception) {
+            println("❌ ThreadService.getDetail 에러: ${e.javaClass.simpleName} - ${e.message}")
+            e.printStackTrace()
+            throw e
+        }
     }
     
     @Transactional(readOnly = true)

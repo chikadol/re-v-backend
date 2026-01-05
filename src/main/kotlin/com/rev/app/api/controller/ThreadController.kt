@@ -152,10 +152,13 @@ class ThreadController(
             val meId = me?.userId
             val detail = threadService.getDetail(threadId, meId)
             ResponseHelper.ok(detail)
+        } catch (e: com.rev.app.api.error.ResourceNotFoundException) {
+            ResponseHelper.notFound(e.message ?: "게시글을 찾을 수 없습니다.")
         } catch (e: IllegalArgumentException) {
             ResponseHelper.notFound("게시글을 찾을 수 없습니다.")
         } catch (e: Exception) {
-            ResponseHelper.error("THREAD_DETAIL_FAILED", "게시글을 불러오는 중 오류가 발생했습니다.")
+            e.printStackTrace()
+            ResponseHelper.error("THREAD_DETAIL_FAILED", "게시글을 불러오는 중 오류가 발생했습니다: ${e.message}")
         }
     }
 

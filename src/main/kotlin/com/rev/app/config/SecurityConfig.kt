@@ -99,6 +99,7 @@ class SecurityConfig(
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
+                    .requestMatchers("/actuator/**").permitAll() // 모니터링 엔드포인트 허용
                     .anyRequest().permitAll()
             }
 

@@ -92,6 +92,11 @@ dependencies {
     
     // Rate Limiting
     implementation("com.bucket4j:bucket4j-core:8.10.1")
+    
+    // Actuator (모니터링)
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    // Prometheus 메트릭 수집
+    implementation("io.micrometer:micrometer-registry-prometheus")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
