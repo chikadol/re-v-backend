@@ -82,6 +82,16 @@ dependencies {
 
     // OAuth2 Client (소셜 로그인)
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    
+    // Redis (캐싱)
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+    
+    // 구조화된 로깅 (JSON)
+    implementation("net.logstash.logback:logstash-logback-encoder:7.4")
+    
+    // Rate Limiting
+    implementation("com.bucket4j:bucket4j-core:8.10.1")
 
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
@@ -178,13 +188,18 @@ if (maybeExisting is JacocoCoverageVerification) {
 }
 
 
-// Flyway Gradle 플러그인 설정 (실행 시에만 사용; 일반 애플리케이션 런타임은 Spring Boot가 관리)
-// 환경변수 없으면 굳이 url/user/password를 지정하지 않아도 됨. 지정하려면 주석 해제해서 사용.
+// Flyway Gradle 플러그인 설정
+// 주의: Flyway Gradle 플러그인은 PostgreSQL 드라이버를 찾지 못할 수 있습니다.
+// 해결 방법: Spring Boot 자동 마이그레이션 사용 (권장)
+//   - application.yml에서 flyway.enabled: true 설정됨
+//   - ./gradlew bootRun 실행 시 자동으로 마이그레이션 실행
+// 또는 Flyway CLI 사용:
+//   brew install flyway
+//   flyway -url=jdbc:postgresql://... -user=... -password=... -schemas=rev migrate
 flyway {
     locations = arrayOf("classpath:db/migration")
-    // url = ...
-    // user = ...
-    // password = ...
+    // gradle.properties에서 설정을 읽어옴
+    // PostgreSQL 드라이버 클래스패스 문제로 인해 Gradle 플러그인 사용 시 오류 발생 가능
 }
 
 sourceSets {

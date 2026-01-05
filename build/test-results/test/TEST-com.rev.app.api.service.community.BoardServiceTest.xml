@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.rev.app.api.service.community.BoardServiceTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-01-04T13:11:24.102Z" hostname="ileuleuui-MacBookPro.local" time="0.774">
+  <properties/>
+  <testcase name="list - 성공()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.736"/>
+  <testcase name="delete - 성공()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.004"/>
+  <testcase name="create - 성공()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.022"/>
+  <testcase name="list - 빈 목록()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.002"/>
+  <testcase name="delete - 존재하지 않는 게시판 삭제 시 예외 발생()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.002"/>
+  <testcase name="create - slug 중복 시 예외 발생()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.001"/>
+  <testcase name="get - 존재하지 않는 게시판 조회 시 예외 발생()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.001"/>
+  <testcase name="get - 성공()" classname="com.rev.app.api.service.community.BoardServiceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (/Users/ileuleu/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.14.19/154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1/byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

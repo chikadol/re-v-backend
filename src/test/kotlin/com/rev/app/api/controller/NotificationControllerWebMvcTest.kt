@@ -55,7 +55,7 @@ class NotificationControllerWebMvcTest {
             .`when`(service).listMine(
                 ArgumentMatchers.eq(FIXED_UID),
                 ArgumentMatchers.any(Pageable::class.java),
-                bool = false,
+                ArgumentMatchers.any()
             )
 
         mockMvc.perform(get("/api/notifications").accept(MediaType.APPLICATION_JSON))

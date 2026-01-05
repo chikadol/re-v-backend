@@ -25,6 +25,24 @@ spring:
         dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.H2Dialect}
         default_schema: rev
 
+  # Redis 설정 (캐싱용)
+  # Redis가 없어도 애플리케이션이 작동하도록 설정
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+        shutdown-timeout: 100ms
+      # Redis 연결 실패 시에도 애플리케이션 시작 허용
+      repositories:
+        enabled: false
+
   # OAuth2 설정은 환경 변수가 설정된 경우에만 활성화됩니다
   # 소셜 로그인을 사용하려면 다음 환경 변수를 설정하세요:
   # GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
@@ -39,9 +57,10 @@ spring:
   # Flyway 설정 (연결 문제 시 일시적으로 비활성화 가능)
   # Supabase 연결이 안 될 때는 false로 설정
   flyway:
-    enabled: false
+    enabled: true  # 애플리케이션 시작 시 자동 마이그레이션
     baseline-on-migrate: true
     locations: classpath:db/migration
+    schemas: rev
 
 server:
   port: 8080

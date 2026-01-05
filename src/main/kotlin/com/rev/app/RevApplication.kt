@@ -10,7 +10,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication(
     scanBasePackages = ["com.rev.app"],
-    exclude = [org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration::class]
+    exclude = [
+        org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration::class,
+        // Redis가 없어도 애플리케이션이 시작되도록 자동 구성 제외 (선택적)
+        // org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration::class
+    ]
 )
 @ConfigurationPropertiesScan
 @EnableConfigurationProperties(JwtProperties::class)

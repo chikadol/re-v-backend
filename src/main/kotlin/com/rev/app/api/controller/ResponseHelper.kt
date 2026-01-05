@@ -24,7 +24,7 @@ object ResponseHelper {
     }
 
     /**
-     * 페이징된 데이터 성공 응답 생성
+     * 페이징된 데이터 성공 응답 생성 (Page<T>에서 PageResponse로 변환)
      */
     fun <T> ok(page: Page<T>, message: String? = null): ResponseEntity<ApiResponse<PageResponse<T>>> {
         val pageResponse = PageResponse(
@@ -36,6 +36,13 @@ object ResponseHelper {
             first = page.isFirst,
             last = page.isLast
         )
+        return ResponseEntity.ok(ApiResponse.success(pageResponse, message))
+    }
+
+    /**
+     * PageResponse를 직접 받는 성공 응답 생성 (캐시된 PageResponse 사용)
+     */
+    fun <T> ok(pageResponse: PageResponse<T>, message: String? = null): ResponseEntity<ApiResponse<PageResponse<T>>> {
         return ResponseEntity.ok(ApiResponse.success(pageResponse, message))
     }
 

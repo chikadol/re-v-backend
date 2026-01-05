@@ -26,9 +26,10 @@ interface ThreadRepository : JpaRepository<ThreadEntity, UUID> {
     @Query(
         """
         select distinct th from ThreadEntity th
-        join th.board b
-        left join ThreadTagEntity tt on tt.thread = th
-        left join TagEntity tg on tg = tt.tag
+        join fetch th.board b
+        join fetch th.author a
+        left join fetch ThreadTagEntity tt on tt.thread = th
+        left join fetch TagEntity tg on tg = tt.tag
         where b.id = :boardId and th.isPrivate = false
           and (:namesEmpty = true or lower(tg.name) in :names)
         """
@@ -39,6 +40,20 @@ interface ThreadRepository : JpaRepository<ThreadEntity, UUID> {
         @Param("namesEmpty") namesEmpty: Boolean,
         pageable: Pageable
     ): Page<ThreadEntity>
+
+    // 태그와 함께 조회 (N+1 문제 해결)
+    @Query(
+        """
+        select th from ThreadEntity th
+        join fetch th.board b
+        join fetch th.author a
+        where b.id = :boardId and th.isPrivate = false
+        """
+    )
+    fun findByBoard_IdAndIsPrivateFalseWithRelations(
+        @Param("boardId") boardId: UUID,
+        pageable: Pageable
+    ): List<ThreadEntity>
 
     // 검색 기능: 제목, 내용, 댓글 내용으로 검색
     @Query(
@@ -66,6 +81,18 @@ interface ThreadRepository : JpaRepository<ThreadEntity, UUID> {
     ): Page<ThreadEntity>
 
     fun countByAuthor_Id(authorId: UUID): Long
+    
+    // JOIN FETCH로 N+1 문제 해결
+    @Query(
+        """
+        select th from ThreadEntity th
+        left join fetch th.board b
+        left join fetch th.author a
+        left join fetch th.parent p
+        where th.id = :threadId
+        """
+    )
+    fun findByIdWithRelations(@Param("threadId") threadId: UUID): ThreadEntity?
 }
 
 interface CommentRepository : JpaRepository<CommentEntity, UUID> {

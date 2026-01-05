@@ -1,5 +1,6 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.api.controller.PageResponse
 import com.rev.app.api.controller.dto.ThreadCreateRequest
 import com.rev.app.api.controller.dto.ThreadResponse
 import com.rev.app.domain.community.repo.ThreadRepository
@@ -13,6 +14,8 @@ import com.rev.app.domain.community.entity.ThreadEntity
 import com.rev.app.domain.community.model.TagEntity
 import com.rev.app.domain.community.model.ThreadTagEntity
 import com.rev.app.domain.community.repo.*
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -32,6 +35,7 @@ class ThreadService(
 ) {
     private val allowedReactions = setOf("LIKE", "LOVE")
 
+    @Cacheable(value = ["threadDetail"], key = "#threadId.toString() + '_' + (#meId?.toString() ?: 'anonymous')")
     fun getDetail(
         threadId: UUID,
         meId: UUID? = null
@@ -56,13 +60,9 @@ class ThreadService(
     
     @Transactional(readOnly = true)
     private fun getThreadWithRelations(threadId: UUID): ThreadEntity {
-        val thread = threadRepository.findById(threadId)
-            .orElseThrow { IllegalArgumentException("Thread not found: $threadId") }
-
-        // LAZY 로딩된 필드들을 명시적으로 접근하여 로드
-        thread.board?.id
-        thread.author?.id
-        thread.parent?.id
+        // JOIN FETCH로 N+1 문제 해결
+        val thread = threadRepository.findByIdWithRelations(threadId)
+            ?: throw IllegalArgumentException("Thread not found: $threadId")
         
         return thread
     }
@@ -122,6 +122,7 @@ class ThreadService(
     private val tagRegex = Regex("^[A-Za-z0-9_-]{1,30}$")
     private val maxTags = 5
 
+    @CacheEvict(value = ["threads"], allEntries = true) // 게시글 생성 시 목록 캐시 무효화
     @Transactional
     fun createInBoard(
         userId: UUID,
@@ -154,7 +155,78 @@ class ThreadService(
     @Transactional(readOnly = true)
     fun listPublic(boardId: UUID, pageable: Pageable): Page<ThreadRes> {
         val page = threadRepository.findByBoard_IdAndIsPrivateFalse(boardId, pageable)
-        return page.map { it.toRes() } // 기본은 태그 비포함
+        
+        // N+1 문제 해결: 배치로 태그 조회
+        val threadIds = page.content.mapNotNull { it.id }
+        val tagsMap = if (threadIds.isNotEmpty()) {
+            threadTagRepository.findByThread_IdIn(threadIds)
+                .groupBy { it.thread?.id }
+                .mapValues { (_, tags) -> tags.map { it.tag.name } }
+        } else {
+            emptyMap()
+        }
+        
+        return page.map { thread ->
+            val tagNames = tagsMap[thread.id] ?: emptyList()
+            thread.toResWithTags(tagNames)
+        }
+    }
+
+    /**
+     * PageResponse를 반환하는 캐시 가능한 메서드
+     * PageImpl 대신 PageResponse를 캐싱하여 역직렬화 문제 해결
+     */
+    @Cacheable(
+        value = ["threads"],
+        key = "#boardId.toString() + '_' + #pageable.pageNumber + '_' + #pageable.pageSize + '_' + (#tags?.joinToString(',') ?: 'none')"
+    )
+    @Transactional(readOnly = true)
+    fun listPublicAsPageResponse(
+        boardId: UUID,
+        pageable: Pageable,
+        tags: List<String>? = null
+    ): PageResponse<ThreadRes> {
+        val page = if (tags.isNullOrEmpty()) {
+            listPublic(boardId, pageable)
+        } else {
+            listPublic(boardId, pageable, tags)
+        }
+        
+        return PageResponse(
+            content = page.content,
+            totalElements = page.totalElements,
+            totalPages = page.totalPages,
+            number = page.number,
+            size = page.size,
+            first = page.isFirst,
+            last = page.isLast
+        )
+    }
+
+    /**
+     * 검색 결과를 PageResponse로 반환하는 캐시 가능한 메서드
+     */
+    @Cacheable(
+        value = ["threads"],
+        key = "#boardId.toString() + '_search_' + #keyword + '_' + #pageable.pageNumber + '_' + #pageable.pageSize"
+    )
+    @Transactional(readOnly = true)
+    fun searchAsPageResponse(
+        boardId: UUID,
+        keyword: String,
+        pageable: Pageable
+    ): PageResponse<ThreadRes> {
+        val page = search(boardId, keyword, pageable)
+        
+        return PageResponse(
+            content = page.content,
+            totalElements = page.totalElements,
+            totalPages = page.totalPages,
+            number = page.number,
+            size = page.size,
+            first = page.isFirst,
+            last = page.isLast
+        )
     }
 
     // ✅ 새 기능: 태그 필터 버전
@@ -176,13 +248,19 @@ class ThreadService(
             pageable = pageable
         )
 
-        // ✅ id null-safe 처리, per-thread 조회 (간단/안전)
-        return page.map { th ->
-            val id = th.id
-            val tagNames =
-                if (id != null) threadTagRepository.findByThread_Id(id).map { it.tag.name }
-                else emptyList()
-            th.toResWithTags(tagNames)
+        // N+1 문제 해결: 배치로 태그 조회
+        val threadIds = page.content.mapNotNull { it.id }
+        val tagsMap = if (threadIds.isNotEmpty()) {
+            threadTagRepository.findByThread_IdIn(threadIds)
+                .groupBy { it.thread?.id }
+                .mapValues { (_, tags) -> tags.map { it.tag.name } }
+        } else {
+            emptyMap()
+        }
+
+        return page.map { thread ->
+            val tagNames = tagsMap[thread.id] ?: emptyList()
+            thread.toResWithTags(tagNames)
         }
     }
 
@@ -199,12 +277,19 @@ class ThreadService(
             pageable = pageable
         )
         
-        return page.map { th ->
-            val id = th.id
-            val tagNames =
-                if (id != null) threadTagRepository.findByThread_Id(id).map { it.tag.name }
-                else emptyList()
-            th.toResWithTags(tagNames)
+        // N+1 문제 해결: 배치로 태그 조회
+        val threadIds = page.content.mapNotNull { it.id }
+        val tagsMap = if (threadIds.isNotEmpty()) {
+            threadTagRepository.findByThread_IdIn(threadIds)
+                .groupBy { it.thread?.id }
+                .mapValues { (_, tags) -> tags.map { it.tag.name } }
+        } else {
+            emptyMap()
+        }
+        
+        return page.map { thread ->
+            val tagNames = tagsMap[thread.id] ?: emptyList()
+            thread.toResWithTags(tagNames)
         }
     }
 
@@ -258,6 +343,7 @@ class ThreadService(
         return threadRepository.saveAndFlush(entity)   // ✅ flush하여 ID와 createdAt이 즉시 반영되도록
     }
 
+    @CacheEvict(value = ["threadDetail", "threads"], allEntries = true) // 게시글 삭제 시 관련 캐시 무효화
     @Transactional
     fun delete(threadId: UUID) {
         if (!threadRepository.existsById(threadId)) {

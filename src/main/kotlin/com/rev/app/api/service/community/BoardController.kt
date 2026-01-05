@@ -1,5 +1,7 @@
 package com.rev.app.api.service.community
 
+import com.rev.app.api.controller.ResponseHelper
+import com.rev.app.api.controller.dto.ApiResponse
 import com.rev.app.api.security.JwtPrincipal
 import com.rev.app.api.service.community.dto.BoardRes
 import com.rev.app.api.service.community.dto.BoardCreateRequest
@@ -18,12 +20,24 @@ class BoardController(
     private val boardService: BoardService
 ) {
     @GetMapping
-    fun list(): ResponseEntity<List<BoardRes>> =
-        ResponseEntity.ok(boardService.list())
+    fun list(): ResponseEntity<ApiResponse<List<BoardRes>>> {
+        return try {
+            val boards = boardService.list()
+            ResponseHelper.ok(boards)
+        } catch (e: Exception) {
+            ResponseHelper.error("BOARD_LIST_FAILED", "게시판 목록을 불러오는 중 오류가 발생했습니다.")
+        }
+    }
 
     @GetMapping("/{id}")
-    fun get(@PathVariable id: UUID): ResponseEntity<BoardRes> =
-        ResponseEntity.ok(boardService.get(id))
+    fun get(@PathVariable id: UUID): ResponseEntity<ApiResponse<BoardRes>> {
+        return try {
+            val board = boardService.get(id)
+            ResponseHelper.ok(board)
+        } catch (e: Exception) {
+            ResponseHelper.notFound("게시판을 찾을 수 없습니다.")
+        }
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -31,9 +45,13 @@ class BoardController(
     fun create(
         @AuthenticationPrincipal me: JwtPrincipal?,
         @Valid @RequestBody request: BoardCreateRequest
-    ): ResponseEntity<BoardRes> {
-        val board = boardService.create(request)
-        return ResponseEntity.status(HttpStatus.CREATED).body(board)
+    ): ResponseEntity<ApiResponse<BoardRes>> {
+        return try {
+            val board = boardService.create(request)
+            ResponseHelper.ok(board, "게시판이 생성되었습니다.")
+        } catch (e: Exception) {
+            ResponseHelper.error("BOARD_CREATE_FAILED", "게시판 생성 중 오류가 발생했습니다.")
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -42,8 +60,12 @@ class BoardController(
     fun delete(
         @AuthenticationPrincipal me: JwtPrincipal?,
         @PathVariable id: UUID
-    ): ResponseEntity<Map<String, String>> {
-        boardService.delete(id)
-        return ResponseEntity.ok(mapOf("message" to "게시판이 삭제되었습니다."))
+    ): ResponseEntity<ApiResponse<Nothing>> {
+        return try {
+            boardService.delete(id)
+            ResponseHelper.ok<Nothing>(message = "게시판이 삭제되었습니다.")
+        } catch (e: Exception) {
+            ResponseHelper.error("BOARD_DELETE_FAILED", "게시판 삭제 중 오류가 발생했습니다.")
+        }
     }
 }
