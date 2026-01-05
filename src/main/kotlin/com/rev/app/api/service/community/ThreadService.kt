@@ -181,11 +181,13 @@ class ThreadService(
     /**
      * PageResponse를 반환하는 캐시 가능한 메서드
      * PageImpl 대신 PageResponse를 캐싱하여 역직렬화 문제 해결
+     * 
+     * 주의: Redis 캐시 형식 변경으로 인해 기존 캐시를 비운 후 사용해야 함
      */
-    @Cacheable(
-        value = ["threads"],
-        key = "#boardId.toString() + '_' + #pageable.pageNumber + '_' + #pageable.pageSize + '_' + (#tags?.joinToString(',') ?: 'none')"
-    )
+    // @Cacheable(
+    //     value = ["threads"],
+    //     key = "#boardId.toString() + '_' + #pageable.pageNumber + '_' + #pageable.pageSize + '_' + (#tags?.joinToString(',') ?: 'none')"
+    // )
     @Transactional(readOnly = true)
     fun listPublicAsPageResponse(
         boardId: UUID,
@@ -211,11 +213,13 @@ class ThreadService(
 
     /**
      * 검색 결과를 PageResponse로 반환하는 캐시 가능한 메서드
+     * 
+     * 주의: Redis 캐시 형식 변경으로 인해 기존 캐시를 비운 후 사용해야 함
      */
-    @Cacheable(
-        value = ["threads"],
-        key = "#boardId.toString() + '_search_' + #keyword + '_' + #pageable.pageNumber + '_' + #pageable.pageSize"
-    )
+    // @Cacheable(
+    //     value = ["threads"],
+    //     key = "#boardId.toString() + '_search_' + #keyword + '_' + #pageable.pageNumber + '_' + #pageable.pageSize"
+    // )
     @Transactional(readOnly = true)
     fun searchAsPageResponse(
         boardId: UUID,

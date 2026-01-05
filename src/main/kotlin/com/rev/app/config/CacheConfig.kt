@@ -1,5 +1,6 @@
 package com.rev.app.config
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
@@ -40,12 +41,14 @@ class CacheConfig {
             // ObjectMapper에 JSR310 모듈 추가하여 Instant 직렬화 지원
             val objectMapper = ObjectMapper().apply {
                 registerModule(JavaTimeModule())
-                // 알 수 없는 속성 무시 (PageImpl 역직렬화를 위해)
+                // 알 수 없는 속성 무시
                 configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 // 타입 정보를 포함하여 역직렬화 시 정확한 타입으로 복원
+                // @JsonTypeInfo 어노테이션을 사용하므로 activateDefaultTyping은 선택적
                 activateDefaultTyping(
                     LaissezFaireSubTypeValidator.instance,
-                    ObjectMapper.DefaultTyping.NON_FINAL
+                    ObjectMapper.DefaultTyping.NON_FINAL,
+                    JsonTypeInfo.As.PROPERTY
                 )
             }
             

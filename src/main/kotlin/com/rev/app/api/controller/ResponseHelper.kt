@@ -1,5 +1,7 @@
 package com.rev.app.api.controller
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.annotation.JsonTypeName
 import com.rev.app.api.controller.dto.ApiResponse
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
@@ -90,8 +92,11 @@ object ResponseHelper {
 
 /**
  * 페이징 응답 데이터
+ * Redis 캐싱을 위한 Jackson 타입 정보 포함
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 data class PageResponse<T>(
+    @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
     val content: List<T>,
     val totalElements: Long,
     val totalPages: Int,

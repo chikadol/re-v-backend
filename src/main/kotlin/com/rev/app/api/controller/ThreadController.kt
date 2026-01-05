@@ -1,6 +1,6 @@
 package com.rev.app.api.controller
 
-import com.rev.app.api.controller.dto.ApiResponse
+import com.rev.app.api.controller.dto.ApiResponse as ApiResponseDto
 import com.rev.app.api.controller.dto.ThreadCreateRequest
 import com.rev.app.api.controller.dto.ThreadResponse
 import com.rev.app.api.security.JwtPrincipal
@@ -43,22 +43,18 @@ class ThreadController(
 
     @Operation(
         summary = "게시글 목록 조회",
-        description = """
-            특정 게시판의 게시글 목록을 페이징하여 조회합니다.
-            
-            ## 파라미터
-            - `boardId`: 게시판 UUID
-            - `tags`: 태그 필터 (선택, 여러 개 가능)
-            - `search`: 검색어 (선택, 제목/내용 검색)
-            - `page`: 페이지 번호 (기본값: 0)
-            - `size`: 페이지 크기 (기본값: 20)
-            - `sort`: 정렬 기준 (예: `createdAt,desc`)
-            
-            ## 예제
-            - 태그 필터: `/api/threads/{boardId}/threads?tags=공연&tags=리뷰`
-            - 검색: `/api/threads/{boardId}/threads?search=아이돌`
-            - 페이징: `/api/threads/{boardId}/threads?page=0&size=10&sort=createdAt,desc`
-        """.trimIndent()
+        description = "특정 게시판의 게시글 목록을 페이징하여 조회합니다.\n\n" +
+            "## 파라미터\n" +
+            "- `boardId`: 게시판 UUID\n" +
+            "- `tags`: 태그 필터 (선택, 여러 개 가능)\n" +
+            "- `search`: 검색어 (선택, 제목/내용 검색)\n" +
+            "- `page`: 페이지 번호 (기본값: 0)\n" +
+            "- `size`: 페이지 크기 (기본값: 20)\n" +
+            "- `sort`: 정렬 기준 (예: `createdAt,desc`)\n\n" +
+            "## 예제\n" +
+            "- 태그 필터: `/api/threads/{boardId}/threads?tags=공연&tags=리뷰`\n" +
+            "- 검색: `/api/threads/{boardId}/threads?search=아이돌`\n" +
+            "- 페이징: `/api/threads/{boardId}/threads?page=0&size=10&sort=createdAt,desc`"
     )
     @ApiResponses(
         value = [
@@ -68,30 +64,28 @@ class ThreadController(
                 content = [Content(
                     mediaType = "application/json",
                     examples = [ExampleObject(
-                        value = """
-                            {
-                              "success": true,
-                              "data": {
-                                "content": [
-                                  {
-                                    "id": "123e4567-e89b-12d3-a456-426614174000",
-                                    "boardId": "123e4567-e89b-12d3-a456-426614174001",
-                                    "title": "게시글 제목",
-                                    "content": "게시글 내용",
-                                    "authorId": "123e4567-e89b-12d3-a456-426614174002",
-                                    "createdAt": "2024-01-01T00:00:00Z",
-                                    "tags": ["태그1", "태그2"]
-                                  }
-                                ],
-                                "totalElements": 100,
-                                "totalPages": 10,
-                                "number": 0,
-                                "size": 20,
-                                "first": true,
-                                "last": false
-                              }
-                            }
-                        """.trimIndent()
+                        value = "{\n" +
+                            "  \"success\": true,\n" +
+                            "  \"data\": {\n" +
+                            "    \"content\": [\n" +
+                            "      {\n" +
+                            "        \"id\": \"123e4567-e89b-12d3-a456-426614174000\",\n" +
+                            "        \"boardId\": \"123e4567-e89b-12d3-a456-426614174001\",\n" +
+                            "        \"title\": \"게시글 제목\",\n" +
+                            "        \"content\": \"게시글 내용\",\n" +
+                            "        \"authorId\": \"123e4567-e89b-12d3-a456-426614174002\",\n" +
+                            "        \"createdAt\": \"2024-01-01T00:00:00Z\",\n" +
+                            "        \"tags\": [\"태그1\", \"태그2\"]\n" +
+                            "      }\n" +
+                            "    ],\n" +
+                            "    \"totalElements\": 100,\n" +
+                            "    \"totalPages\": 10,\n" +
+                            "    \"number\": 0,\n" +
+                            "    \"size\": 20,\n" +
+                            "    \"first\": true,\n" +
+                            "    \"last\": false\n" +
+                            "  }\n" +
+                            "}"
                     )]
                 )]
             ),
@@ -111,7 +105,7 @@ class ThreadController(
         @RequestParam(name = "search", required = false) search: String?,
         @Parameter(description = "페이징 정보", required = false)
         pageable: Pageable
-    ): ResponseEntity<ApiResponse<com.rev.app.api.controller.PageResponse<ThreadRes>>> {
+    ): ResponseEntity<ApiResponseDto<com.rev.app.api.controller.PageResponse<ThreadRes>>> {
         return try {
             // PageResponse를 반환하는 캐시 가능한 메서드 사용
             val pageResponse = if (!search.isNullOrBlank()) {
@@ -128,15 +122,12 @@ class ThreadController(
 
     @Operation(
         summary = "게시글 상세 조회",
-        description = """
-            특정 게시글의 상세 정보를 조회합니다.
-            
-            ## 반환 정보
-            - 게시글 기본 정보 (제목, 내용, 작성자 등)
-            - 댓글 수, 북마크 수
-            - 반응 수 (좋아요, 사랑해요)
-            - 현재 사용자의 반응 및 북마크 여부
-        """.trimIndent()
+        description = "특정 게시글의 상세 정보를 조회합니다.\n\n" +
+            "## 반환 정보\n" +
+            "- 게시글 기본 정보 (제목, 내용, 작성자 등)\n" +
+            "- 댓글 수, 북마크 수\n" +
+            "- 반응 수 (좋아요, 사랑해요)\n" +
+            "- 현재 사용자의 반응 및 북마크 여부"
     )
     @ApiResponses(
         value = [
@@ -150,13 +141,13 @@ class ThreadController(
             )
         ]
     )
-    @GetMapping("/{threadId}")
+    @GetMapping("/detail/{threadId}")
     fun getDetail(
         @Parameter(description = "게시글 UUID", required = true, example = "123e4567-e89b-12d3-a456-426614174000")
         @PathVariable threadId: UUID,
         @Parameter(hidden = true)
         @AuthenticationPrincipal me: JwtPrincipal?
-    ): ResponseEntity<ApiResponse<ThreadDetailRes>> {
+    ): ResponseEntity<ApiResponseDto<ThreadDetailRes>> {
         return try {
             val meId = me?.userId
             val detail = threadService.getDetail(threadId, meId)
@@ -170,23 +161,19 @@ class ThreadController(
 
     @Operation(
         summary = "게시글 생성",
-        description = """
-            새로운 게시글을 생성합니다.
-            
-            ## 요구사항
-            - 인증 필요 (JWT 토큰)
-            - 제목: 1-200자
-            - 내용: 1-10000자
-            
-            ## 예제 요청
-            ```json
-            {
-              "title": "게시글 제목",
-              "content": "게시글 내용입니다.",
-              "isPrivate": false
-            }
-            ```
-        """.trimIndent()
+        description = "새로운 게시글을 생성합니다.\n\n" +
+            "## 요구사항\n" +
+            "- 인증 필요 (JWT 토큰)\n" +
+            "- 제목: 1-200자\n" +
+            "- 내용: 1-10000자\n\n" +
+            "## 예제 요청\n" +
+            "```json\n" +
+            "{\n" +
+            "  \"title\": \"게시글 제목\",\n" +
+            "  \"content\": \"게시글 내용입니다.\",\n" +
+            "  \"isPrivate\": false\n" +
+            "}\n" +
+            "```"
     )
     @ApiResponses(
         value = [
@@ -215,20 +202,18 @@ class ThreadController(
                 mediaType = "application/json",
                 schema = Schema(implementation = ThreadCreateRequest::class),
                 examples = [ExampleObject(
-                    value = """
-                        {
-                          "title": "새로운 게시글",
-                          "content": "게시글 내용입니다.",
-                          "isPrivate": false
-                        }
-                    """.trimIndent()
+                    value = "{\n" +
+                        "  \"title\": \"새로운 게시글\",\n" +
+                        "  \"content\": \"게시글 내용입니다.\",\n" +
+                        "  \"isPrivate\": false\n" +
+                        "}"
                 )]
             )]
         )
         @RequestBody @Valid req: ThreadCreateRequest,
         @Parameter(hidden = true)
         @AuthenticationPrincipal me: JwtPrincipal?
-    ): ResponseEntity<ApiResponse<ThreadResponse>> {
+    ): ResponseEntity<ApiResponseDto<ThreadResponse>> {
         return try {
             val authorId = me?.userId ?: throw IllegalArgumentException("인증이 필요합니다.")
             
@@ -257,13 +242,10 @@ class ThreadController(
 
     @Operation(
         summary = "게시글 삭제",
-        description = """
-            게시글을 삭제합니다. 관리자 권한이 필요합니다.
-            
-            ## 주의사항
-            - 게시글 삭제 시 관련 댓글도 함께 삭제됩니다.
-            - 삭제된 게시글은 복구할 수 없습니다.
-        """.trimIndent()
+        description = "게시글을 삭제합니다. 관리자 권한이 필요합니다.\n\n" +
+            "## 주의사항\n" +
+            "- 게시글 삭제 시 관련 댓글도 함께 삭제됩니다.\n" +
+            "- 삭제된 게시글은 복구할 수 없습니다."
     )
     @ApiResponses(
         value = [
@@ -286,7 +268,7 @@ class ThreadController(
     fun deleteThread(
         @AuthenticationPrincipal me: JwtPrincipal?,
         @PathVariable threadId: UUID
-    ): ResponseEntity<ApiResponse<Nothing>> {
+    ): ResponseEntity<ApiResponseDto<Nothing>> {
         return try {
             threadService.delete(threadId)
             ResponseHelper.ok<Nothing>("게시글이 삭제되었습니다.")
