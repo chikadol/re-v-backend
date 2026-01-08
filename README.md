@@ -141,6 +141,15 @@ RE-V는 지하 아이돌 공연 정보를 크롤링하고, 커뮤니티 기능�
 - 라우팅: React Router
 - 빌드 도구: Vite
 - 스타일링: CSS Variables (커스텀 디자인 시스템)
+- 테스트: Vitest, Testing Library
+- E2E 테스트: Playwright
+
+### 인프라 및 모니터링
+- 캐싱: Redis (Spring Cache)
+- 모니터링: Prometheus, Grafana
+- 로깅: Logback (JSON 형식, Logstash Encoder)
+- Rate Limiting: Bucket4j
+- 데이터베이스 마이그레이션: Flyway
 
 ---
 
@@ -637,6 +646,145 @@ where b.id = :boardId
 
 ---
 
+### 11. API 응답 형식 통일 및 에러 핸들링 개선
+
+요구사항: 모든 API에서 통일된 응답 형식 사용 및 일관된 에러 처리
+
+구현:
+1. `ApiResponse<T>` 래퍼 클래스 생성
+   - `success`: 요청 성공 여부
+   - `data`: 응답 데이터
+   - `message`: 성공/실패 메시지
+   - `error`: 에러 정보 (실패 시)
+2. `PageResponse<T>` 통일된 페이징 응답 형식
+   - `content`, `totalElements`, `totalPages`, `number`, `size`, `first`, `last`
+3. `GlobalExceptionHandler`에서 통일된 에러 응답 생성
+4. 커스텀 예외 클래스 (`BusinessException`, `ResourceNotFoundException` 등)
+5. 한국어 검증 메시지 자동 변환
+
+코드:
+```kotlin
+// 성공 응답
+ResponseHelper.ok(data, "성공 메시지")
+
+// 에러 응답
+ResponseHelper.error(
+    code = ErrorCode.THREAD_NOT_FOUND.code,
+    message = ErrorCode.THREAD_NOT_FOUND.message,
+    status = ErrorCode.THREAD_NOT_FOUND.status
+)
+```
+
+교훈: 통일된 응답 형식은 프론트엔드 개발을 크게 단순화한다.
+
+---
+
+### 12. 성능 최적화
+
+#### 12.1. N+1 문제 해결
+
+문제: 게시글 목록 조회 시 댓글, 작성자 등 관련 엔티티를 각각 조회하여 성능 저하
+
+해결:
+- `JOIN FETCH`를 사용한 단일 쿼리로 변경
+- 태그는 배치 조회로 최적화
+
+코드:
+```kotlin
+@Query("""
+    select th from ThreadEntity th
+    left join fetch th.board b
+    left join fetch th.author a
+    where th.id = :threadId
+""")
+fun findByIdWithRelations(@Param("threadId") threadId: UUID): ThreadEntity?
+```
+
+#### 12.2. Redis 캐싱 최적화
+
+구현:
+- 게시글 목록 캐싱 (5분 TTL)
+- 게시글 상세 캐싱 (15분 TTL)
+- 게시판 목록 캐싱 (1시간 TTL)
+- Kotlin data class 역직렬화 지원 (`KotlinModule` 추가)
+- `@JsonTypeInfo`를 통한 타입 정보 보존
+
+문제 해결:
+- `ThreadDetailRes`, `ThreadRes`에 `@JsonTypeInfo` 추가
+- Redis 직렬화/역직렬화 문제 해결
+- `CacheConfig`에 `KotlinModule` 등록
+
+#### 12.3. 프론트엔드 성능 최적화
+
+구현:
+- **React.memo 적용**: `CommentList`, `ErrorMessage`, `LoadingSpinner` 등
+- **코드 스플리팅**: `React.lazy`와 `Suspense`를 사용한 페이지별 동적 로딩
+- **이미지 최적화**: `OptimizedImage` 컴포넌트로 lazy loading 및 에러 처리
+- **useCallback**: 함수 참조 안정화로 불필요한 리렌더링 방지
+
+성능 개선 효과:
+- 초기 번들 크기 감소 (코드 스플리팅)
+- 이미지 로딩 최적화 (뷰포트에 보이는 이미지만 로드)
+- 리렌더링 최소화 (React.memo)
+
+#### 12.4. 데이터베이스 인덱스 최적화
+
+구현:
+- Flyway 마이그레이션으로 성능 인덱스 추가
+- 게시글, 댓글, 북마크, 반응 등 주요 테이블에 인덱스 적용
+- 복합 인덱스로 쿼리 성능 향상
+
+---
+
+### 13. 모니터링 및 로깅
+
+#### 13.1. Prometheus & Grafana 통합
+
+구현:
+- Spring Boot Actuator로 메트릭 노출
+- Prometheus로 메트릭 수집
+- Grafana 대시보드 구성
+- Docker Compose로 통합 실행
+
+설정:
+- `/actuator/prometheus` 엔드포인트 활성화
+- `monitoring/prometheus.yml` 설정
+- `monitoring/grafana/` 데이터소스 및 대시보드 설정
+
+#### 13.2. 구조화된 로깅
+
+구현:
+- Logback with Logstash Encoder
+- JSON 형식 로그 출력
+- 로그 레벨별 설정
+
+---
+
+### 14. Rate Limiting
+
+구현:
+- Bucket4j를 사용한 API 요청 제한
+- IP 기반 Rate Limiting
+- 인터셉터를 통한 전역 적용
+
+---
+
+### 15. 테스트 코드 개선
+
+구현:
+- Vitest를 사용한 프론트엔드 단위 테스트
+- Testing Library로 컴포넌트 테스트
+- Playwright로 E2E 테스트
+- 백엔드 테스트 코드 정리 및 개선
+
+테스트 커버리지:
+- `Login.test.tsx`: 로그인 페이지 테스트
+- `BoardPage.test.tsx`: 게시판 페이지 테스트
+- `ThreadDetailPage.test.tsx`: 게시글 상세 페이지 테스트
+- `useAuth.test.tsx`: 인증 훅 테스트
+
+---
+
 ## 데이터베이스 스키마
 
 ### 주요 테이블
@@ -762,5 +910,28 @@ Kotlin에서 mutable property는 스마트 캐스트가 불가능하다. 로컬 
 
 ---
 
-마지막 업데이트: 2025-01-01  
-버전: 1.0.0
+---
+
+## 최근 개선 사항 (2025-01-04)
+
+### 성능 최적화
+- ✅ N+1 문제 해결 (JOIN FETCH 사용)
+- ✅ Redis 캐싱 최적화 (KotlinModule 추가, @JsonTypeInfo 적용)
+- ✅ 프론트엔드 성능 최적화 (React.memo, 코드 스플리팅, 이미지 lazy loading)
+- ✅ 데이터베이스 인덱스 추가
+
+### 코드 품질 개선
+- ✅ API 응답 형식 통일 (ApiResponse, PageResponse)
+- ✅ 에러 핸들링 개선 (GlobalExceptionHandler, 커스텀 예외)
+- ✅ 한국어 검증 메시지 자동 변환
+- ✅ 테스트 코드 정리 및 개선
+
+### 모니터링 및 인프라
+- ✅ Prometheus & Grafana 통합
+- ✅ 구조화된 로깅 (JSON 형식)
+- ✅ Rate Limiting (Bucket4j)
+
+---
+
+마지막 업데이트: 2025-01-04  
+버전: 1.1.0

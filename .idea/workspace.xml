@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="어드민 페이지 추가">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.kotlin/sessions/kotlin-compiler-16120029953377123645.salive" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/revdb.lock.db" beforeDir="false" />
+    <list default="true" id="378681d4-6b5b-48aa-b957-5d324a070622" name="변경" comment="CacheConfig.kt: ObjectMapper에 registerKotlinModule() 추가&#10;Kotlin data class 역직렬화 지원&#10;ThreadDetailDtos.kt: 필드 레벨 @JsonTypeInfo 제거&#10;클래스 레벨만 사용하도록 수정&#10;Redis 캐시 비우기: 기존 잘못된 캐시 데이터 삭제">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/revdb.lock.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/revdb.lock.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/revdb.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/revdb.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/application.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/application.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/error.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/error.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,62 +251,7 @@
       <workItem from="1766976257711" duration="16000" />
       <workItem from="1766976386763" duration="3673000" />
       <workItem from="1766980907893" duration="28748000" />
-    </task>
-    <task id="LOCAL-00029" summary="게시판 기능 업데이트">
-      <option name="closed" value="true" />
-      <created>1766915267761</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1766915267761</updated>
-    </task>
-    <task id="LOCAL-00030" summary="게시판 기능 업데이트">
-      <option name="closed" value="true" />
-      <created>1766915699601</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1766915699601</updated>
-    </task>
-    <task id="LOCAL-00031" summary="게시판 기능 업데이트">
-      <option name="closed" value="true" />
-      <created>1766915917175</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1766915917175</updated>
-    </task>
-    <task id="LOCAL-00032" summary="게시판 기능 업데이트">
-      <option name="closed" value="true" />
-      <created>1766916257745</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1766916257745</updated>
-    </task>
-    <task id="LOCAL-00033" summary="게시판 기능 업데이트">
-      <option name="closed" value="true" />
-      <created>1766916581947</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1766916581948</updated>
-    </task>
-    <task id="LOCAL-00034" summary="게시판 기능 업데이트">
-      <option name="closed" value="true" />
-      <created>1766916886980</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1766916886980</updated>
-    </task>
-    <task id="LOCAL-00035" summary="게시판 기능 업데이트">
-      <option name="closed" value="true" />
-      <created>1766917154084</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1766917154084</updated>
+      <workItem from="1767502734049" duration="13257000" />
     </task>
     <task id="LOCAL-00036" summary="게시판 기능 업데이트">
       <option name="closed" value="true" />
@@ -646,20 +589,69 @@
       <option name="project" value="LOCAL" />
       <updated>1767363000468</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="Response format 통일 /글로벌 상태 관리 /로딩 스피너 /토큰 자동 갱신/역할 기반 라우팅 보호">
+      <option name="closed" value="true" />
+      <created>1767504607289</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1767504607289</updated>
+    </task>
+    <task id="LOCAL-00079" summary="Redis 캐싱 재구현 및 API 문서화 개선&#10;- PageResponse 기반 Redis 캐싱으로 변경&#10;- Swagger API 문서 보완 (ThreadController, DTO)">
+      <option name="closed" value="true" />
+      <created>1767618955342</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1767618955342</updated>
+    </task>
+    <task id="LOCAL-00080" summary="에러 핸들링 개선 및 에러 코드 체계 구축&#10;- ErrorCode enum으로 체계적인 에러 코드 정의&#10;- 커스텀 예외 클래스 생성 (BusinessException, ResourceNotFoundException 등)&#10;- GlobalExceptionHandler 개선 (더 많은 예외 타입 처리)&#10;- 서비스 레이어에서 커스텀 예외 사용">
+      <option name="closed" value="true" />
+      <created>1767619605729</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1767619605729</updated>
+    </task>
+    <task id="LOCAL-00081" summary="API 경로 충돌 해결 및 에러 핸들링 개선&#10;- 게시글 상세 조회 경로 변경: /{threadId} -&gt; /detail/{threadId}&#10;- Redis 캐싱 개선 (PageResponse 직렬화 설정)&#10;- ErrorCode enum 및 커스텀 예외 클래스 추가&#10;- Swagger API 문서 보완">
+      <option name="closed" value="true" />
+      <created>1767620938153</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1767620938153</updated>
+    </task>
+    <task id="LOCAL-00082" summary="ThreadController: ResourceNotFoundException 처리 추가 및 에러 메시지 개선&#10;ThreadService: @Cacheable 일시 비활성화 (Redis 역직렬화 문제 해결 전까지)&#10;에러 로깅: 상세 로그 추가">
+      <option name="closed" value="true" />
+      <created>1767621637966</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1767621637966</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Redis 캐시 직렬화 문제 해결 및 성능 최적화&#10;- ThreadDetailRes/ThreadRes에 @JsonTypeInfo 추가&#10;- ThreadService.getDetail의 @Cacheable 재활성화&#10;- CacheConfig의 타입 정보 설정 조정&#10;- 테스트 코드 TODO 해결&#10;- TODO.md 업데이트">
+      <option name="closed" value="true" />
+      <created>1767622467298</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1767622467298</updated>
+    </task>
+    <task id="LOCAL-00084" summary="CacheConfig.kt: ObjectMapper에 registerKotlinModule() 추가&#10;Kotlin data class 역직렬화 지원&#10;ThreadDetailDtos.kt: 필드 레벨 @JsonTypeInfo 제거&#10;클래스 레벨만 사용하도록 수정&#10;Redis 캐시 비우기: 기존 잘못된 캐시 데이터 삭제">
+      <option name="closed" value="true" />
+      <created>1767622681895</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1767622681895</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fix testcode OK" />
-    <MESSAGE value="testcode all 200 OK" />
-    <MESSAGE value="AuthService.kt updated" />
-    <MESSAGE value="updated" />
-    <MESSAGE value="회원가입 기능 추가" />
-    <MESSAGE value="게시판 기능 업데이트" />
-    <MESSAGE value="댓글 기능 업데이트" />
     <MESSAGE value="내정보 / 알림 기능 업데이트" />
     <MESSAGE value="커뮤니티 전체 기능 업데이트" />
     <MESSAGE value="내정보 기능 업데이트" />
@@ -678,7 +670,14 @@
     <MESSAGE value="게시판 생성 요청 페이지 추가, 게시판 생성 기능 어드민으로 변경" />
     <MESSAGE value="리드미 업데이트" />
     <MESSAGE value="어드민 페이지 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="어드민 페이지 추가" />
+    <MESSAGE value="Response format 통일 /글로벌 상태 관리 /로딩 스피너 /토큰 자동 갱신/역할 기반 라우팅 보호" />
+    <MESSAGE value="Redis 캐싱 재구현 및 API 문서화 개선&#10;- PageResponse 기반 Redis 캐싱으로 변경&#10;- Swagger API 문서 보완 (ThreadController, DTO)" />
+    <MESSAGE value="에러 핸들링 개선 및 에러 코드 체계 구축&#10;- ErrorCode enum으로 체계적인 에러 코드 정의&#10;- 커스텀 예외 클래스 생성 (BusinessException, ResourceNotFoundException 등)&#10;- GlobalExceptionHandler 개선 (더 많은 예외 타입 처리)&#10;- 서비스 레이어에서 커스텀 예외 사용" />
+    <MESSAGE value="API 경로 충돌 해결 및 에러 핸들링 개선&#10;- 게시글 상세 조회 경로 변경: /{threadId} -&gt; /detail/{threadId}&#10;- Redis 캐싱 개선 (PageResponse 직렬화 설정)&#10;- ErrorCode enum 및 커스텀 예외 클래스 추가&#10;- Swagger API 문서 보완" />
+    <MESSAGE value="ThreadController: ResourceNotFoundException 처리 추가 및 에러 메시지 개선&#10;ThreadService: @Cacheable 일시 비활성화 (Redis 역직렬화 문제 해결 전까지)&#10;에러 로깅: 상세 로그 추가" />
+    <MESSAGE value="Redis 캐시 직렬화 문제 해결 및 성능 최적화&#10;- ThreadDetailRes/ThreadRes에 @JsonTypeInfo 추가&#10;- ThreadService.getDetail의 @Cacheable 재활성화&#10;- CacheConfig의 타입 정보 설정 조정&#10;- 테스트 코드 TODO 해결&#10;- TODO.md 업데이트" />
+    <MESSAGE value="CacheConfig.kt: ObjectMapper에 registerKotlinModule() 추가&#10;Kotlin data class 역직렬화 지원&#10;ThreadDetailDtos.kt: 필드 레벨 @JsonTypeInfo 제거&#10;클래스 레벨만 사용하도록 수정&#10;Redis 캐시 비우기: 기존 잘못된 캐시 데이터 삭제" />
+    <option name="LAST_COMMIT_MESSAGE" value="CacheConfig.kt: ObjectMapper에 registerKotlinModule() 추가&#10;Kotlin data class 역직렬화 지원&#10;ThreadDetailDtos.kt: 필드 레벨 @JsonTypeInfo 제거&#10;클래스 레벨만 사용하도록 수정&#10;Redis 캐시 비우기: 기존 잘못된 캐시 데이터 삭제" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

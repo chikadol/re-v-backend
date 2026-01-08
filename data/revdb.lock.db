@@ -1,6 +1,6 @@
 #FileLock
-#Mon Jan 05 23:17:31 KST 2026
-hostName=localhost
-id=19b8e852e192e294e83d52053afd1f12722116b06cc
+#Tue Jan 06 01:52:29 KST 2026
+hostName=172.30.1.60
+id=19b8f12fa42b0ffeadbf39bdbb973076eb0ccf076d1
 method=file
-server=localhost\:59932
+server=172.30.1.60\:56823
